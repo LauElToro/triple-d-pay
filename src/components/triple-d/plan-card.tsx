@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import type { Plan } from "@/lib/mock-data";
+import { useTranslation } from "@/lib/i18n-context";
 
 export function PlanCard({ plan, featured = false }: { plan: Plan; featured?: boolean }) {
+  const { t } = useTranslation();
+
   return (
     <Card
       className={
@@ -15,7 +18,7 @@ export function PlanCard({ plan, featured = false }: { plan: Plan; featured?: bo
     >
       {featured && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-signal text-primary-foreground text-xs px-3 py-1 rounded-full font-mono uppercase tracking-wider">
-          Recomendado
+          {t("common.recommended")}
         </div>
       )}
       <CardHeader>
