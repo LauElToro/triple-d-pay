@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyField } from "@/components/triple-d/copy-field";
 import { KeyStatusBadge } from "@/components/triple-d/key-status-badge";
+import { AppPageHeader } from "@/components/triple-d/app-page-header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { KeyRound, AlertTriangle } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
+import { useTranslation } from "@/lib/i18n-context";
 import { MOCK_KEY } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/app/keys")({
@@ -14,22 +16,24 @@ export const Route = createFileRoute("/app/keys")({
 
 function KeysPage() {
   const { issuedKey, clearIssuedKey } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-6 max-w-4xl">
-      <div>
-        <h1 className="text-3xl font-display font-bold">API Key</h1>
-        <p className="text-slate text-sm">Autenticá tu SDK con esta key. Es única por cliente.</p>
-      </div>
+      <AppPageHeader
+        title={t("keys.title")}
+        description={t("keys.subtitle")}
+        crumbs={[{ label: t("keys.title") }]}
+      />
 
       {issuedKey && (
         <Alert className="border-signal bg-signal/5">
           <AlertTriangle className="h-4 w-4 text-signal" />
-          <AlertTitle className="font-display">Tu API Key — se muestra una sola vez</AlertTitle>
+          <AlertTitle className="font-display">{t("keys.alertTitle")}</AlertTitle>
           <AlertDescription className="space-y-3">
-            <p>Copiala ahora. No la vamos a volver a mostrar. Guardala en un lugar seguro.</p>
-            <CopyField value={issuedKey} label="Key completa" />
-            <Button size="sm" onClick={clearIssuedKey}>Ya la guardé</Button>
+            <p>{t("keys.alertDesc")}</p>
+            <CopyField value={issuedKey} label={t("keys.fullKey")} />
+            <Button size="sm" onClick={clearIssuedKey}>{t("keys.saved")}</Button>
           </AlertDescription>
         </Alert>
       )}
@@ -37,19 +41,19 @@ function KeysPage() {
       <Card className="border-line">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2 font-display">
-            <KeyRound className="h-5 w-5" /> Key actual
+            <KeyRound className="h-5 w-5" /> {t("keys.current")}
           </CardTitle>
           <KeyStatusBadge status={MOCK_KEY.status} />
         </CardHeader>
         <CardContent className="space-y-4">
-          <CopyField value={MOCK_KEY.prefix} masked label="Prefijo" />
+          <CopyField value={MOCK_KEY.prefix} masked label={t("keys.prefix")} />
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <div className="text-xs text-slate uppercase tracking-wider font-mono">Uso desde</div>
+              <div className="text-xs text-slate uppercase tracking-wider font-mono">{t("keys.usageSince")}</div>
               <div className="font-mono">{MOCK_KEY.usageStartedAt}</div>
             </div>
             <div>
-              <div className="text-xs text-slate uppercase tracking-wider font-mono">Cierra ciclo</div>
+              <div className="text-xs text-slate uppercase tracking-wider font-mono">{t("keys.cycleEnds")}</div>
               <div className="font-mono">{MOCK_KEY.cycleEndsAt}</div>
             </div>
           </div>
@@ -58,7 +62,7 @@ function KeysPage() {
 
       <Card className="border-line">
         <CardHeader>
-          <CardTitle className="font-display">Uso con el SDK</CardTitle>
+          <CardTitle className="font-display">{t("keys.sdkTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <pre className="bg-ink text-paper rounded-md p-4 text-sm font-mono overflow-x-auto">
