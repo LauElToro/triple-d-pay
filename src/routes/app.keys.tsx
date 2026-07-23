@@ -91,7 +91,7 @@ function KeysPage() {
       )}
 
       {canWrite && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2" data-tour="keys-create">
           <Button
             onClick={() => create.mutate()}
             disabled={create.isPending || !kycOk}
@@ -123,7 +123,7 @@ function KeysPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <CopyField value={key.prefix} masked label={t("keys.prefix")} />
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-2 gap-4 text-sm" data-tour="keys-prefix">
                 <div>
                   <div className="text-xs text-slate uppercase tracking-wider font-mono">{t("keys.usageSince")}</div>
                   <div className="font-mono">{formatDate(key.usageStartedAt)}</div>

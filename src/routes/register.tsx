@@ -98,7 +98,7 @@ function RegisterPage() {
                     setLoading(true);
                     try {
                       await verifyEmail(pendingEmail, code.trim());
-                      navigate({ to: "/kyc" });
+                      navigate({ to: "/onboarding" });
                     } catch (err) {
                       toast.error(err instanceof ApiError ? err.message : "Código inválido");
                     } finally {
@@ -193,7 +193,7 @@ function RegisterPage() {
                     setLoading(true);
                     try {
                       await loginWithGoogle(credential);
-                      navigate({ to: "/kyc" });
+                      navigate({ to: "/onboarding" });
                     } catch (err) {
                       toast.error(
                         err instanceof ApiError ? err.message : "No se pudo registrar con Google",

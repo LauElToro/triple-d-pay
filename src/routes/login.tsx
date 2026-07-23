@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import type { TwoFactorChallenge } from "@/lib/api-types";
@@ -49,6 +54,12 @@ function LoginPage() {
       );
       return;
     }
+    const authUser = (res as { user?: { kycStatus?: string } }).user;
+    if (authUser?.kycStatus && authUser.kycStatus !== "APPROVED") {
+      toast.info("Completá la verificación de identidad cuando puedas", {
+        action: { label: "KYC", onClick: () => navigate({ to: "/kyc" }) },
+      });
+    }
     navigate({ to: "/app" });
   };
 
@@ -77,11 +88,11 @@ function LoginPage() {
           {challenge ? (
             <>
               <CardHeader>
-                <CardTitle className="font-display text-2xl">Verificación en dos pasos</CardTitle>
+                <CardTitle className="font-display text-2xl">{t("login.twofaTitle")}</CardTitle>
                 <p className="text-sm text-slate">
                   {challenge.method === "email"
-                    ? "Ingresá el código que enviamos a tu email."
-                    : "Ingresá el código de tu app."}
+                    ? t("login.twofaEmail")
+                    : t("login.twofaTotp")}
                 </p>
               </CardHeader>
               <CardContent>
@@ -93,27 +104,33 @@ function LoginPage() {
                       await verifyTwoFactor(challenge.pendingToken, code.trim());
                       navigate({ to: "/app" });
                     } catch (err) {
-                      toast.error(err instanceof ApiError ? err.message : "Código inválido");
+                      toast.error(err instanceof ApiError ? err.message : t("login.twofaInvalid"));
                     } finally {
                       setLoading(false);
                     }
                   }}
                   className="space-y-4"
                 >
-                  <div className="space-y-2">
-                    <Label htmlFor="code">Código</Label>
-                    <Input
-                      id="code"
-                      inputMode="numeric"
-                      autoFocus
+                  <div className="space-y-2 flex flex-col items-center">
+                    <Label htmlFor="code">{t("login.twofaCode")}</Label>
+                    <InputOTP
+                      maxLength={6}
                       value={code}
-                      onChange={(e) => setCode(e.target.value)}
-                      maxLength={8}
-                      className="font-mono tracking-widest text-center text-lg"
-                    />
+                      onChange={setCode}
+                      autoFocus
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                        <InputOTPSlot index={5} />
+                      </InputOTPGroup>
+                    </InputOTP>
                   </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Verificando…" : "Verificar"}
+                  <Button type="submit" className="w-full" disabled={loading || code.length < 6}>
+                    {loading ? t("login.twofaVerifying") : t("login.twofaVerify")}
                   </Button>
                   <button
                     type="button"
@@ -123,7 +140,7 @@ function LoginPage() {
                       setCode("");
                     }}
                   >
-                    Volver
+                    {t("common.back")}
                   </button>
                 </form>
               </CardContent>

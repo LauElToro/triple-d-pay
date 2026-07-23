@@ -100,7 +100,7 @@ function TeamPage() {
       </div>
 
       {canWrite && (
-        <Card className="border-line">
+        <Card className="border-line" data-tour="team-invite">
           <CardHeader><CardTitle className="font-display">Invitar colaborador</CardTitle></CardHeader>
           <CardContent>
             <div className="flex flex-col md:flex-row gap-3 md:items-end">

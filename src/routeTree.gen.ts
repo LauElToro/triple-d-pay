@@ -16,11 +16,14 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as KycRouteImport } from './routes/kyc'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminClientsRouteImport } from './routes/admin.clients'
+import { Route as AdminProfitabilityRouteImport } from './routes/admin.profitability'
 import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
+import { Route as AdminTrafficRouteImport } from './routes/admin.traffic'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
 import { Route as AppCuitsRouteImport } from './routes/app.cuits'
@@ -41,6 +44,7 @@ import { Route as ProductosFacturaRouteImport } from './routes/productos.factura
 import { Route as ProductosPlatformRouteImport } from './routes/productos.platform'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
+import { Route as AdminClientsIdRouteImport } from './routes/admin.clients.$id'
 import { Route as DocsAutomationsSlugRouteImport } from './routes/docs.automations.$slug'
 import { Route as DocsWebServicesSlugRouteImport } from './routes/docs.web-services.$slug'
 
@@ -79,6 +83,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -99,9 +108,19 @@ const AdminClientsRoute = AdminClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminProfitabilityRoute = AdminProfitabilityRouteImport.update({
+  id: '/profitability',
+  path: '/profitability',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTicketsRoute = AdminTicketsRouteImport.update({
   id: '/tickets',
   path: '/tickets',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTrafficRoute = AdminTrafficRouteImport.update({
+  id: '/traffic',
+  path: '/traffic',
   getParentRoute: () => AdminRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -204,6 +223,11 @@ const ToolsSlugRoute = ToolsSlugRouteImport.update({
   path: '/tools/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminClientsIdRoute = AdminClientsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminClientsRoute,
+} as any)
 const DocsAutomationsSlugRoute = DocsAutomationsSlugRouteImport.update({
   id: '/automations/$slug',
   path: '/automations/$slug',
@@ -223,10 +247,13 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRouteWithChildren
   '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
-  '/admin/clients': typeof AdminClientsRoute
+  '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
+  '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
@@ -248,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/tools/': typeof ToolsIndexRoute
+  '/admin/clients/$id': typeof AdminClientsIdRoute
   '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
   '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
@@ -256,10 +284,13 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
-  '/admin/clients': typeof AdminClientsRoute
+  '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
+  '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
@@ -281,6 +312,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppIndexRoute
   '/docs': typeof DocsIndexRoute
   '/tools': typeof ToolsIndexRoute
+  '/admin/clients/$id': typeof AdminClientsIdRoute
   '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
   '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
@@ -293,10 +325,13 @@ export interface FileRoutesById {
   '/docs': typeof DocsRouteWithChildren
   '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
-  '/admin/clients': typeof AdminClientsRoute
+  '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
+  '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
@@ -318,6 +353,7 @@ export interface FileRoutesById {
   '/app/': typeof AppIndexRoute
   '/docs/': typeof DocsIndexRoute
   '/tools/': typeof ToolsIndexRoute
+  '/admin/clients/$id': typeof AdminClientsIdRoute
   '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
   '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
@@ -331,10 +367,13 @@ export interface FileRouteTypes {
     | '/docs'
     | '/kyc'
     | '/login'
+    | '/onboarding'
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/profitability'
     | '/admin/tickets'
+    | '/admin/traffic'
     | '/app/automations'
     | '/app/cuits'
     | '/app/invoices'
@@ -356,6 +395,7 @@ export interface FileRouteTypes {
     | '/app/'
     | '/docs/'
     | '/tools/'
+    | '/admin/clients/$id'
     | '/docs/automations/$slug'
     | '/docs/web-services/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -364,10 +404,13 @@ export interface FileRouteTypes {
     | '/contact'
     | '/kyc'
     | '/login'
+    | '/onboarding'
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/profitability'
     | '/admin/tickets'
+    | '/admin/traffic'
     | '/app/automations'
     | '/app/cuits'
     | '/app/invoices'
@@ -389,6 +432,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/docs'
     | '/tools'
+    | '/admin/clients/$id'
     | '/docs/automations/$slug'
     | '/docs/web-services/$slug'
   id:
@@ -400,10 +444,13 @@ export interface FileRouteTypes {
     | '/docs'
     | '/kyc'
     | '/login'
+    | '/onboarding'
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/profitability'
     | '/admin/tickets'
+    | '/admin/traffic'
     | '/app/automations'
     | '/app/cuits'
     | '/app/invoices'
@@ -425,6 +472,7 @@ export interface FileRouteTypes {
     | '/app/'
     | '/docs/'
     | '/tools/'
+    | '/admin/clients/$id'
     | '/docs/automations/$slug'
     | '/docs/web-services/$slug'
   fileRoutesById: FileRoutesById
@@ -437,6 +485,7 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRouteWithChildren
   KycRoute: typeof KycRouteWithChildren
   LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
   RegisterRoute: typeof RegisterRoute
   InviteAcceptRoute: typeof InviteAcceptRoute
@@ -497,6 +546,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -525,11 +581,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClientsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/profitability': {
+      id: '/admin/profitability'
+      path: '/profitability'
+      fullPath: '/admin/profitability'
+      preLoaderRoute: typeof AdminProfitabilityRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/tickets': {
       id: '/admin/tickets'
       path: '/tickets'
       fullPath: '/admin/tickets'
       preLoaderRoute: typeof AdminTicketsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/traffic': {
+      id: '/admin/traffic'
+      path: '/traffic'
+      fullPath: '/admin/traffic'
+      preLoaderRoute: typeof AdminTrafficRouteImport
       parentRoute: typeof AdminRoute
     }
     '/app/': {
@@ -672,6 +742,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/clients/$id': {
+      id: '/admin/clients/$id'
+      path: '/$id'
+      fullPath: '/admin/clients/$id'
+      preLoaderRoute: typeof AdminClientsIdRouteImport
+      parentRoute: typeof AdminClientsRoute
+    }
     '/docs/automations/$slug': {
       id: '/docs/automations/$slug'
       path: '/automations/$slug'
@@ -689,15 +766,31 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminClientsRouteChildren {
+  AdminClientsIdRoute: typeof AdminClientsIdRoute
+}
+
+const AdminClientsRouteChildren: AdminClientsRouteChildren = {
+  AdminClientsIdRoute: AdminClientsIdRoute,
+}
+
+const AdminClientsRouteWithChildren = AdminClientsRoute._addFileChildren(
+  AdminClientsRouteChildren,
+)
+
 interface AdminRouteChildren {
-  AdminClientsRoute: typeof AdminClientsRoute
+  AdminClientsRoute: typeof AdminClientsRouteWithChildren
+  AdminProfitabilityRoute: typeof AdminProfitabilityRoute
   AdminTicketsRoute: typeof AdminTicketsRoute
+  AdminTrafficRoute: typeof AdminTrafficRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminClientsRoute: AdminClientsRoute,
+  AdminClientsRoute: AdminClientsRouteWithChildren,
+  AdminProfitabilityRoute: AdminProfitabilityRoute,
   AdminTicketsRoute: AdminTicketsRoute,
+  AdminTrafficRoute: AdminTrafficRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -769,6 +862,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRouteWithChildren,
   KycRoute: KycRouteWithChildren,
   LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
   RegisterRoute: RegisterRoute,
   InviteAcceptRoute: InviteAcceptRoute,

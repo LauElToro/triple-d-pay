@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { api, refreshSession, setAccessToken, setActiveOrgId } from "@/lib/api";
+import { getAcquisitionPayload } from "@/lib/acquisition";
 import type {
   AuthResponse,
   OrgSummary,
@@ -128,6 +129,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const res = await api.post<AuthResponse | TwoFactorChallenge>("/api/auth/login", {
       email,
       password,
+      acquisition: getAcquisitionPayload(),
     });
     if ("status" in res && res.status === "twofa_required") return res;
     await applySession(res as AuthResponse);
@@ -137,6 +139,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginWithGoogle = async (credential: string): Promise<LoginResult> => {
     const res = await api.post<AuthResponse | TwoFactorChallenge>("/api/auth/google", {
       credential,
+      acquisition: getAcquisitionPayload(),
     });
     if ("status" in res && res.status === "twofa_required") return res;
     await applySession(res as AuthResponse);
@@ -145,7 +148,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const verifyTwoFactor = async (pendingToken: string, code: string) => {
     setAccessToken(pendingToken);
-    const auth = await api.post<AuthResponse>("/api/auth/2fa/verify", { code });
+    const auth = await api.post<AuthResponse>("/api/auth/2fa/verify", {
+      code,
+      acquisition: getAcquisitionPayload(),
+    });
     await applySession(auth);
   };
 

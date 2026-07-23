@@ -15,13 +15,25 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "./logo";
-import { Home, Hash, Activity, Zap, CreditCard, LogOut } from "lucide-react";
+import {
+  Home,
+  Hash,
+  Activity,
+  Zap,
+  CreditCard,
+  LogOut,
+  KeyRound,
+  Settings,
+  Users,
+  LifeBuoy,
+  Shield,
+} from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
 
 function isNavActive(url: string, pathname: string) {
   if (url === "/app") return pathname === "/app" || pathname === "/app/";
-  return pathname === url;
+  return pathname === url || pathname.startsWith(`${url}/`);
 }
 
 export function AppSidebar() {
@@ -33,15 +45,19 @@ export function AppSidebar() {
   const planName = plans.find((p) => p.id === activeOrg?.planId)?.name ?? "Free";
 
   const items = [
-    { title: t("sidebar.home"), url: "/app", icon: Home },
-    { title: t("sidebar.cuits"), url: "/app/cuits", icon: Hash },
-    { title: t("sidebar.requests"), url: "/app/requests", icon: Activity },
-    { title: t("sidebar.automations"), url: "/app/automations", icon: Zap },
-    { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard },
+    { title: t("sidebar.home"), url: "/app", icon: Home, tour: "nav-home" },
+    { title: t("sidebar.apiKey"), url: "/app/keys", icon: KeyRound, tour: "nav-keys" },
+    { title: t("sidebar.cuits"), url: "/app/cuits", icon: Hash, tour: "nav-cuits" },
+    { title: t("sidebar.requests"), url: "/app/requests", icon: Activity, tour: "nav-requests" },
+    { title: t("sidebar.automations"), url: "/app/automations", icon: Zap, tour: "nav-automations" },
+    { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard, tour: "nav-subscription" },
+    { title: t("sidebar.team"), url: "/app/team", icon: Users, tour: "nav-team" },
+    { title: t("sidebar.tickets"), url: "/app/tickets", icon: LifeBuoy, tour: "nav-tickets" },
+    { title: t("sidebar.settings"), url: "/app/settings", icon: Settings, tour: "nav-settings" },
   ];
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" data-tour="sidebar">
       <SidebarHeader className="overflow-hidden border-b border-line px-4 py-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3">
         <div className="flex flex-col gap-0.5 group-data-[collapsible=icon]:items-center">
           <LogoMark compact={collapsed} />
@@ -64,13 +80,23 @@ export function AppSidebar() {
                     isActive={isNavActive(item.url, pathname)}
                     tooltip={item.title}
                   >
-                    <Link to={item.url}>
+                    <Link to={item.url} data-tour={item.tour}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              {user?.systemRole === "SUPERADMIN" && (
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={pathname.startsWith("/admin")} tooltip="Admin">
+                    <Link to="/admin">
+                      <Shield className="h-4 w-4" />
+                      <span>Admin</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

@@ -13,7 +13,7 @@ export function UsageChart({ days }: { days: { day: string; count: number }[] })
   }
 
   return (
-    <div className="border border-line bg-card rounded-md p-4">
+    <div className="border border-line bg-card rounded-md p-4" data-tour="usage-chart">
       <div className="text-xs uppercase tracking-wider text-slate font-mono mb-4">
         {t("usage.chartTitle")}
       </div>

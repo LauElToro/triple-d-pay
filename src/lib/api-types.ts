@@ -27,6 +27,9 @@ export interface SessionUser {
   emailVerified: boolean;
   twoFactorEnabled: boolean;
   kycStatus: KycStatus;
+  lastLoginAt?: string | null;
+  onboardingSkippedAt?: string | null;
+  tourCompleted?: Record<string, string> | null;
   createdAt: string;
 }
 
@@ -37,6 +40,12 @@ export interface OrgSummary {
   kycStatus: KycStatus;
   arcaCuit: string | null;
   clientType: string | null;
+  source?: string | null;
+  heardAbout?: string | null;
+  intendedUse?: string | null;
+  companyRole?: string | null;
+  companySize?: string | null;
+  onboardingCompletedAt?: string | null;
   orgRole: "OWNER" | "ADMIN" | "MEMBER";
   subRole: SubRole | null;
   permissions: Permission[];

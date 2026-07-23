@@ -15,6 +15,9 @@ export const en: TranslationDict = {
   "common.pay": "Pay",
   "common.recommended": "Recommended",
   "common.current": "Current",
+  "common.back": "Back",
+  "common.save": "Save",
+  "common.dismiss": "Dismiss",
 
   "nav.login": "Sign in",
   "nav.register": "Create account",
@@ -97,6 +100,9 @@ export const en: TranslationDict = {
   "sidebar.usage": "Usage",
   "sidebar.invoices": "Invoices",
   "sidebar.plans": "Plans",
+  "sidebar.team": "Team",
+  "sidebar.tickets": "Support",
+  "sidebar.settings": "Settings",
 
   "breadcrumb.dashboard": "Dashboard",
 

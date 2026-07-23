@@ -65,7 +65,7 @@ function SubscriptionPage() {
           <TabsTrigger value="invoices">{t("subscription.tabInvoices")}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="plan" className="mt-6">
+        <TabsContent value="plan" className="mt-6" data-tour="sub-plans">
           <div className="grid md:grid-cols-3 gap-6">
             {plans.map((p) => {
               const current = activeOrg?.planId === p.id;
@@ -105,7 +105,7 @@ function SubscriptionPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="invoices" className="mt-6 space-y-4">
+        <TabsContent value="invoices" className="mt-6 space-y-4" data-tour="sub-invoices">
           <p className="text-sm text-slate">{t("invoices.subtitle")}</p>
           <InvoiceTable invoices={invoices.data?.invoices} />
         </TabsContent>

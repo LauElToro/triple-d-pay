@@ -1,9 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LogoMark } from "@/components/triple-d/logo";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
+import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/kyc/complete")({
   head: () => ({ meta: [{ title: "Verificación en proceso · Triple D" }] }),
@@ -12,42 +14,68 @@ export const Route = createFileRoute("/kyc/complete")({
 
 function KycComplete() {
   const { refreshMe } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [approved, setApproved] = useState(false);
+  const [state, setState] = useState<"polling" | "approved" | "declined" | "timeout">("polling");
 
   useEffect(() => {
     let attempts = 0;
+    let cancelled = false;
     const poll = async () => {
+      if (cancelled) return;
       attempts += 1;
       try {
         const d = await api.get<{ kycStatus: string }>("/api/kyc/status");
         if (d.kycStatus === "APPROVED") {
-          setApproved(true);
+          setState("approved");
           await refreshMe();
           setTimeout(() => navigate({ to: "/app" }), 1200);
+          return;
+        }
+        if (d.kycStatus === "DECLINED") {
+          setState("declined");
           return;
         }
       } catch {
         // ignore transient errors
       }
       if (attempts < 20) setTimeout(poll, 3000);
-      else navigate({ to: "/kyc" });
+      else setState("timeout");
     };
     poll();
+    return () => {
+      cancelled = true;
+    };
   }, [navigate, refreshMe]);
 
   return (
-    <div className="min-h-screen bg-paper flex flex-col items-center justify-center gap-4">
+    <div className="min-h-screen bg-paper flex flex-col items-center justify-center gap-4 px-4">
       <LogoMark />
-      {approved ? (
+      {state === "approved" && (
         <div className="flex flex-col items-center gap-2 text-signal">
           <CheckCircle2 className="h-10 w-10" />
-          <p className="font-display text-lg">¡Verificación aprobada!</p>
+          <p className="font-display text-lg">{t("kyc.approved")}</p>
         </div>
-      ) : (
+      )}
+      {state === "polling" && (
         <div className="flex flex-col items-center gap-2 text-slate">
           <Loader2 className="h-8 w-8 animate-spin" />
-          <p className="text-sm">Confirmando tu verificación…</p>
+          <p className="text-sm">{t("kyc.confirming")}</p>
+        </div>
+      )}
+      {state === "declined" && (
+        <div className="flex flex-col items-center gap-3 text-seal max-w-sm text-center">
+          <XCircle className="h-10 w-10" />
+          <p className="font-display text-lg">{t("kyc.declinedTitle")}</p>
+          <p className="text-sm text-slate">{t("kyc.declinedDesc")}</p>
+          <Button onClick={() => navigate({ to: "/kyc" })}>{t("kyc.retry")}</Button>
+        </div>
+      )}
+      {state === "timeout" && (
+        <div className="flex flex-col items-center gap-3 text-slate max-w-sm text-center">
+          <p className="font-display text-lg text-ink">{t("kyc.timeoutTitle")}</p>
+          <p className="text-sm">{t("kyc.timeoutDesc")}</p>
+          <Button onClick={() => navigate({ to: "/kyc" })}>{t("kyc.back")}</Button>
         </div>
       )}
     </div>
