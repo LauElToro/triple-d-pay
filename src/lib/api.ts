@@ -8,8 +8,12 @@
  * - On a 401 the client transparently tries to refresh once and retries.
  */
 
+const DEFAULT_API_URL = import.meta.env.PROD
+  ? "https://triple-d-backend.vercel.app"
+  : "http://localhost:4000";
+
 export const API_URL =
-  (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:4000";
+  (import.meta.env.VITE_API_URL as string | undefined)?.trim() || DEFAULT_API_URL;
 
 let accessToken: string | null = null;
 let activeOrgId: string | null = null;

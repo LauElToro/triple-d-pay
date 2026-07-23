@@ -26,11 +26,11 @@ function isNavActive(url: string, pathname: string) {
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { user, logout } = useAuth();
+  const { user, activeOrg, logout } = useAuth();
   const { state } = useSidebar();
   const { t, plans } = useTranslation();
   const collapsed = state === "collapsed";
-  const planName = plans.find((p) => p.id === user?.planId)?.name ?? "Free";
+  const planName = plans.find((p) => p.id === activeOrg?.planId)?.name ?? "Free";
 
   const items = [
     { title: t("sidebar.home"), url: "/app", icon: Home },

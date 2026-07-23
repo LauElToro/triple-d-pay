@@ -13,10 +13,10 @@ export const Route = createFileRoute("/app/")({
 });
 
 function DashboardHome() {
-  const { user } = useAuth();
+  const { user, activeOrg } = useAuth();
   const { t, plans } = useTranslation();
   const pending = MOCK_INVOICES.find((i) => i.status !== "paid");
-  const plan = plans.find((p) => p.id === user?.planId);
+  const plan = plans.find((p) => p.id === activeOrg?.planId);
 
   return (
     <div className="space-y-8 max-w-6xl">

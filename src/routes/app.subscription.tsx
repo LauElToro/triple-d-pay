@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type { PlanId } from "@/lib/mock-data";
+import type { PlanId } from "@/lib/api-types";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
 import { AppPageHeader } from "@/components/triple-d/app-page-header";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
+import { ApiError } from "@/lib/api";
 import { MOCK_INVOICES } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/app/subscription")({
@@ -17,20 +18,24 @@ export const Route = createFileRoute("/app/subscription")({
 });
 
 function SubscriptionPage() {
-  const { user, selectPlan } = useAuth();
+  const { activeOrg, selectPlan } = useAuth();
   const { t, plans } = useTranslation();
   const pending = MOCK_INVOICES.find((i) => i.status !== "paid");
 
-  const change = (id: PlanId) => {
-    if (id === "free") {
-      selectPlan(id);
-      toast.success(t("appPlans.changedFree"));
-      return;
-    }
-    if (confirm(t("appPlans.confirmPaid"))) {
-      selectPlan(id);
-      const name = plans.find((p) => p.id === id)?.name ?? id;
-      toast.success(t("appPlans.changed", { name }));
+  const change = async (id: PlanId) => {
+    try {
+      if (id === "free") {
+        await selectPlan(id);
+        toast.success(t("appPlans.changedFree"));
+        return;
+      }
+      if (confirm(t("appPlans.confirmPaid"))) {
+        await selectPlan(id);
+        const name = plans.find((p) => p.id === id)?.name ?? id;
+        toast.success(t("appPlans.changed", { name }));
+      }
+    } catch (err) {
+      toast.error(err instanceof ApiError ? err.message : "No se pudo cambiar el plan");
     }
   };
 
@@ -53,7 +58,7 @@ function SubscriptionPage() {
         <TabsContent value="plan" className="mt-6">
           <div className="grid md:grid-cols-3 gap-6">
             {plans.map((p) => {
-              const current = user?.planId === p.id;
+              const current = activeOrg?.planId === p.id;
               return (
                 <Card key={p.id} className={current ? "border-signal border-2" : "border-line"}>
                   <CardHeader>

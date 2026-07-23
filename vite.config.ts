@@ -12,4 +12,6 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Explicit Vercel preset so local `vite build` matches CI (Lovable defaults to Cloudflare).
+  nitro: { preset: "vercel" },
 });

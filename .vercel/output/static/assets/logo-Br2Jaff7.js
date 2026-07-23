@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-BKllkxft.js";var t=e();function n({className:e=``}){return(0,t.jsxs)(`span`,{className:`inline-flex items-center gap-2 font-display font-bold ${e}`,children:[(0,t.jsx)(`span`,{className:`text-signal tracking-tighter`,"aria-hidden":!0,children:`|||`}),(0,t.jsx)(`span`,{children:`Triple D`})]})}export{n as t};
