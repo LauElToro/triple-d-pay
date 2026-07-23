@@ -1,12 +1,19 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Clock } from "lucide-react";
-import type { MockInvoice } from "@/lib/mock-data";
 import { formatARS } from "@/lib/mock-data";
 
-export function BillingAlert({ invoice }: { invoice: MockInvoice }) {
+export interface BillingAlertInvoice {
+  id: string;
+  amount: number;
+  status: string;
+  dueAt: string;
+}
+
+export function BillingAlert({ invoice }: { invoice: BillingAlertInvoice }) {
   if (invoice.status === "paid") return null;
   const overdue = invoice.status === "overdue";
+  const due = new Date(invoice.dueAt).toLocaleDateString("es-AR");
   return (
     <Alert className={overdue ? "border-seal bg-seal/10" : "border-signal bg-signal/5"}>
       {overdue ? (
@@ -15,20 +22,15 @@ export function BillingAlert({ invoice }: { invoice: MockInvoice }) {
         <Clock className="h-4 w-4 text-signal" />
       )}
       <AlertTitle className="font-display">
-        {overdue
-          ? "Riesgo de suspensión del servicio"
-          : "Factura pendiente de pago"}
+        {overdue ? "Riesgo de suspensión del servicio" : "Factura pendiente de pago"}
       </AlertTitle>
       <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <span>
           {overdue
-            ? `Tu factura ${invoice.id} está vencida. Si no se paga, la key será suspendida.`
-            : `Factura ${invoice.id} por ${formatARS(invoice.amount)} vence el ${invoice.dueAt}. Tenés 15 días de gracia.`}
+            ? `Tu factura ${invoice.id.slice(0, 8)} está vencida. Si no se paga, la key será suspendida.`
+            : `Factura ${invoice.id.slice(0, 8)} por ${formatARS(invoice.amount)} vence el ${due}. Tenés 15 días de gracia.`}
         </span>
-        <Button
-          size="sm"
-          onClick={() => alert("Redirección a MercadoPago (placeholder)")}
-        >
+        <Button size="sm" onClick={() => alert("Redirección a MercadoPago (placeholder)")}>
           Pagar con MercadoPago
         </Button>
       </AlertDescription>

@@ -13,7 +13,15 @@ function AppLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (hydrated && !user) navigate({ to: "/login" });
+    if (!hydrated) return;
+    if (!user) {
+      navigate({ to: "/login" });
+      return;
+    }
+    // KYC gate: everyone except SUPERADMIN must be verified to use the platform.
+    if (user.systemRole !== "SUPERADMIN" && user.kycStatus !== "APPROVED") {
+      navigate({ to: "/kyc" });
+    }
   }, [hydrated, user, navigate]);
 
   if (!hydrated || !user) {

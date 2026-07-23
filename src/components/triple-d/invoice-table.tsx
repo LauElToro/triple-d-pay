@@ -8,21 +8,35 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MOCK_INVOICES, formatARS } from "@/lib/mock-data";
+import { formatARS } from "@/lib/mock-data";
+import type { InvoiceView } from "@/lib/api-types";
 
 const statusStyle: Record<string, string> = {
   paid: "bg-signal/15 text-signal border-signal/30",
   pending: "bg-mist text-ink border-line",
   overdue: "bg-seal/15 text-seal border-seal/30",
+  void: "bg-mist text-slate border-line",
 };
 
 const statusLabel: Record<string, string> = {
   paid: "Pagada",
   pending: "Pendiente",
   overdue: "Vencida",
+  void: "Anulada",
 };
 
-export function InvoiceTable() {
+function fmt(d: string) {
+  return new Date(d).toLocaleDateString("es-AR");
+}
+
+export function InvoiceTable({ invoices }: { invoices: InvoiceView[] }) {
+  if (invoices.length === 0) {
+    return (
+      <div className="border border-line border-dashed rounded-md bg-card p-10 text-center text-slate text-sm">
+        Todavía no hay facturas emitidas.
+      </div>
+    );
+  }
   return (
     <div className="border border-line rounded-md bg-card overflow-hidden">
       <Table>
@@ -37,11 +51,11 @@ export function InvoiceTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {MOCK_INVOICES.map((inv) => (
+          {invoices.map((inv) => (
             <TableRow key={inv.id}>
-              <TableCell className="font-mono">{inv.id}</TableCell>
+              <TableCell className="font-mono">{inv.id.slice(0, 8)}</TableCell>
               <TableCell className="text-sm text-slate">
-                {inv.periodStart} → {inv.periodEnd}
+                {fmt(inv.periodStart)} → {fmt(inv.periodEnd)}
               </TableCell>
               <TableCell className="font-mono">{formatARS(inv.amount)}</TableCell>
               <TableCell>
@@ -49,13 +63,10 @@ export function InvoiceTable() {
                   {statusLabel[inv.status]}
                 </Badge>
               </TableCell>
-              <TableCell className="font-mono text-sm">{inv.dueAt}</TableCell>
+              <TableCell className="font-mono text-sm">{fmt(inv.dueAt)}</TableCell>
               <TableCell>
-                {inv.status !== "paid" && (
-                  <Button
-                    size="sm"
-                    onClick={() => alert("Redirección a MercadoPago (placeholder)")}
-                  >
+                {inv.status !== "paid" && inv.status !== "void" && (
+                  <Button size="sm" onClick={() => alert("Redirección a MercadoPago (placeholder)")}>
                     Pagar
                   </Button>
                 )}

@@ -51,13 +51,6 @@ export const PLANS: Plan[] = [
   },
 ];
 
-export interface MockUser {
-  id: string;
-  email: string;
-  planId: PlanId;
-  createdAt: string;
-}
-
 export interface MockKey {
   id: string;
   prefix: string;

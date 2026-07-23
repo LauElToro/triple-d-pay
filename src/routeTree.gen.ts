@@ -9,24 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as KycRouteImport } from './routes/kyc'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminClientsRouteImport } from './routes/admin.clients'
+import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
 import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppUsageRouteImport } from './routes/app.usage'
-import { Route as AppPlansRouteImport } from './routes/app.plans'
-import { Route as AppKeysRouteImport } from './routes/app.keys'
 import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
+import { Route as AppKeysRouteImport } from './routes/app.keys'
+import { Route as AppPlansRouteImport } from './routes/app.plans'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppTicketsRouteImport } from './routes/app.tickets'
+import { Route as AppUsageRouteImport } from './routes/app.usage'
+import { Route as InviteAcceptRouteImport } from './routes/invite.accept'
+import { Route as KycCompleteRouteImport } from './routes/kyc.complete'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -34,29 +44,39 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const KycRoute = KycRouteImport.update({
+  id: '/kyc',
+  path: '/kyc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientsRoute = AdminClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTicketsRoute = AdminTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppUsageRoute = AppUsageRouteImport.update({
-  id: '/usage',
-  path: '/usage',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPlansRoute = AppPlansRouteImport.update({
-  id: '/plans',
-  path: '/plans',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppKeysRoute = AppKeysRouteImport.update({
-  id: '/keys',
-  path: '/keys',
   getParentRoute: () => AppRoute,
 } as any)
 const AppInvoicesRoute = AppInvoicesRouteImport.update({
@@ -64,96 +84,197 @@ const AppInvoicesRoute = AppInvoicesRouteImport.update({
   path: '/invoices',
   getParentRoute: () => AppRoute,
 } as any)
+const AppKeysRoute = AppKeysRouteImport.update({
+  id: '/keys',
+  path: '/keys',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPlansRoute = AppPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTicketsRoute = AppTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppUsageRoute = AppUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => AppRoute,
+} as any)
+const InviteAcceptRoute = InviteAcceptRouteImport.update({
+  id: '/invite/accept',
+  path: '/invite/accept',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KycCompleteRoute = KycCompleteRouteImport.update({
+  id: '/complete',
+  path: '/complete',
+  getParentRoute: () => KycRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/app'
+    | '/kyc'
     | '/login'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/settings'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/admin/'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/kyc'
     | '/login'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/settings'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/admin'
     | '/app'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/app'
+    | '/kyc'
     | '/login'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/settings'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/admin/'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
+  KycRoute: typeof KycRouteWithChildren
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  InviteAcceptRoute: typeof InviteAcceptRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app': {
@@ -163,39 +284,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/kyc': {
+      id: '/kyc'
+      path: '/kyc'
+      fullPath: '/kyc'
+      preLoaderRoute: typeof KycRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clients': {
+      id: '/admin/clients'
+      path: '/clients'
+      fullPath: '/admin/clients'
+      preLoaderRoute: typeof AdminClientsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/tickets': {
+      id: '/admin/tickets'
+      path: '/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AdminTicketsRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/app/': {
       id: '/app/'
       path: '/'
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/usage': {
-      id: '/app/usage'
-      path: '/usage'
-      fullPath: '/app/usage'
-      preLoaderRoute: typeof AppUsageRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/plans': {
-      id: '/app/plans'
-      path: '/plans'
-      fullPath: '/app/plans'
-      preLoaderRoute: typeof AppPlansRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/keys': {
-      id: '/app/keys'
-      path: '/keys'
-      fullPath: '/app/keys'
-      preLoaderRoute: typeof AppKeysRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/invoices': {
@@ -205,13 +340,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppInvoicesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/keys': {
+      id: '/app/keys'
+      path: '/keys'
+      fullPath: '/app/keys'
+      preLoaderRoute: typeof AppKeysRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/plans': {
+      id: '/app/plans'
+      path: '/plans'
+      fullPath: '/app/plans'
+      preLoaderRoute: typeof AppPlansRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tickets': {
+      id: '/app/tickets'
+      path: '/tickets'
+      fullPath: '/app/tickets'
+      preLoaderRoute: typeof AppTicketsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/usage': {
+      id: '/app/usage'
+      path: '/usage'
+      fullPath: '/app/usage'
+      preLoaderRoute: typeof AppUsageRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/invite/accept': {
+      id: '/invite/accept'
+      path: '/invite/accept'
+      fullPath: '/invite/accept'
+      preLoaderRoute: typeof InviteAcceptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kyc/complete': {
+      id: '/kyc/complete'
+      path: '/complete'
+      fullPath: '/kyc/complete'
+      preLoaderRoute: typeof KycCompleteRouteImport
+      parentRoute: typeof KycRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminClientsRoute: typeof AdminClientsRoute
+  AdminTicketsRoute: typeof AdminTicketsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminClientsRoute: AdminClientsRoute,
+  AdminTicketsRoute: AdminTicketsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppRouteChildren {
   AppInvoicesRoute: typeof AppInvoicesRoute
   AppKeysRoute: typeof AppKeysRoute
   AppPlansRoute: typeof AppPlansRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppTicketsRoute: typeof AppTicketsRoute
   AppUsageRoute: typeof AppUsageRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -220,18 +428,44 @@ const AppRouteChildren: AppRouteChildren = {
   AppInvoicesRoute: AppInvoicesRoute,
   AppKeysRoute: AppKeysRoute,
   AppPlansRoute: AppPlansRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppTicketsRoute: AppTicketsRoute,
   AppUsageRoute: AppUsageRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface KycRouteChildren {
+  KycCompleteRoute: typeof KycCompleteRoute
+}
+
+const KycRouteChildren: KycRouteChildren = {
+  KycCompleteRoute: KycCompleteRoute,
+}
+
+const KycRouteWithChildren = KycRoute._addFileChildren(KycRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AppRoute: AppRouteWithChildren,
+  KycRoute: KycRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  InviteAcceptRoute: InviteAcceptRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
