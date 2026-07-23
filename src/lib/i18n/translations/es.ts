@@ -179,9 +179,21 @@ export const es: TranslationDict = {
   "keys.usageSince": "Uso desde",
   "keys.cycleEnds": "Cierra ciclo",
   "keys.sdkTitle": "Uso con el SDK",
+  "keys.empty": "Todavía no tenés una API Key. Creá una para empezar.",
+  "keys.create": "Crear API Key",
+  "keys.created": "API Key creada",
+  "keys.createError": "No se pudo crear la API Key",
+  "keys.rotated": "API Key rotada",
+  "keys.rotateError": "No se pudo rotar la API Key",
+  "keys.revoke": "Revocar",
+  "keys.revoked": "API Key revocada",
+  "keys.revokeError": "No se pudo revocar la API Key",
+  "keys.confirmRotate": "¿Rotar esta key? La anterior dejará de funcionar.",
+  "keys.confirmRevoke": "¿Revocar esta key? No se puede deshacer.",
+  "keys.kycRequired": "Completá el KYC para emitir o rotar keys.",
 
   "usage.title": "Uso",
-  "usage.subtitle": "Metering del ciclo actual — cierra el {date}.",
+  "usage.subtitle": "Metering del ciclo actual — plan {date}.",
   "usage.total7d": "Total 7d",
   "usage.avgDay": "Promedio/día",
   "usage.peak": "Pico",
@@ -198,6 +210,8 @@ export const es: TranslationDict = {
   "invoices.statusPaid": "Pagada",
   "invoices.statusPending": "Pendiente",
   "invoices.statusOverdue": "Vencida",
+  "invoices.statusVoid": "Anulada",
+  "invoices.empty": "No hay facturas todavía.",
 
   "billing.overdueTitle": "Riesgo de suspensión del servicio",
   "billing.pendingTitle": "Factura pendiente de pago",
@@ -206,6 +220,7 @@ export const es: TranslationDict = {
   "billing.pendingDesc":
     "Factura {id} por {amount} vence el {due}. Tenés 15 días de gracia.",
   "billing.payMercadoPago": "Pagar con MercadoPago",
+  "billing.paySoon": "El cobro con MercadoPago se habilitará en el próximo deploy.",
 
   "appPlans.title": "Planes",
   "appPlans.subtitle": "Cambio inmediato para Free. Los pagos usan MercadoPago.",
@@ -216,8 +231,9 @@ export const es: TranslationDict = {
   "appPlans.changedFree": "Plan cambiado a Free",
   "appPlans.changed": "Plan cambiado a {name}",
 
-  "keyStatus.active": "Active",
-  "keyStatus.suspended": "Suspended",
+  "keyStatus.active": "Activa",
+  "keyStatus.suspended": "Suspendida",
+  "keyStatus.revoked": "Revocada",
 
   "days.mon": "Lun",
   "days.tue": "Mar",

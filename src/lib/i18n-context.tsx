@@ -7,7 +7,8 @@ import {
   type Locale,
   type TranslateParams,
 } from "@/lib/i18n";
-import type { Plan, PlanId } from "@/lib/mock-data";
+import type { Plan } from "@/lib/plans";
+import type { PlanId } from "@/lib/api-types";
 
 const STORAGE_KEY = "td_locale";
 
@@ -34,7 +35,6 @@ interface I18nContextValue {
   setLocale: (locale: Locale) => void;
   t: (key: string, params?: TranslateParams) => string;
   plans: Plan[];
-  usageDays: { key: string; label: string; count: number }[];
 }
 
 const I18nContext = createContext<I18nContextValue | null>(null);
@@ -64,9 +64,6 @@ function buildPlans(locale: Locale, t: (key: string) => string): Plan[] {
   }));
 }
 
-const USAGE_COUNTS = [42, 78, 65, 91, 120, 34, 12];
-const DAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
-
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
 
@@ -95,18 +92,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const plans = useMemo(() => buildPlans(locale, t), [locale, t]);
 
-  const usageDays = useMemo(
-    () =>
-      DAY_KEYS.map((key, i) => ({
-        key,
-        label: t(`days.${key}`),
-        count: USAGE_COUNTS[i],
-      })),
-    [t],
-  );
-
   return (
-    <I18nContext.Provider value={{ locale, setLocale, t, plans, usageDays }}>
+    <I18nContext.Provider value={{ locale, setLocale, t, plans }}>
       {children}
     </I18nContext.Provider>
   );
@@ -119,6 +106,6 @@ export function useI18n() {
 }
 
 export function useTranslation() {
-  const { t, locale, plans, usageDays } = useI18n();
-  return { t, locale, plans, usageDays };
+  const { t, locale, plans } = useI18n();
+  return { t, locale, plans };
 }

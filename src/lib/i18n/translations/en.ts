@@ -179,9 +179,21 @@ export const en: TranslationDict = {
   "keys.usageSince": "Usage since",
   "keys.cycleEnds": "Cycle ends",
   "keys.sdkTitle": "SDK usage",
+  "keys.empty": "You don't have an API Key yet. Create one to get started.",
+  "keys.create": "Create API Key",
+  "keys.created": "API Key created",
+  "keys.createError": "Could not create the API Key",
+  "keys.rotated": "API Key rotated",
+  "keys.rotateError": "Could not rotate the API Key",
+  "keys.revoke": "Revoke",
+  "keys.revoked": "API Key revoked",
+  "keys.revokeError": "Could not revoke the API Key",
+  "keys.confirmRotate": "Rotate this key? The previous one will stop working.",
+  "keys.confirmRevoke": "Revoke this key? This cannot be undone.",
+  "keys.kycRequired": "Complete KYC to issue or rotate keys.",
 
   "usage.title": "Usage",
-  "usage.subtitle": "Current cycle metering — closes on {date}.",
+  "usage.subtitle": "Current cycle metering — plan {date}.",
   "usage.total7d": "Total 7d",
   "usage.avgDay": "Avg/day",
   "usage.peak": "Peak",
@@ -198,6 +210,8 @@ export const en: TranslationDict = {
   "invoices.statusPaid": "Paid",
   "invoices.statusPending": "Pending",
   "invoices.statusOverdue": "Overdue",
+  "invoices.statusVoid": "Void",
+  "invoices.empty": "No invoices yet.",
 
   "billing.overdueTitle": "Service suspension risk",
   "billing.pendingTitle": "Invoice pending payment",
@@ -206,6 +220,7 @@ export const en: TranslationDict = {
   "billing.pendingDesc":
     "Invoice {id} for {amount} is due on {due}. You have a 15-day grace period.",
   "billing.payMercadoPago": "Pay with MercadoPago",
+  "billing.paySoon": "MercadoPago checkout will be enabled in the next deploy.",
 
   "appPlans.title": "Plans",
   "appPlans.subtitle": "Instant change for Free. Paid plans use MercadoPago.",
@@ -218,6 +233,7 @@ export const en: TranslationDict = {
 
   "keyStatus.active": "Active",
   "keyStatus.suspended": "Suspended",
+  "keyStatus.revoked": "Revoked",
 
   "days.mon": "Mon",
   "days.tue": "Tue",

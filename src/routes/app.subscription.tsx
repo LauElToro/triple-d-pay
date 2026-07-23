@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import type { PlanId } from "@/lib/api-types";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
@@ -10,17 +11,26 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
-import { ApiError } from "@/lib/api";
-import { MOCK_INVOICES } from "@/lib/mock-data";
+import { api, ApiError } from "@/lib/api";
+import type { InvoiceView } from "@/lib/api-types";
 
 export const Route = createFileRoute("/app/subscription")({
   component: SubscriptionPage,
 });
 
 function SubscriptionPage() {
-  const { activeOrg, selectPlan } = useAuth();
+  const { activeOrg, selectPlan, hasPermission } = useAuth();
   const { t, plans } = useTranslation();
-  const pending = MOCK_INVOICES.find((i) => i.status !== "paid");
+
+  const invoices = useQuery({
+    queryKey: ["invoices", activeOrg?.id],
+    queryFn: () => api.get<{ invoices: InvoiceView[] }>("/api/invoices"),
+    enabled: Boolean(activeOrg) && hasPermission("invoices:read"),
+  });
+
+  const pending = invoices.data?.invoices.find(
+    (i) => i.status === "pending" || i.status === "overdue",
+  );
 
   const change = async (id: PlanId) => {
     try {
@@ -83,7 +93,7 @@ function SubscriptionPage() {
                     <Button
                       className="w-full"
                       variant={current ? "outline" : "default"}
-                      disabled={current}
+                      disabled={current || !hasPermission("org:manage")}
                       onClick={() => change(p.id)}
                     >
                       {current ? t("appPlans.currentPlan") : t("appPlans.changeTo", { name: p.name })}
@@ -97,7 +107,7 @@ function SubscriptionPage() {
 
         <TabsContent value="invoices" className="mt-6 space-y-4">
           <p className="text-sm text-slate">{t("invoices.subtitle")}</p>
-          <InvoiceTable />
+          <InvoiceTable invoices={invoices.data?.invoices} />
         </TabsContent>
       </Tabs>
     </div>

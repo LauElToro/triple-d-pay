@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { StatChip } from "@/components/triple-d/stat-chip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/lib/api";
-import { formatARS } from "@/lib/mock-data";
+import { formatARS } from "@/lib/format";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminKpis,

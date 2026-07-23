@@ -67,9 +67,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }>("/api/me");
     setUser(data.user);
     setOrganizations(data.organizations);
-    const active = data.activeOrg ?? data.organizations[0] ?? null;
-    setActiveOrg(active);
-    setActiveOrgId(active?.id ?? null);
+    setActiveOrg((prev) => {
+      const preferred =
+        (prev ? data.organizations.find((o) => o.id === prev.id) : undefined) ??
+        data.activeOrg ??
+        data.organizations[0] ??
+        null;
+      setActiveOrgId(preferred?.id ?? null);
+      return preferred;
+    });
   };
 
   const applySession = async (auth: AuthResponse) => {

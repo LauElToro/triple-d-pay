@@ -83,3 +83,25 @@ export interface InvoiceView {
   issuedAt: string;
   paidAt: string | null;
 }
+
+export interface UsageView {
+  plan: {
+    id: PlanId;
+    name: string;
+    /** `null` when unlimited (JSON cannot encode Infinity). */
+    cap: number | null;
+    includedUnits: number;
+    unitCost: number;
+  };
+  cycle: {
+    units: number;
+    cost: number;
+    remaining: number | null;
+  };
+  daily: { day: string; count: number }[];
+}
+
+export interface CreateKeyResponse {
+  key: ApiKeyView;
+  plaintext: string;
+}

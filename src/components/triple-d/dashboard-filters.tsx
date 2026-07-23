@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { DASHBOARD_PERIOD } from "@/content/dashboard";
+import { defaultFilterPeriod } from "@/content/dashboard";
 import { useTranslation } from "@/lib/i18n-context";
 
 export function DashboardFilters({
@@ -19,6 +19,7 @@ export function DashboardFilters({
   total?: number;
 }) {
   const { t } = useTranslation();
+  const period = defaultFilterPeriod();
 
   return (
     <Card className="border-line">
@@ -53,11 +54,11 @@ export function DashboardFilters({
           </div>
           <div className="space-y-1.5">
             <Label className="text-xs font-mono uppercase text-slate">{t("filters.from")}</Label>
-            <Input type="date" defaultValue={DASHBOARD_PERIOD.start} className="h-9 w-[160px] border-line" />
+            <Input type="date" defaultValue={period.start} className="h-9 w-[160px] border-line" />
           </div>
           <div className="space-y-1.5">
             <Label className="text-xs font-mono uppercase text-slate">{t("filters.to")}</Label>
-            <Input type="date" defaultValue={DASHBOARD_PERIOD.end} className="h-9 w-[160px] border-line" />
+            <Input type="date" defaultValue={period.end} className="h-9 w-[160px] border-line" />
           </div>
           <div className="ml-auto text-xs font-mono text-slate border border-line rounded-full px-3 py-1.5 bg-mist/50">
             {t("filters.totalInRange")}{" "}

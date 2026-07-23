@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import type { Plan } from "@/lib/mock-data";
+import type { Plan } from "@/lib/plans";
 import { useTranslation } from "@/lib/i18n-context";
 
 export function PlanCard({ plan, featured = false }: { plan: Plan; featured?: boolean }) {

@@ -7,7 +7,11 @@ import { useTranslation } from "@/lib/i18n-context";
 
 export function UsageLimitCard({ item }: { item: UsageLimit }) {
   const { t } = useTranslation();
-  const pct = item.limit > 0 ? Math.min(100, (item.used / item.limit) * 100) : 0;
+  const pct = item.unlimited
+    ? 0
+    : item.limit > 0
+      ? Math.min(100, (item.used / item.limit) * 100)
+      : 0;
 
   return (
     <Card className="border-line">
@@ -24,9 +28,15 @@ export function UsageLimitCard({ item }: { item: UsageLimit }) {
       <CardContent className="space-y-3">
         <div className="text-sm font-mono">
           <span className="text-2xl font-display font-bold text-ink">{item.used}</span>
-          <span className="text-slate"> {t("dashboard.usage.of")} {item.limit.toLocaleString()}</span>
+          <span className="text-slate">
+            {" "}
+            {t("dashboard.usage.of")}{" "}
+            {item.unlimited ? "∞" : item.limit.toLocaleString()}
+          </span>
         </div>
-        <Progress value={pct} className="h-1.5 bg-mist [&>div]:bg-signal" />
+        {!item.unlimited && (
+          <Progress value={pct} className="h-1.5 bg-mist [&>div]:bg-signal" />
+        )}
         <Link to="/app/subscription" className="text-xs text-signal hover:underline font-mono">
           {t("dashboard.usageSummary.increaseLimit")}
         </Link>

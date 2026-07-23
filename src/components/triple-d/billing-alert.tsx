@@ -1,14 +1,14 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Clock } from "lucide-react";
-import type { MockInvoice } from "@/lib/mock-data";
-import { formatARS } from "@/lib/mock-data";
+import type { InvoiceView } from "@/lib/api-types";
+import { formatARS, formatDate } from "@/lib/format";
 import { useTranslation } from "@/lib/i18n-context";
 
-export function BillingAlert({ invoice }: { invoice: MockInvoice }) {
+export function BillingAlert({ invoice }: { invoice: InvoiceView }) {
   const { t } = useTranslation();
 
-  if (invoice.status === "paid") return null;
+  if (invoice.status === "paid" || invoice.status === "void") return null;
   const overdue = invoice.status === "overdue";
 
   return (
@@ -24,17 +24,14 @@ export function BillingAlert({ invoice }: { invoice: MockInvoice }) {
       <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <span>
           {overdue
-            ? t("billing.overdueDesc", { id: invoice.id })
+            ? t("billing.overdueDesc", { id: invoice.id.slice(0, 8) })
             : t("billing.pendingDesc", {
-                id: invoice.id,
+                id: invoice.id.slice(0, 8),
                 amount: formatARS(invoice.amount),
-                due: invoice.dueAt,
+                due: formatDate(invoice.dueAt),
               })}
         </span>
-        <Button
-          size="sm"
-          onClick={() => alert("Redirección a MercadoPago (placeholder)")}
-        >
+        <Button size="sm" onClick={() => alert(t("billing.paySoon"))}>
           {t("billing.payMercadoPago")}
         </Button>
       </AlertDescription>

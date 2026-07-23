@@ -30,6 +30,10 @@ export function setActiveOrgId(orgId: string | null) {
   activeOrgId = orgId;
 }
 
+export function getActiveOrgId(): string | null {
+  return activeOrgId;
+}
+
 export class ApiError extends Error {
   constructor(
     public status: number,
