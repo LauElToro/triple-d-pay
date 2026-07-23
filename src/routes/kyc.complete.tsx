@@ -39,7 +39,7 @@ function KycComplete() {
       } catch {
         // ignore transient errors
       }
-      if (attempts < 20) setTimeout(poll, 3000);
+      if (attempts < 60) setTimeout(poll, 3000);
       else setState("timeout");
     };
     poll();
@@ -47,6 +47,36 @@ function KycComplete() {
       cancelled = true;
     };
   }, [navigate, refreshMe]);
+
+  // Keep listening even after "timeout" UI — webhook may arrive later.
+  useEffect(() => {
+    if (state !== "timeout") return;
+    let cancelled = false;
+    const tick = async () => {
+      if (cancelled) return;
+      try {
+        const d = await api.get<{ kycStatus: string }>("/api/kyc/status");
+        if (d.kycStatus === "APPROVED") {
+          setState("approved");
+          await refreshMe();
+          setTimeout(() => navigate({ to: "/app" }), 1200);
+          return;
+        }
+        if (d.kycStatus === "DECLINED") {
+          setState("declined");
+          return;
+        }
+      } catch {
+        // ignore
+      }
+      if (!cancelled) setTimeout(tick, 5000);
+    };
+    const id = setTimeout(tick, 5000);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+  }, [state, navigate, refreshMe]);
 
   return (
     <div className="min-h-screen bg-paper flex flex-col items-center justify-center gap-4 px-4">
@@ -73,9 +103,12 @@ function KycComplete() {
       )}
       {state === "timeout" && (
         <div className="flex flex-col items-center gap-3 text-slate max-w-sm text-center">
+          <Loader2 className="h-8 w-8 text-slate" />
           <p className="font-display text-lg text-ink">{t("kyc.timeoutTitle")}</p>
           <p className="text-sm">{t("kyc.timeoutDesc")}</p>
-          <Button onClick={() => navigate({ to: "/kyc" })}>{t("kyc.back")}</Button>
+          <Button variant="outline" onClick={() => navigate({ to: "/app" })}>
+            {t("kyc.skipToApp")}
+          </Button>
         </div>
       )}
     </div>

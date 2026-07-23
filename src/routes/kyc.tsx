@@ -21,7 +21,6 @@ function KycPage() {
   const [status, setStatus] = useState<string>("NOT_STARTED");
   const [sessionUrl, setSessionUrl] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
-  const [checking, setChecking] = useState(false);
 
   useEffect(() => {
     if (hydrated && !user) navigate({ to: "/login" });
@@ -33,6 +32,7 @@ function KycPage() {
       navigate({ to: "/app" });
       return;
     }
+    setStatus(user.kycStatus);
     api
       .get<{ kycStatus: string; session: { url: string | null; status: string } | null }>(
         "/api/kyc/status",
@@ -43,6 +43,34 @@ function KycPage() {
       })
       .catch(() => undefined);
   }, [user, navigate]);
+
+  // When PENDING, poll status — Didit webhook updates the DB; we just reflect it.
+  useEffect(() => {
+    if (!user || status !== "PENDING") return;
+    let cancelled = false;
+    const tick = async () => {
+      if (cancelled) return;
+      try {
+        const d = await api.get<{ kycStatus: string }>("/api/kyc/status");
+        if (cancelled) return;
+        setStatus(d.kycStatus);
+        if (d.kycStatus === "APPROVED") {
+          await refreshMe();
+          navigate({ to: "/app" });
+          return;
+        }
+        if (d.kycStatus === "DECLINED") return;
+      } catch {
+        // ignore
+      }
+      if (!cancelled) setTimeout(tick, 4000);
+    };
+    const id = setTimeout(tick, 4000);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+  }, [user, status, refreshMe, navigate]);
 
   const start = async () => {
     setStarting(true);
@@ -56,24 +84,6 @@ function KycPage() {
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : t("kyc.startError"));
       setStarting(false);
-    }
-  };
-
-  const recheck = async () => {
-    setChecking(true);
-    try {
-      const d = await api.get<{ kycStatus: string }>("/api/kyc/status");
-      setStatus(d.kycStatus);
-      if (d.kycStatus === "APPROVED") {
-        await refreshMe();
-        navigate({ to: "/app" });
-      } else if (d.kycStatus === "DECLINED") {
-        toast.error(t("kyc.declinedToast"));
-      } else {
-        toast.info(t("kyc.pendingToast"));
-      }
-    } finally {
-      setChecking(false);
     }
   };
 
@@ -97,8 +107,13 @@ function KycPage() {
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-sm font-mono text-slate">
-              {t("kyc.status")}: <span className="text-ink">{status}</span>
+            <div className="text-sm font-mono text-slate flex items-center gap-2">
+              <span>
+                {t("kyc.status")}: <span className="text-ink">{status}</span>
+              </span>
+              {status === "PENDING" && (
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-signal" aria-hidden />
+              )}
             </div>
             {status === "DECLINED" && (
               <p className="text-sm text-seal">{t("kyc.declinedDesc")}</p>
@@ -111,10 +126,9 @@ function KycPage() {
                 ? t("kyc.redirecting")
                 : status === "PENDING"
                   ? t("kyc.continue")
-                  : t("kyc.start")}
-            </Button>
-            <Button variant="outline" className="w-full" onClick={recheck} disabled={checking}>
-              {checking ? <Loader2 className="h-4 w-4 animate-spin" /> : t("kyc.recheck")}
+                  : status === "DECLINED"
+                    ? t("kyc.retry")
+                    : t("kyc.start")}
             </Button>
           </CardContent>
         </Card>
