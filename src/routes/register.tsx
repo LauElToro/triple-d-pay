@@ -2,13 +2,15 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { LogoMark } from "@/components/triple-d/logo";
+import { NavbarControls } from "@/components/triple-d/navbar-controls";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useAuth } from "@/lib/auth-context";
-import { PLANS, type PlanId } from "@/lib/mock-data";
+import { useTranslation } from "@/lib/i18n-context";
+import type { PlanId } from "@/lib/mock-data";
 import { toast } from "sonner";
 
 const searchSchema = z.object({
@@ -31,6 +33,7 @@ export const Route = createFileRoute("/register")({
 function RegisterPage() {
   const { plan: initialPlan } = Route.useSearch();
   const { register, user, hydrated } = useAuth();
+  const { t, plans } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,14 +46,14 @@ function RegisterPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.includes("@")) return toast.error("Email inválido");
-    if (password.length < 8) return toast.error("Mínimo 8 caracteres");
+    if (!email.includes("@")) return toast.error(t("register.invalidEmail"));
+    if (password.length < 8) return toast.error(t("register.minPassword"));
     setLoading(true);
     try {
       await register(email, password, plan);
       navigate({ to: "/app/keys" });
     } catch {
-      toast.error("No se pudo crear la cuenta");
+      toast.error(t("register.error"));
     } finally {
       setLoading(false);
     }
@@ -58,27 +61,30 @@ function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-paper flex flex-col">
-      <header className="p-6"><Link to="/"><LogoMark /></Link></header>
+      <header className="p-6 flex items-center justify-between">
+        <Link to="/"><LogoMark /></Link>
+        <NavbarControls />
+      </header>
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         <Card className="w-full max-w-lg border-line">
           <CardHeader>
-            <CardTitle className="font-display text-2xl">Crear cuenta</CardTitle>
-            <p className="text-sm text-slate">Elegí tu plan. Podés cambiarlo después.</p>
+            <CardTitle className="font-display text-2xl">{t("register.title")}</CardTitle>
+            <p className="text-sm text-slate">{t("register.subtitle")}</p>
           </CardHeader>
           <CardContent>
             <form onSubmit={submit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("common.email")}</Label>
                 <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Contraseña</Label>
+                <Label htmlFor="password">{t("common.password")}</Label>
                 <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
               </div>
               <div className="space-y-2">
-                <Label>Plan</Label>
+                <Label>{t("common.plan")}</Label>
                 <RadioGroup value={plan} onValueChange={(v) => setPlan(v as PlanId)}>
-                  {PLANS.map((p) => (
+                  {plans.map((p) => (
                     <label
                       key={p.id}
                       htmlFor={`plan-${p.id}`}
@@ -99,10 +105,11 @@ function RegisterPage() {
                 </RadioGroup>
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Creando…" : "Crear cuenta"}
+                {loading ? t("register.submitting") : t("register.submit")}
               </Button>
               <p className="text-sm text-center text-slate">
-                ¿Ya tenés cuenta? <Link to="/login" className="text-signal underline">Entrar</Link>
+                {t("register.hasAccount")}{" "}
+                <Link to="/login" className="text-signal underline">{t("nav.login")}</Link>
               </p>
             </form>
           </CardContent>

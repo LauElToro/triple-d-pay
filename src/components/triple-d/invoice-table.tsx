@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MOCK_INVOICES, formatARS } from "@/lib/mock-data";
+import { useTranslation } from "@/lib/i18n-context";
 
 const statusStyle: Record<string, string> = {
   paid: "bg-signal/15 text-signal border-signal/30",
@@ -16,23 +17,25 @@ const statusStyle: Record<string, string> = {
   overdue: "bg-seal/15 text-seal border-seal/30",
 };
 
-const statusLabel: Record<string, string> = {
-  paid: "Pagada",
-  pending: "Pendiente",
-  overdue: "Vencida",
-};
-
 export function InvoiceTable() {
+  const { t } = useTranslation();
+
+  const statusLabel: Record<string, string> = {
+    paid: t("invoices.statusPaid"),
+    pending: t("invoices.statusPending"),
+    overdue: t("invoices.statusOverdue"),
+  };
+
   return (
     <div className="border border-line rounded-md bg-card overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-mono text-xs uppercase">Factura</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Período</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Monto</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Estado</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Vence</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colInvoice")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colPeriod")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colAmount")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colStatus")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colDue")}</TableHead>
             <TableHead />
           </TableRow>
         </TableHeader>
@@ -56,7 +59,7 @@ export function InvoiceTable() {
                     size="sm"
                     onClick={() => alert("Redirección a MercadoPago (placeholder)")}
                   >
-                    Pagar
+                    {t("common.pay")}
                   </Button>
                 )}
               </TableCell>
