@@ -10,18 +10,48 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as KycRouteImport } from './routes/kyc'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminClientsRouteImport } from './routes/admin.clients'
+import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAutomationsRouteImport } from './routes/app.automations'
+import { Route as AppCuitsRouteImport } from './routes/app.cuits'
 import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
 import { Route as AppKeysRouteImport } from './routes/app.keys'
 import { Route as AppPlansRouteImport } from './routes/app.plans'
+import { Route as AppRequestsRouteImport } from './routes/app.requests'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSubscriptionRouteImport } from './routes/app.subscription'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppTicketsRouteImport } from './routes/app.tickets'
 import { Route as AppUsageRouteImport } from './routes/app.usage'
+import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
+import { Route as InviteAcceptRouteImport } from './routes/invite.accept'
+import { Route as KycCompleteRouteImport } from './routes/kyc.complete'
+import { Route as ProductosFacturaRouteImport } from './routes/productos.factura'
+import { Route as ProductosPlatformRouteImport } from './routes/productos.platform'
+import { Route as ToolsIndexRouteImport } from './routes/tools.index'
+import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
+import { Route as DocsAutomationsSlugRouteImport } from './routes/docs.automations.$slug'
+import { Route as DocsWebServicesSlugRouteImport } from './routes/docs.web-services.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
@@ -29,9 +59,29 @@ const AppRoute = AppRouteImport.update({
   path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KycRoute = KycRouteImport.update({
+  id: '/kyc',
+  path: '/kyc',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -39,9 +89,34 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminClientsRoute = AdminClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTicketsRoute = AdminTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAutomationsRoute = AppAutomationsRouteImport.update({
+  id: '/automations',
+  path: '/automations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCuitsRoute = AppCuitsRouteImport.update({
+  id: '/cuits',
+  path: '/cuits',
   getParentRoute: () => AppRoute,
 } as any)
 const AppInvoicesRoute = AppInvoicesRouteImport.update({
@@ -59,85 +134,316 @@ const AppPlansRoute = AppPlansRouteImport.update({
   path: '/plans',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRequestsRoute = AppRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSubscriptionRoute = AppSubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTicketsRoute = AppTicketsRouteImport.update({
+  id: '/tickets',
+  path: '/tickets',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppUsageRoute = AppUsageRouteImport.update({
   id: '/usage',
   path: '/usage',
   getParentRoute: () => AppRoute,
 } as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsQuickstartRoute = DocsQuickstartRouteImport.update({
+  id: '/quickstart',
+  path: '/quickstart',
+  getParentRoute: () => DocsRoute,
+} as any)
+const InviteAcceptRoute = InviteAcceptRouteImport.update({
+  id: '/invite/accept',
+  path: '/invite/accept',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KycCompleteRoute = KycCompleteRouteImport.update({
+  id: '/complete',
+  path: '/complete',
+  getParentRoute: () => KycRoute,
+} as any)
+const ProductosFacturaRoute = ProductosFacturaRouteImport.update({
+  id: '/productos/factura',
+  path: '/productos/factura',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductosPlatformRoute = ProductosPlatformRouteImport.update({
+  id: '/productos/platform',
+  path: '/productos/platform',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSlugRoute = ToolsSlugRouteImport.update({
+  id: '/tools/$slug',
+  path: '/tools/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsAutomationsSlugRoute = DocsAutomationsSlugRouteImport.update({
+  id: '/automations/$slug',
+  path: '/automations/$slug',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsWebServicesSlugRoute = DocsWebServicesSlugRouteImport.update({
+  id: '/web-services/$slug',
+  path: '/web-services/$slug',
+  getParentRoute: () => DocsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/app/automations': typeof AppAutomationsRoute
+  '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/requests': typeof AppRequestsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/subscription': typeof AppSubscriptionRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/productos/factura': typeof ProductosFacturaRoute
+  '/productos/platform': typeof ProductosPlatformRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/docs/': typeof DocsIndexRoute
+  '/tools/': typeof ToolsIndexRoute
+  '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
+  '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/app/automations': typeof AppAutomationsRoute
+  '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/requests': typeof AppRequestsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/subscription': typeof AppSubscriptionRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/productos/factura': typeof ProductosFacturaRoute
+  '/productos/platform': typeof ProductosPlatformRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/app': typeof AppIndexRoute
+  '/docs': typeof DocsIndexRoute
+  '/tools': typeof ToolsIndexRoute
+  '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
+  '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/app': typeof AppRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/kyc': typeof KycRouteWithChildren
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
+  '/admin/clients': typeof AdminClientsRoute
+  '/admin/tickets': typeof AdminTicketsRoute
+  '/app/automations': typeof AppAutomationsRoute
+  '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/requests': typeof AppRequestsRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/subscription': typeof AppSubscriptionRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/quickstart': typeof DocsQuickstartRoute
+  '/invite/accept': typeof InviteAcceptRoute
+  '/kyc/complete': typeof KycCompleteRoute
+  '/productos/factura': typeof ProductosFacturaRoute
+  '/productos/platform': typeof ProductosPlatformRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/app/': typeof AppIndexRoute
+  '/docs/': typeof DocsIndexRoute
+  '/tools/': typeof ToolsIndexRoute
+  '/docs/automations/$slug': typeof DocsAutomationsSlugRoute
+  '/docs/web-services/$slug': typeof DocsWebServicesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/app'
+    | '/contact'
+    | '/docs'
+    | '/kyc'
     | '/login'
+    | '/pricing'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
+    | '/app/automations'
+    | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/requests'
+    | '/app/settings'
+    | '/app/subscription'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/docs/quickstart'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/productos/factura'
+    | '/productos/platform'
+    | '/tools/$slug'
+    | '/admin/'
     | '/app/'
+    | '/docs/'
+    | '/tools/'
+    | '/docs/automations/$slug'
+    | '/docs/web-services/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
+    | '/kyc'
     | '/login'
+    | '/pricing'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
+    | '/app/automations'
+    | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/requests'
+    | '/app/settings'
+    | '/app/subscription'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/docs/quickstart'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/productos/factura'
+    | '/productos/platform'
+    | '/tools/$slug'
+    | '/admin'
     | '/app'
+    | '/docs'
+    | '/tools'
+    | '/docs/automations/$slug'
+    | '/docs/web-services/$slug'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/app'
+    | '/contact'
+    | '/docs'
+    | '/kyc'
     | '/login'
+    | '/pricing'
     | '/register'
+    | '/admin/clients'
+    | '/admin/tickets'
+    | '/app/automations'
+    | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/requests'
+    | '/app/settings'
+    | '/app/subscription'
+    | '/app/team'
+    | '/app/tickets'
     | '/app/usage'
+    | '/docs/quickstart'
+    | '/invite/accept'
+    | '/kyc/complete'
+    | '/productos/factura'
+    | '/productos/platform'
+    | '/tools/$slug'
+    | '/admin/'
     | '/app/'
+    | '/docs/'
+    | '/tools/'
+    | '/docs/automations/$slug'
+    | '/docs/web-services/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  DocsRoute: typeof DocsRouteWithChildren
+  KycRoute: typeof KycRouteWithChildren
   LoginRoute: typeof LoginRoute
+  PricingRoute: typeof PricingRoute
   RegisterRoute: typeof RegisterRoute
+  InviteAcceptRoute: typeof InviteAcceptRoute
+  ProductosFacturaRoute: typeof ProductosFacturaRoute
+  ProductosPlatformRoute: typeof ProductosPlatformRoute
+  ToolsSlugRoute: typeof ToolsSlugRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -149,11 +455,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app': {
       id: '/app'
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kyc': {
+      id: '/kyc'
+      path: '/kyc'
+      fullPath: '/kyc'
+      preLoaderRoute: typeof KycRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -163,6 +497,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -170,11 +511,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/clients': {
+      id: '/admin/clients'
+      path: '/clients'
+      fullPath: '/admin/clients'
+      preLoaderRoute: typeof AdminClientsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/tickets': {
+      id: '/admin/tickets'
+      path: '/tickets'
+      fullPath: '/admin/tickets'
+      preLoaderRoute: typeof AdminTicketsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/app/': {
       id: '/app/'
       path: '/'
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/automations': {
+      id: '/app/automations'
+      path: '/automations'
+      fullPath: '/app/automations'
+      preLoaderRoute: typeof AppAutomationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cuits': {
+      id: '/app/cuits'
+      path: '/cuits'
+      fullPath: '/app/cuits'
+      preLoaderRoute: typeof AppCuitsRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/invoices': {
@@ -198,6 +574,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlansRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/requests': {
+      id: '/app/requests'
+      path: '/requests'
+      fullPath: '/app/requests'
+      preLoaderRoute: typeof AppRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/subscription': {
+      id: '/app/subscription'
+      path: '/subscription'
+      fullPath: '/app/subscription'
+      preLoaderRoute: typeof AppSubscriptionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tickets': {
+      id: '/app/tickets'
+      path: '/tickets'
+      fullPath: '/app/tickets'
+      preLoaderRoute: typeof AppTicketsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/usage': {
       id: '/app/usage'
       path: '/usage'
@@ -205,43 +616,167 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppUsageRouteImport
       parentRoute: typeof AppRoute
     }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/quickstart': {
+      id: '/docs/quickstart'
+      path: '/quickstart'
+      fullPath: '/docs/quickstart'
+      preLoaderRoute: typeof DocsQuickstartRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/invite/accept': {
+      id: '/invite/accept'
+      path: '/invite/accept'
+      fullPath: '/invite/accept'
+      preLoaderRoute: typeof InviteAcceptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kyc/complete': {
+      id: '/kyc/complete'
+      path: '/complete'
+      fullPath: '/kyc/complete'
+      preLoaderRoute: typeof KycCompleteRouteImport
+      parentRoute: typeof KycRoute
+    }
+    '/productos/factura': {
+      id: '/productos/factura'
+      path: '/productos/factura'
+      fullPath: '/productos/factura'
+      preLoaderRoute: typeof ProductosFacturaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/productos/platform': {
+      id: '/productos/platform'
+      path: '/productos/platform'
+      fullPath: '/productos/platform'
+      preLoaderRoute: typeof ProductosPlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/$slug': {
+      id: '/tools/$slug'
+      path: '/tools/$slug'
+      fullPath: '/tools/$slug'
+      preLoaderRoute: typeof ToolsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/automations/$slug': {
+      id: '/docs/automations/$slug'
+      path: '/automations/$slug'
+      fullPath: '/docs/automations/$slug'
+      preLoaderRoute: typeof DocsAutomationsSlugRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/web-services/$slug': {
+      id: '/docs/web-services/$slug'
+      path: '/web-services/$slug'
+      fullPath: '/docs/web-services/$slug'
+      preLoaderRoute: typeof DocsWebServicesSlugRouteImport
+      parentRoute: typeof DocsRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminClientsRoute: typeof AdminClientsRoute
+  AdminTicketsRoute: typeof AdminTicketsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminClientsRoute: AdminClientsRoute,
+  AdminTicketsRoute: AdminTicketsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface AppRouteChildren {
+  AppAutomationsRoute: typeof AppAutomationsRoute
+  AppCuitsRoute: typeof AppCuitsRoute
   AppInvoicesRoute: typeof AppInvoicesRoute
   AppKeysRoute: typeof AppKeysRoute
   AppPlansRoute: typeof AppPlansRoute
+  AppRequestsRoute: typeof AppRequestsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSubscriptionRoute: typeof AppSubscriptionRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppTicketsRoute: typeof AppTicketsRoute
   AppUsageRoute: typeof AppUsageRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAutomationsRoute: AppAutomationsRoute,
+  AppCuitsRoute: AppCuitsRoute,
   AppInvoicesRoute: AppInvoicesRoute,
   AppKeysRoute: AppKeysRoute,
   AppPlansRoute: AppPlansRoute,
+  AppRequestsRoute: AppRequestsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSubscriptionRoute: AppSubscriptionRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppTicketsRoute: AppTicketsRoute,
   AppUsageRoute: AppUsageRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface DocsRouteChildren {
+  DocsQuickstartRoute: typeof DocsQuickstartRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+  DocsAutomationsSlugRoute: typeof DocsAutomationsSlugRoute
+  DocsWebServicesSlugRoute: typeof DocsWebServicesSlugRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsQuickstartRoute: DocsQuickstartRoute,
+  DocsIndexRoute: DocsIndexRoute,
+  DocsAutomationsSlugRoute: DocsAutomationsSlugRoute,
+  DocsWebServicesSlugRoute: DocsWebServicesSlugRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
+interface KycRouteChildren {
+  KycCompleteRoute: typeof KycCompleteRoute
+}
+
+const KycRouteChildren: KycRouteChildren = {
+  KycCompleteRoute: KycCompleteRoute,
+}
+
+const KycRouteWithChildren = KycRoute._addFileChildren(KycRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AppRoute: AppRouteWithChildren,
+  ContactRoute: ContactRoute,
+  DocsRoute: DocsRouteWithChildren,
+  KycRoute: KycRouteWithChildren,
   LoginRoute: LoginRoute,
+  PricingRoute: PricingRoute,
   RegisterRoute: RegisterRoute,
+  InviteAcceptRoute: InviteAcceptRoute,
+  ProductosFacturaRoute: ProductosFacturaRoute,
+  ProductosPlatformRoute: ProductosPlatformRoute,
+  ToolsSlugRoute: ToolsSlugRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

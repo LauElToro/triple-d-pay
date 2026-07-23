@@ -12,23 +12,27 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth-context";
+import { I18nProvider } from "@/lib/i18n-context";
+import { ThemeProvider } from "@/lib/theme-context";
 import { Toaster } from "@/components/ui/sonner";
+import { useTranslation } from "@/lib/i18n-context";
+
+const initScript = `(function(){try{var t=localStorage.getItem("td_theme");if(t==="dark")document.documentElement.classList.add("dark");var l=localStorage.getItem("td_locale");if(l&&["es","en","pt"].indexOf(l)!==-1)document.documentElement.lang=l}catch(e){}})();`;
 
 function NotFoundComponent() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-display font-bold text-ink">404</h1>
-        <h2 className="mt-4 text-xl font-semibold">Página no encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          La ruta que buscás no existe o fue movida.
-        </p>
+        <h2 className="mt-4 text-xl font-semibold">{t("error.notFoundTitle")}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{t("error.notFoundDesc")}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Volver al inicio
+            {t("error.backHome")}
           </Link>
         </div>
       </div>
@@ -39,6 +43,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useTranslation();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -47,23 +52,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-ink">
-          Esta página no cargó
+          {t("error.pageTitle")}
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Algo falló de nuestro lado. Probá recargar o volver al inicio.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("error.pageDesc")}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => { router.invalidate(); reset(); }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Reintentar
+            {t("common.retry")}
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent"
           >
-            Inicio
+            {t("common.home")}
           </a>
         </div>
       </div>
@@ -102,9 +105,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body>
         {children}
@@ -118,10 +122,14 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Outlet />
-        <Toaster />
-      </AuthProvider>
+      <I18nProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Outlet />
+            <Toaster />
+          </AuthProvider>
+        </ThemeProvider>
+      </I18nProvider>
     </QueryClientProvider>
   );
 }
