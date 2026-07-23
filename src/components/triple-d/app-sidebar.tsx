@@ -10,61 +10,60 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "./logo";
-import {
-  LayoutDashboard,
-  KeyRound,
-  BarChart3,
-  Receipt,
-  Package,
-  Users,
-  LifeBuoy,
-  Settings,
-  ShieldCheck,
-  LogOut,
-} from "lucide-react";
+import { Home, Hash, Activity, Zap, CreditCard, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
-import type { Permission } from "@/lib/api-types";
+import { useTranslation } from "@/lib/i18n-context";
 
-interface NavItem {
-  title: string;
-  url: string;
-  icon: typeof LayoutDashboard;
-  perm?: Permission;
+function isNavActive(url: string, pathname: string) {
+  if (url === "/app") return pathname === "/app" || pathname === "/app/";
+  return pathname === url;
 }
-
-const items: NavItem[] = [
-  { title: "Resumen", url: "/app", icon: LayoutDashboard },
-  { title: "API Keys", url: "/app/keys", icon: KeyRound, perm: "keys:read" },
-  { title: "Uso", url: "/app/usage", icon: BarChart3, perm: "usage:read" },
-  { title: "Facturas", url: "/app/invoices", icon: Receipt, perm: "invoices:read" },
-  { title: "Equipo", url: "/app/team", icon: Users, perm: "team:read" },
-  { title: "Soporte", url: "/app/tickets", icon: LifeBuoy, perm: "tickets:read" },
-  { title: "Planes", url: "/app/plans", icon: Package },
-  { title: "Ajustes", url: "/app/settings", icon: Settings },
-];
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { user, activeOrg, logout, hasPermission } = useAuth();
+  const { user, logout } = useAuth();
+  const { state } = useSidebar();
+  const { t, plans } = useTranslation();
+  const collapsed = state === "collapsed";
+  const planName = plans.find((p) => p.id === user?.planId)?.name ?? "Free";
 
-  const visible = items.filter((i) => !i.perm || hasPermission(i.perm));
+  const items = [
+    { title: t("sidebar.home"), url: "/app", icon: Home },
+    { title: t("sidebar.cuits"), url: "/app/cuits", icon: Hash },
+    { title: t("sidebar.requests"), url: "/app/requests", icon: Activity },
+    { title: t("sidebar.automations"), url: "/app/automations", icon: Zap },
+    { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard },
+  ];
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-line px-4 py-4">
-        <LogoMark />
+      <SidebarHeader className="overflow-hidden border-b border-line px-4 py-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-3">
+        <div className="flex flex-col gap-0.5 group-data-[collapsible=icon]:items-center">
+          <LogoMark compact={collapsed} />
+          {!collapsed && (
+            <span className="text-[10px] font-mono uppercase text-slate pl-0.5">{planName}</span>
+          )}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="font-mono text-[10px] uppercase">Panel</SidebarGroupLabel>
+          <SidebarGroupLabel className="font-mono text-[10px] uppercase">
+            {t("sidebar.panel")}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {visible.map((item) => (
+              {items.map((item) => (
                 <SidebarMenuItem key={item.url}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isNavActive(item.url, pathname)}
+                    tooltip={item.title}
+                  >
                     <Link to={item.url}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
@@ -75,38 +74,28 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {user?.systemRole === "SUPERADMIN" && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="font-mono text-[10px] uppercase">Admin</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={pathname.startsWith("/admin")}>
-                    <Link to="/admin">
-                      <ShieldCheck className="h-4 w-4" />
-                      <span>Consola global</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
       </SidebarContent>
-      <SidebarFooter className="border-t border-line p-3 space-y-2">
+      <SidebarFooter className="border-t border-line p-3 space-y-2 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:p-2">
         {user && (
-          <div className="text-xs font-mono text-slate truncate" title={user.id}>
+          <div
+            className="truncate text-xs font-mono text-slate group-data-[collapsible=icon]:hidden"
+            title={user.id}
+          >
             {user.email}
-            <div className="opacity-60">
-              {activeOrg?.subRole ?? activeOrg?.orgRole ?? user.systemRole}
-            </div>
           </div>
         )}
-        <Button variant="outline" size="sm" onClick={() => logout()} className="w-full">
-          <LogOut className="h-4 w-4 mr-2" /> Salir
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={logout}
+          className="w-full group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:p-0"
+          title={t("nav.logout")}
+        >
+          <LogOut className="h-4 w-4 shrink-0" />
+          <span className="ml-2 group-data-[collapsible=icon]:hidden">{t("nav.logout")}</span>
         </Button>
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

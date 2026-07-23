@@ -1,189 +1,84 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-import {
-  api,
-  refreshSession,
-  setAccessToken,
-  setActiveOrgId,
-} from "./api";
-import type {
-  AuthResponse,
-  OrgSummary,
-  SessionUser,
-  TwoFactorChallenge,
-  VerifyEmailChallenge,
-  PlanId,
-  Permission,
-} from "./api-types";
-
-type LoginOutcome = { status: "ok" } | TwoFactorChallenge;
-type RegisterOutcome = VerifyEmailChallenge;
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { generateKeyPlaintext, type MockUser, type PlanId } from "./mock-data";
 
 interface AuthState {
-  user: SessionUser | null;
-  organizations: OrgSummary[];
-  activeOrg: OrgSummary | null;
-  hydrated: boolean;
+  user: MockUser | null;
   issuedKey: string | null;
-
-  register: (input: {
-    email: string;
-    password: string;
-    name?: string;
-    plan?: PlanId;
-  }) => Promise<RegisterOutcome>;
-  verifyEmail: (email: string, code: string) => Promise<void>;
-  login: (email: string, password: string) => Promise<LoginOutcome>;
-  loginWithGoogle: (credential: string) => Promise<LoginOutcome>;
-  verifyTwoFactor: (pendingToken: string, code: string) => Promise<void>;
-  logout: () => Promise<void>;
-  refreshMe: () => Promise<void>;
-  selectOrg: (orgId: string) => void;
-  setIssuedKey: (key: string | null) => void;
-  hasPermission: (p: Permission) => boolean;
+  hydrated: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, plan: PlanId) => Promise<void>;
+  logout: () => void;
+  selectPlan: (plan: PlanId) => void;
+  clearIssuedKey: () => void;
 }
 
 const AuthContext = createContext<AuthState | null>(null);
+const SESSION_KEY = "td_session";
 
-// Refresh a bit before the 2h access token expires.
-const REFRESH_INTERVAL_MS = 110 * 60 * 1000;
+function uuid(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return "u_" + Math.random().toString(36).slice(2, 12);
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [organizations, setOrganizations] = useState<OrgSummary[]>([]);
-  const [activeOrg, setActiveOrg] = useState<OrgSummary | null>(null);
-  const [hydrated, setHydrated] = useState(false);
+  const [user, setUser] = useState<MockUser | null>(null);
   const [issuedKey, setIssuedKey] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
-  const loadMe = async () => {
-    const data = await api.get<{
-      user: SessionUser;
-      organizations: OrgSummary[];
-      activeOrg: OrgSummary | null;
-    }>("/api/me");
-    setUser(data.user);
-    setOrganizations(data.organizations);
-    const active = data.activeOrg ?? data.organizations[0] ?? null;
-    setActiveOrg(active);
-    setActiveOrgId(active?.id ?? null);
-  };
-
-  const applySession = async (auth: AuthResponse) => {
-    setAccessToken(auth.accessToken);
-    setUser(auth.user);
-    await loadMe();
-  };
-
-  // Bootstrap: try to silently restore a session via the refresh cookie.
   useEffect(() => {
-    (async () => {
-      const ok = await refreshSession();
-      if (ok) {
-        try {
-          await loadMe();
-        } catch {
-          setUser(null);
-        }
-      }
-      setHydrated(true);
-    })();
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
-  }, []);
-
-  // Auto-refresh loop while authenticated.
-  useEffect(() => {
-    if (timer.current) clearInterval(timer.current);
-    if (user) {
-      timer.current = setInterval(() => {
-        refreshSession();
-      }, REFRESH_INTERVAL_MS);
-    }
-    return () => {
-      if (timer.current) clearInterval(timer.current);
-    };
-  }, [user]);
-
-  const register: AuthState["register"] = async (input) => {
-    return api.post<VerifyEmailChallenge>("/api/auth/register", input);
-  };
-
-  const verifyEmail: AuthState["verifyEmail"] = async (email, code) => {
-    const auth = await api.post<AuthResponse>("/api/auth/verify-email", { email, code });
-    await applySession(auth);
-  };
-
-  const login: AuthState["login"] = async (email, password) => {
-    const res = await api.post<AuthResponse | TwoFactorChallenge>("/api/auth/login", {
-      email,
-      password,
-    });
-    if ("status" in res && res.status === "twofa_required") return res;
-    await applySession(res as AuthResponse);
-    return { status: "ok" };
-  };
-
-  const loginWithGoogle: AuthState["loginWithGoogle"] = async (credential) => {
-    const res = await api.post<AuthResponse | TwoFactorChallenge>("/api/auth/google", { credential });
-    if ("status" in res && res.status === "twofa_required") return res;
-    await applySession(res as AuthResponse);
-    return { status: "ok" };
-  };
-
-  const verifyTwoFactor: AuthState["verifyTwoFactor"] = async (pendingToken, code) => {
-    // Use the pending token directly for this single call.
-    setAccessToken(pendingToken);
-    const auth = await api.post<AuthResponse>("/api/auth/2fa/verify", { code });
-    await applySession(auth);
-  };
-
-  const logout: AuthState["logout"] = async () => {
     try {
-      await api.post("/api/auth/logout");
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if (raw) setUser(JSON.parse(raw));
     } catch {
       // ignore
     }
-    setAccessToken(null);
-    setActiveOrgId(null);
-    setUser(null);
-    setOrganizations([]);
-    setActiveOrg(null);
+    setHydrated(true);
+  }, []);
+
+  const persist = (u: MockUser | null) => {
+    setUser(u);
+    try {
+      if (u) sessionStorage.setItem(SESSION_KEY, JSON.stringify(u));
+      else sessionStorage.removeItem(SESSION_KEY);
+    } catch {
+      // ignore
+    }
+  };
+
+  const login = async (email: string, _password: string) => {
+    persist({
+      id: uuid(),
+      email,
+      planId: "free",
+      createdAt: new Date().toISOString(),
+    });
+  };
+
+  const register = async (email: string, _password: string, plan: PlanId) => {
+    persist({
+      id: uuid(),
+      email,
+      planId: plan,
+      createdAt: new Date().toISOString(),
+    });
+    setIssuedKey(generateKeyPlaintext());
+  };
+
+  const logout = () => {
+    persist(null);
     setIssuedKey(null);
   };
 
-  const refreshMe: AuthState["refreshMe"] = async () => {
-    await loadMe();
+  const selectPlan = (plan: PlanId) => {
+    if (!user) return;
+    persist({ ...user, planId: plan });
   };
 
-  const selectOrg: AuthState["selectOrg"] = (orgId) => {
-    const org = organizations.find((o) => o.id === orgId) ?? null;
-    setActiveOrg(org);
-    setActiveOrgId(org?.id ?? null);
-  };
-
-  const hasPermission: AuthState["hasPermission"] = (p) =>
-    Boolean(activeOrg?.permissions?.includes(p)) || user?.systemRole === "SUPERADMIN";
+  const clearIssuedKey = () => setIssuedKey(null);
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        organizations,
-        activeOrg,
-        hydrated,
-        issuedKey,
-        register,
-        verifyEmail,
-        login,
-        loginWithGoogle,
-        verifyTwoFactor,
-        logout,
-        refreshMe,
-        selectOrg,
-        setIssuedKey,
-        hasPermission,
-      }}
+      value={{ user, issuedKey, hydrated, login, register, logout, selectPlan, clearIssuedKey }}
     >
       {children}
     </AuthContext.Provider>

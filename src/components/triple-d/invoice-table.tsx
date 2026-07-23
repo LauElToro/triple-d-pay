@@ -8,54 +8,43 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatARS } from "@/lib/mock-data";
-import type { InvoiceView } from "@/lib/api-types";
+import { MOCK_INVOICES, formatARS } from "@/lib/mock-data";
+import { useTranslation } from "@/lib/i18n-context";
 
 const statusStyle: Record<string, string> = {
   paid: "bg-signal/15 text-signal border-signal/30",
   pending: "bg-mist text-ink border-line",
   overdue: "bg-seal/15 text-seal border-seal/30",
-  void: "bg-mist text-slate border-line",
 };
 
-const statusLabel: Record<string, string> = {
-  paid: "Pagada",
-  pending: "Pendiente",
-  overdue: "Vencida",
-  void: "Anulada",
-};
+export function InvoiceTable() {
+  const { t } = useTranslation();
 
-function fmt(d: string) {
-  return new Date(d).toLocaleDateString("es-AR");
-}
+  const statusLabel: Record<string, string> = {
+    paid: t("invoices.statusPaid"),
+    pending: t("invoices.statusPending"),
+    overdue: t("invoices.statusOverdue"),
+  };
 
-export function InvoiceTable({ invoices }: { invoices: InvoiceView[] }) {
-  if (invoices.length === 0) {
-    return (
-      <div className="border border-line border-dashed rounded-md bg-card p-10 text-center text-slate text-sm">
-        Todavía no hay facturas emitidas.
-      </div>
-    );
-  }
   return (
     <div className="border border-line rounded-md bg-card overflow-hidden">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-mono text-xs uppercase">Factura</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Período</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Monto</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Estado</TableHead>
-            <TableHead className="font-mono text-xs uppercase">Vence</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colInvoice")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colPeriod")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colAmount")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colStatus")}</TableHead>
+            <TableHead className="font-mono text-xs uppercase">{t("invoices.colDue")}</TableHead>
             <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((inv) => (
+          {MOCK_INVOICES.map((inv) => (
             <TableRow key={inv.id}>
-              <TableCell className="font-mono">{inv.id.slice(0, 8)}</TableCell>
+              <TableCell className="font-mono">{inv.id}</TableCell>
               <TableCell className="text-sm text-slate">
-                {fmt(inv.periodStart)} → {fmt(inv.periodEnd)}
+                {inv.periodStart} → {inv.periodEnd}
               </TableCell>
               <TableCell className="font-mono">{formatARS(inv.amount)}</TableCell>
               <TableCell>
@@ -63,11 +52,14 @@ export function InvoiceTable({ invoices }: { invoices: InvoiceView[] }) {
                   {statusLabel[inv.status]}
                 </Badge>
               </TableCell>
-              <TableCell className="font-mono text-sm">{fmt(inv.dueAt)}</TableCell>
+              <TableCell className="font-mono text-sm">{inv.dueAt}</TableCell>
               <TableCell>
-                {inv.status !== "paid" && inv.status !== "void" && (
-                  <Button size="sm" onClick={() => alert("Redirección a MercadoPago (placeholder)")}>
-                    Pagar
+                {inv.status !== "paid" && (
+                  <Button
+                    size="sm"
+                    onClick={() => alert("Redirección a MercadoPago (placeholder)")}
+                  >
+                    {t("common.pay")}
                   </Button>
                 )}
               </TableCell>

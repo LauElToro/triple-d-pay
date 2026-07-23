@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BKllkxft.js";import{t}from"./badge-BSMi-Fht.js";var n=e();function r({status:e}){return e===`active`?(0,n.jsx)(t,{className:`bg-signal text-primary-foreground font-mono uppercase text-xs`,children:`Active`}):(0,n.jsx)(t,{className:`bg-seal text-destructive-foreground font-mono uppercase text-xs`,children:`Suspended`})}export{r as t};
