@@ -7,17 +7,16 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider } from "@/lib/auth-context";
 import { I18nProvider } from "@/lib/i18n-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import { Toaster } from "@/components/ui/sonner";
 import { useTranslation } from "@/lib/i18n-context";
 
-const initScript = `(function(){try{var t=localStorage.getItem("td_theme");if(t==="dark")document.documentElement.classList.add("dark");var l=localStorage.getItem("td_locale");if(l&&["es","en","pt"].indexOf(l)!==-1)document.documentElement.lang=l}catch(e){}})();`;
+const initScript = `(function(){try{var t=localStorage.getItem("sa_theme");if(t==="dark")document.documentElement.classList.add("dark");var l=localStorage.getItem("sa_locale");if(l&&["es","en","pt"].indexOf(l)!==-1)document.documentElement.lang=l}catch(e){}})();`;
 
 function NotFoundComponent() {
   const { t } = useTranslation();
@@ -44,9 +43,6 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   const { t } = useTranslation();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -79,9 +75,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Triple D — Facturación electrónica ARCA para desarrolladores" },
+      { title: "Set-Api — Facturación electrónica ARCA para desarrolladores" },
       { name: "description", content: "SDK + API Key para facturar electrónicamente en Argentina. Planes free, fijo o por uso. Ciclo mensual, cobro con MercadoPago." },
-      { property: "og:title", content: "Triple D — Facturación electrónica ARCA" },
+      { property: "og:title", content: "Set-Api — Facturación electrónica ARCA" },
       { property: "og:description", content: "SDK + API para facturar en ARCA. Integrá en minutos." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

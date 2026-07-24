@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PublicShell } from "@/components/triple-d/public-shell";
+import { PublicShell } from "@/components/set-api/public-shell";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/lib/i18n-context";
 import { Check } from "lucide-react";

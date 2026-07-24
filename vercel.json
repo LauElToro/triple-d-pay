@@ -5,7 +5,7 @@
   "buildCommand": "npm run build",
   "build": {
     "env": {
-      "VITE_API_URL": "https://triple-d-backend.vercel.app"
+      "VITE_API_URL": "https://set-api-backend.vercel.app"
     }
   }
 }

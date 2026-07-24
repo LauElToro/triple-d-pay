@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { LogoMark } from "@/components/triple-d/logo";
-import { NavbarControls } from "@/components/triple-d/navbar-controls";
-import { GoogleButton } from "@/components/triple-d/google-button";
+import { LogoMark } from "@/components/set-api/logo";
+import { NavbarControls } from "@/components/set-api/navbar-controls";
+import { GoogleButton } from "@/components/set-api/google-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,12 +23,12 @@ export const Route = createFileRoute("/register")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "Crear cuenta · Triple D" },
+      { title: "Crear cuenta · Set-Api" },
       {
         name: "description",
-        content: "Creá tu cuenta Triple D y obtené tu API Key para facturar electrónicamente.",
+        content: "Creá tu cuenta Set-Api y obtené tu API Key para facturar electrónicamente.",
       },
-      { property: "og:title", content: "Crear cuenta · Triple D" },
+      { property: "og:title", content: "Crear cuenta · Set-Api" },
       { property: "og:description", content: "Obtené tu API Key en un minuto." },
     ],
   }),

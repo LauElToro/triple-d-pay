@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { DocsLayout } from "@/components/triple-d/docs-layout";
-import { DocsSidebarExtra } from "@/components/triple-d/docs-sidebar";
+import { DocsLayout } from "@/components/set-api/docs-layout";
+import { DocsSidebarExtra } from "@/components/set-api/docs-sidebar";
 
 export const Route = createFileRoute("/docs")({
   component: DocsRouteLayout,

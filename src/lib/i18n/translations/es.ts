@@ -32,7 +32,7 @@ export const es: TranslationDict = {
   "landing.heroTitle1": "Facturación electrónica",
   "landing.heroTitle2": "en 3 líneas de código.",
   "landing.heroDesc":
-    "Triple D es el SDK + API para emitir comprobantes ARCA sin pelearte con SOAP, certificados ni pantallas del AFIP. Integrás con tu API Key y listo.",
+    "Set-Api es el SDK + API para emitir comprobantes ARCA sin pelearte con SOAP, certificados ni pantallas del AFIP. Integrás con tu API Key y listo.",
   "landing.startFree": "Empezar gratis",
   "landing.viewPlans": "Ver planes",
   "landing.trial": "30 días sin costo",
@@ -73,7 +73,7 @@ export const es: TranslationDict = {
   "plans.usage.cta": "Contratar Por uso",
 
   "login.title": "Entrar",
-  "login.subtitle": "Con tu cuenta Triple D.",
+  "login.subtitle": "Con tu cuenta Set-Api.",
   "login.submit": "Entrar",
   "login.submitting": "Entrando…",
   "login.noAccount": "¿No tenés cuenta?",
@@ -107,7 +107,7 @@ export const es: TranslationDict = {
   "breadcrumb.dashboard": "Dashboard",
 
   "dashboard.accessToken.title": "Tu access token",
-  "dashboard.accessToken.desc": "Usalo para autenticar el SDK de Triple D. Es único para tu proyecto activo.",
+  "dashboard.accessToken.desc": "Usalo para autenticar el SDK de Set-Api. Es único para tu proyecto activo.",
   "dashboard.accessToken.renew": "Renovar access token",
   "dashboard.accessToken.renewSoon": "La renovación estará disponible pronto.",
   "dashboard.accessToken.manage": "Gestionar API Key",
@@ -249,7 +249,7 @@ export const es: TranslationDict = {
   "days.sat": "Sáb",
   "days.sun": "Dom",
 
-  "hero.line0": "TRIPLE D · COMPROBANTE ELECTRÓNICO",
+  "hero.line0": "Set-Api · COMPROBANTE ELECTRÓNICO",
   "hero.line1": "CUIT EMISOR   30-71234567-8",
   "hero.line2": "PTO. VTA      00005    TIPO  FC A",
   "hero.line3": "Nº            0000-00012845",
@@ -287,7 +287,7 @@ export const es: TranslationDict = {
   "notices.keySuspendedCta": "Ver suscripción",
 
   "kyc.title": "Verificación de identidad",
-  "kyc.subtitle": "Proceso seguro con Didit. Es un paso único para operar en Triple D.",
+  "kyc.subtitle": "Proceso seguro con Didit. Es un paso único para operar en Set-Api.",
   "kyc.poweredBy": "Powered by Didit",
   "kyc.status": "Estado",
   "kyc.start": "Iniciar verificación",
@@ -306,7 +306,7 @@ export const es: TranslationDict = {
   "kyc.back": "Volver a KYC",
 
   "onboarding.title": "Contanos un poco sobre vos",
-  "onboarding.subtitle": "Nos ayuda a mejorar Triple D. Podés omitirlo.",
+  "onboarding.subtitle": "Nos ayuda a mejorar Set-Api. Podés omitirlo.",
   "onboarding.source": "¿De dónde venís?",
   "onboarding.sourceDirect": "Directo",
   "onboarding.sourceReferral": "Referido",

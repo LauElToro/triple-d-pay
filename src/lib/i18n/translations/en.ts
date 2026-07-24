@@ -32,7 +32,7 @@ export const en: TranslationDict = {
   "landing.heroTitle1": "Electronic invoicing",
   "landing.heroTitle2": "in 3 lines of code.",
   "landing.heroDesc":
-    "Triple D is the SDK + API to issue ARCA vouchers without wrestling with SOAP, certificates, or AFIP screens. Connect with your API Key and you're done.",
+    "Set-Api is the SDK + API to issue ARCA vouchers without wrestling with SOAP, certificates, or AFIP screens. Connect with your API Key and you're done.",
   "landing.startFree": "Start for free",
   "landing.viewPlans": "View plans",
   "landing.trial": "30 days free",
@@ -73,7 +73,7 @@ export const en: TranslationDict = {
   "plans.usage.cta": "Get Usage plan",
 
   "login.title": "Sign in",
-  "login.subtitle": "With your Triple D account.",
+  "login.subtitle": "With your Set-Api account.",
   "login.submit": "Sign in",
   "login.submitting": "Signing in…",
   "login.noAccount": "Don't have an account?",
@@ -107,7 +107,7 @@ export const en: TranslationDict = {
   "breadcrumb.dashboard": "Dashboard",
 
   "dashboard.accessToken.title": "Your access token",
-  "dashboard.accessToken.desc": "Use it to authenticate the Triple D SDK. Unique to your active project.",
+  "dashboard.accessToken.desc": "Use it to authenticate the Set-Api SDK. Unique to your active project.",
   "dashboard.accessToken.renew": "Renew access token",
   "dashboard.accessToken.renewSoon": "Renewal will be available soon.",
   "dashboard.accessToken.manage": "Manage API Key",
@@ -249,7 +249,7 @@ export const en: TranslationDict = {
   "days.sat": "Sat",
   "days.sun": "Sun",
 
-  "hero.line0": "TRIPLE D · ELECTRONIC VOUCHER",
+  "hero.line0": "Set-Api · ELECTRONIC VOUCHER",
   "hero.line1": "ISSUER CUIT  30-71234567-8",
   "hero.line2": "POS          00005    TYPE  FC A",
   "hero.line3": "NO.          0000-00012845",

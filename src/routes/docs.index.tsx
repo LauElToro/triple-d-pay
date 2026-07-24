@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CatalogCard } from "@/components/triple-d/catalog-card";
+import { CatalogCard } from "@/components/set-api/catalog-card";
 import {
   AUTOMATION_SLUGS,
   WEB_SERVICE_SLUGS,

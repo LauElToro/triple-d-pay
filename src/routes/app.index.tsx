@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { AccessTokenCard } from "@/components/triple-d/access-token-card";
-import { AppPageHeader } from "@/components/triple-d/app-page-header";
-import { BillingAlert } from "@/components/triple-d/billing-alert";
-import { UsageLimitCard } from "@/components/triple-d/usage-limit-card";
+import { AccessTokenCard } from "@/components/set-api/access-token-card";
+import { AppPageHeader } from "@/components/set-api/app-page-header";
+import { BillingAlert } from "@/components/set-api/billing-alert";
+import { UsageLimitCard } from "@/components/set-api/usage-limit-card";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import type { ApiKeyView, InvoiceView, UsageView } from "@/lib/api-types";

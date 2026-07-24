@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppEmptyTable } from "@/components/triple-d/app-empty-table";
-import { AppPageHeader } from "@/components/triple-d/app-page-header";
-import { DashboardFilters } from "@/components/triple-d/dashboard-filters";
+import { AppEmptyTable } from "@/components/set-api/app-empty-table";
+import { AppPageHeader } from "@/components/set-api/app-page-header";
+import { DashboardFilters } from "@/components/set-api/dashboard-filters";
 import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/app/automations")({

@@ -10,7 +10,7 @@ export const catalogEn: TranslationDict = {
   "nav.webServices": "Web services",
 
   "footer.disclaimer":
-    "Triple D is a commercial site with no official relationship to government agencies.",
+    "Set-Api is a commercial site with no official relationship to government agencies.",
   "footer.products": "Products",
   "footer.resources": "Resources",
   "footer.tools": "Tools",
@@ -18,7 +18,7 @@ export const catalogEn: TranslationDict = {
 
   "landing.connectTitle": "Connect to ARCA today",
   "landing.connectDesc":
-    "Skip ARCA complexity. With Triple D you integrate in minutes and focus on growing your business.",
+    "Skip ARCA complexity. With Set-Api you integrate in minutes and focus on growing your business.",
   "landing.ctaAutomations": "Use automations",
   "landing.ctaWebServices": "Use web services",
   "landing.statsTitle": "Platform volume",
@@ -26,11 +26,11 @@ export const catalogEn: TranslationDict = {
   "landing.statsRequests": "requests processed",
   "landing.statsRequestsPeriod": "in the last 30 days",
   "landing.statsCuits": "active CUITs",
-  "landing.statsCuitsPeriod": "operating with Triple D in the last 30 days",
+  "landing.statsCuitsPeriod": "operating with Set-Api in the last 30 days",
   "landing.facturaTitle": "Need end-to-end invoicing?",
   "landing.facturaDesc":
-    "Triple D Factura handles emission, states, PDFs, QR and webhooks for SaaS, ERPs and platforms.",
-  "landing.facturaCta": "Discover Triple D Factura",
+    "Set-Api Factura handles emission, states, PDFs, QR and webhooks for SaaS, ERPs and platforms.",
+  "landing.facturaCta": "Discover Set-Api Factura",
   "landing.facturaFeature0": "Tax emission",
   "landing.facturaFeature1": "States & retries",
   "landing.facturaFeature2": "PDF + QR",
@@ -42,7 +42,7 @@ export const catalogEn: TranslationDict = {
   "landing.integrationsTitle": "Integrations",
   "landing.integrationsSubtitle": "SDKs and REST APIs for your favorite languages and platforms.",
   "landing.viewAllDocs": "View documentation",
-  "landing.whyTitle": "Why Triple D?",
+  "landing.whyTitle": "Why Set-Api?",
   "landing.whyDocs": "Documentation",
   "landing.whyDocsDesc": "Complete docs to integrate fast and easily.",
   "landing.whyAuth": "Authentication",
@@ -76,12 +76,12 @@ export const catalogEn: TranslationDict = {
   "tools.title": "Tools",
   "tools.subtitle": "Public utilities for ARCA queries and validations.",
   "tools.comingSoon": "This tool will be available soon.",
-  "tools.requiresApi": "Requires a Triple D API Key for live queries.",
+  "tools.requiresApi": "Requires a Set-Api API Key for live queries.",
 
-  "product.platform.title": "Triple D Platform",
+  "product.platform.title": "Set-Api Platform",
   "product.platform.desc":
     "REST API + API Key to access ARCA web services and automations from your stack.",
-  "product.factura.title": "Triple D Factura",
+  "product.factura.title": "Set-Api Factura",
   "product.factura.desc":
     "End-to-end invoicing: emission, states, PDF, QR and webhooks for your product.",
 
@@ -179,7 +179,7 @@ export const catalogEn: TranslationDict = {
 
   "catalog.integration.javascript.title": "JavaScript / TypeScript",
   "catalog.integration.javascript.desc": "Official SDK for Node.js and browsers.",
-  "catalog.integration.javascript.body": "npm i @triple-d/sdk",
+  "catalog.integration.javascript.body": "npm i @set-api/sdk",
   "catalog.integration.api-rest.title": "REST API",
   "catalog.integration.api-rest.desc": "Direct HTTP integration without SDK.",
   "catalog.integration.api-rest.body": "OpenAPI docs and curl examples.",

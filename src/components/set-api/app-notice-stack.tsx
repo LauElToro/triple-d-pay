@@ -7,10 +7,10 @@ import { ShieldAlert, KeyRound, X } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import type { ApiKeyView, InvoiceView } from "@/lib/api-types";
-import { BillingAlert } from "@/components/triple-d/billing-alert";
+import { BillingAlert } from "@/components/set-api/billing-alert";
 import { useTranslation } from "@/lib/i18n-context";
 
-const DISMISS_KEY = "td_notices_dismissed";
+const DISMISS_KEY = "sa_notices_dismissed";
 
 function readDismissed(): Record<string, boolean> {
   try {

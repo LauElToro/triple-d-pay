@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogoMark } from "@/components/triple-d/logo";
+import { LogoMark } from "@/components/set-api/logo";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
@@ -8,7 +8,7 @@ import { api } from "@/lib/api";
 import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/kyc/complete")({
-  head: () => ({ meta: [{ title: "Verificación en proceso · Triple D" }] }),
+  head: () => ({ meta: [{ title: "Verificación en proceso · Set-Api" }] }),
   component: KycComplete,
 });
 

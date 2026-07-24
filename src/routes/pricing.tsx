@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PublicShell } from "@/components/triple-d/public-shell";
-import { PlanCard } from "@/components/triple-d/plan-card";
+import { PublicShell } from "@/components/set-api/public-shell";
+import { PlanCard } from "@/components/set-api/plan-card";
 import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/pricing")({

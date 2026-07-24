@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { CodeBlock } from "@/components/triple-d/code-block";
+import { CodeBlock } from "@/components/set-api/code-block";
 import {
   AUTOMATION_SLUGS,
   AUTOMATION_SAMPLE_CODE,

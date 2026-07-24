@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { AppPageHeader } from "@/components/triple-d/app-page-header";
-import { UsageChart } from "@/components/triple-d/usage-chart";
-import { StatChip } from "@/components/triple-d/stat-chip";
+import { AppPageHeader } from "@/components/set-api/app-page-header";
+import { UsageChart } from "@/components/set-api/usage-chart";
+import { StatChip } from "@/components/set-api/stat-chip";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import type { UsageView } from "@/lib/api-types";

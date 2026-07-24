@@ -16,7 +16,7 @@ export function LogoMark({
       )}
     >
       <span className="shrink-0 text-signal tracking-tighter" aria-hidden>
-        |||
+        ⌁
       </span>
       <span
         className={cn(
@@ -24,7 +24,7 @@ export function LogoMark({
           compact ? "w-0 opacity-0" : "w-auto opacity-100",
         )}
       >
-        Triple D
+        Set-Api
       </span>
     </span>
   );

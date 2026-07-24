@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { FlagIcon } from "@/components/triple-d/flag-icon";
+import { FlagIcon } from "@/components/set-api/flag-icon";
 import { LOCALES } from "@/lib/i18n/types";
 import { useI18n } from "@/lib/i18n-context";
 

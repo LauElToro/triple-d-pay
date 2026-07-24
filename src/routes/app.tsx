@@ -1,10 +1,10 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/triple-d/app-sidebar";
-import { AppNoticeStack } from "@/components/triple-d/app-notice-stack";
-import { NavbarControls } from "@/components/triple-d/navbar-controls";
-import { TourLauncher } from "@/components/triple-d/tour-launcher";
+import { AppSidebar } from "@/components/set-api/app-sidebar";
+import { AppNoticeStack } from "@/components/set-api/app-notice-stack";
+import { NavbarControls } from "@/components/set-api/navbar-controls";
+import { TourLauncher } from "@/components/set-api/tour-launcher";
 import { TourProvider } from "@/lib/tour/tour-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";

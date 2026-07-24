@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Eye, EyeOff, Copy, Check, RefreshCw, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { KeyStatusBadge } from "@/components/triple-d/key-status-badge";
+import { KeyStatusBadge } from "@/components/set-api/key-status-badge";
 import { useAuth } from "@/lib/auth-context";
 import { api, ApiError } from "@/lib/api";
 import type { ApiKeyView, CreateKeyResponse } from "@/lib/api-types";

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PublicShell } from "@/components/triple-d/public-shell";
-import { CatalogCard } from "@/components/triple-d/catalog-card";
+import { PublicShell } from "@/components/set-api/public-shell";
+import { CatalogCard } from "@/components/set-api/catalog-card";
 import { TOOL_SLUGS, catalogKey } from "@/content/catalog";
 import { useTranslation } from "@/lib/i18n-context";
 

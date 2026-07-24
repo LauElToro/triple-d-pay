@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { PublicShell } from "@/components/triple-d/public-shell";
+import { PublicShell } from "@/components/set-api/public-shell";
 import { Button } from "@/components/ui/button";
 import { TOOL_SLUGS, catalogKey, type ToolSlug } from "@/content/catalog";
 import { useTranslation } from "@/lib/i18n-context";

@@ -10,7 +10,7 @@ import {
 import type { Plan } from "@/lib/plans";
 import type { PlanId } from "@/lib/api-types";
 
-const STORAGE_KEY = "td_locale";
+const STORAGE_KEY = "sa_locale";
 
 const PLAN_PRICES: Record<PlanId, string> = {
   free: "AR$ 0",

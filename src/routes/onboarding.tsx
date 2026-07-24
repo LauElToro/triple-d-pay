@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogoMark } from "@/components/triple-d/logo";
+import { LogoMark } from "@/components/set-api/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -17,7 +17,7 @@ import { useTranslation } from "@/lib/i18n-context";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/onboarding")({
-  head: () => ({ meta: [{ title: "Conocete · Triple D" }] }),
+  head: () => ({ meta: [{ title: "Conocete · Set-Api" }] }),
   component: OnboardingPage,
 });
 

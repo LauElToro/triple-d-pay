@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { StatChip } from "@/components/triple-d/stat-chip";
+import { StatChip } from "@/components/set-api/stat-chip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { formatARS, formatDate } from "@/lib/format";

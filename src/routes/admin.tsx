@@ -1,9 +1,9 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LogoMark } from "@/components/triple-d/logo";
+import { LogoMark } from "@/components/set-api/logo";
 import { Button } from "@/components/ui/button";
 import { TourProvider } from "@/lib/tour/tour-context";
-import { TourLauncher } from "@/components/triple-d/tour-launcher";
+import { TourLauncher } from "@/components/set-api/tour-launcher";
 import { useAuth } from "@/lib/auth-context";
 import {
   BarChart3,

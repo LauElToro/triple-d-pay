@@ -71,21 +71,21 @@ export const PLATFORM_STATS = {
   cuits: "4.238",
 } as const;
 
-export const QUICKSTART_CODE = `import { TripleD } from "@triple-d/sdk";
+export const QUICKSTART_CODE = `import { SetApi } from "@set-api/sdk";
 
-const td = new TripleD({ apiKey: process.env.TRIPLE_D_KEY });
+const api = new SetApi({ apiKey: process.env.SET_API_KEY });
 
-await td.invoices.create({
+await api.invoices.create({
   cuit: "30-71234567-8",
   tipo: "FC_A",
   items: [{ descripcion: "Servicio", total: 155364 }],
 });`;
 
-export const AUTOMATION_SAMPLE_CODE = `import { TripleD } from "@triple-d/sdk";
+export const AUTOMATION_SAMPLE_CODE = `import { SetApi } from "@set-api/sdk";
 
-const td = new TripleD({ apiKey: process.env.TRIPLE_D_KEY });
+const api = new SetApi({ apiKey: process.env.SET_API_KEY });
 
-const result = await td.automations.run("mis-comprobantes", {
+const result = await api.automations.run("mis-comprobantes", {
   cuit: "30123456789",
   filters: { tipo: "E", fechaEmision: "01/01/2026 - 31/01/2026" },
 });

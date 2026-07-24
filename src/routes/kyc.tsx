@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogoMark } from "@/components/triple-d/logo";
+import { LogoMark } from "@/components/set-api/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShieldCheck, Loader2, ExternalLink } from "lucide-react";
@@ -10,7 +10,7 @@ import { useTranslation } from "@/lib/i18n-context";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/kyc")({
-  head: () => ({ meta: [{ title: "Verificación de identidad · Triple D" }] }),
+  head: () => ({ meta: [{ title: "Verificación de identidad · Set-Api" }] }),
   component: KycPage,
 });
 

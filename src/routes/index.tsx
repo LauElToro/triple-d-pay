@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { SiteHeader, SiteFooter } from "@/components/triple-d/site-chrome";
-import { HeroComprobante } from "@/components/triple-d/hero-comprobante";
-import { PlanCard } from "@/components/triple-d/plan-card";
-import { CatalogCard } from "@/components/triple-d/catalog-card";
-import { CodeBlock } from "@/components/triple-d/code-block";
+import { SiteHeader, SiteFooter } from "@/components/set-api/site-chrome";
+import { HeroComprobante } from "@/components/set-api/hero-comprobante";
+import { PlanCard } from "@/components/set-api/plan-card";
+import { CatalogCard } from "@/components/set-api/catalog-card";
+import { CodeBlock } from "@/components/set-api/code-block";
 import {
   AUTOMATION_SLUGS,
   INTEGRATION_SLUGS,
@@ -103,7 +103,7 @@ function Landing() {
         </div>
       </section>
 
-      {/* TRIPLE D FACTURA */}
+      {/* Set-Api FACTURA */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="border border-signal/30 bg-signal/5 rounded-lg p-8 md:p-10 grid md:grid-cols-2 gap-8 items-center">
           <div>
@@ -120,7 +120,7 @@ function Landing() {
               <Link to="/productos/factura">{t("landing.facturaCta")}</Link>
             </Button>
           </div>
-          <CodeBlock code={QUICKSTART_CODE} comment="// Triple D Factura" />
+          <CodeBlock code={QUICKSTART_CODE} comment="// Set-Api Factura" />
         </div>
       </section>
 

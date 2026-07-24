@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CodeBlock } from "@/components/triple-d/code-block";
+import { CodeBlock } from "@/components/set-api/code-block";
 import { QUICKSTART_CODE } from "@/content/catalog";
 import { useTranslation } from "@/lib/i18n-context";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,7 +20,7 @@ function DocsQuickstart() {
 
       <section className="space-y-3">
         <h2 className="font-display text-xl">{t("docs.install")}</h2>
-        <CodeBlock code="npm i @triple-d/sdk" />
+        <CodeBlock code="npm i @set-api/sdk" />
       </section>
 
       <section className="space-y-3">
@@ -32,7 +32,7 @@ function DocsQuickstart() {
             <TabsTrigger value="py" disabled>{t("docs.comingSoonLang")} Python</TabsTrigger>
           </TabsList>
           <TabsContent value="js" className="mt-4">
-            <CodeBlock code={QUICKSTART_CODE} comment="// npm i @triple-d/sdk" />
+            <CodeBlock code={QUICKSTART_CODE} comment="// npm i @set-api/sdk" />
           </TabsContent>
         </Tabs>
       </section>

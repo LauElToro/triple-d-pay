@@ -14,7 +14,7 @@ export type TourRoute =
   | "/app/team"
   | "/admin";
 
-const LOCAL_KEY = "td_tours_done";
+const LOCAL_KEY = "sa_tours_done";
 
 export function readLocalTours(): Record<string, string> {
   try {

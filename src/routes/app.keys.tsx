@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CopyField } from "@/components/triple-d/copy-field";
-import { KeyStatusBadge } from "@/components/triple-d/key-status-badge";
-import { AppPageHeader } from "@/components/triple-d/app-page-header";
+import { CopyField } from "@/components/set-api/copy-field";
+import { KeyStatusBadge } from "@/components/set-api/key-status-badge";
+import { AppPageHeader } from "@/components/set-api/app-page-header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { KeyRound, AlertTriangle, RefreshCw, Plus, Trash2 } from "lucide-react";
@@ -170,13 +170,13 @@ function KeysPage() {
         </CardHeader>
         <CardContent>
           <pre className="bg-ink text-paper rounded-md p-4 text-sm font-mono overflow-x-auto">
-{`import { TripleD } from "@triple-d/sdk";
+{`import { SetApi } from "@set-api/sdk";
 
-const td = new TripleD({
-  apiKey: process.env.TRIPLE_D_KEY, // tu API Key
+const api = new SetApi({
+  apiKey: process.env.SET_API_KEY, // tu API Key
 });
 
-const inv = await td.invoices.create({ /* ... */ });`}
+const inv = await api.invoices.create({ /* ... */ });`}
           </pre>
         </CardContent>
       </Card>

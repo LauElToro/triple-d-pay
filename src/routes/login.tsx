@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LogoMark } from "@/components/triple-d/logo";
-import { NavbarControls } from "@/components/triple-d/navbar-controls";
-import { GoogleButton } from "@/components/triple-d/google-button";
+import { LogoMark } from "@/components/set-api/logo";
+import { NavbarControls } from "@/components/set-api/navbar-controls";
+import { GoogleButton } from "@/components/set-api/google-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,10 +21,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Entrar · Triple D" },
-      { name: "description", content: "Accedé a tu panel de facturación electrónica Triple D." },
-      { property: "og:title", content: "Entrar · Triple D" },
-      { property: "og:description", content: "Accedé a tu panel Triple D." },
+      { title: "Entrar · Set-Api" },
+      { name: "description", content: "Accedé a tu panel de facturación electrónica Set-Api." },
+      { property: "og:title", content: "Entrar · Set-Api" },
+      { property: "og:description", content: "Accedé a tu panel Set-Api." },
     ],
   }),
   component: LoginPage,

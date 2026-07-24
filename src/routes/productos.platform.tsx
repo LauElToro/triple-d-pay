@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PublicShell } from "@/components/triple-d/public-shell";
+import { PublicShell } from "@/components/set-api/public-shell";
 import { Button } from "@/components/ui/button";
-import { CatalogCard } from "@/components/triple-d/catalog-card";
+import { CatalogCard } from "@/components/set-api/catalog-card";
 import { WEB_SERVICE_SLUGS, AUTOMATION_SLUGS, catalogKey } from "@/content/catalog";
 import { useTranslation } from "@/lib/i18n-context";
 import { ArrowRight } from "lucide-react";

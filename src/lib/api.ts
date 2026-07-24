@@ -1,5 +1,5 @@
 /**
- * Triple D API client.
+ * Set-Api API client.
  *
  * - Access token lives in memory only (never in localStorage) and is sent as a
  *   Bearer header.
@@ -9,7 +9,7 @@
  */
 
 const DEFAULT_API_URL = import.meta.env.PROD
-  ? "https://triple-d-backend.vercel.app"
+  ? "https://set-api-backend.vercel.app"
   : "http://localhost:4000";
 
 export const API_URL =
