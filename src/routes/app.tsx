@@ -50,8 +50,16 @@ function AppLayout() {
         <AppSidebar />
         <SidebarInset className="bg-paper">
           <header className="sticky top-0 z-20 flex h-12 shrink-0 items-center justify-between border-b border-line bg-card/60 px-3 backdrop-blur">
-            <SidebarTrigger />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <SidebarTrigger
+                className="h-9 w-9 md:h-7 md:w-7"
+                aria-label={t("nav.openMenu")}
+              />
+              <span className="text-xs font-mono text-slate md:hidden truncate">
+                {t("nav.menu")}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
               <TourLauncher />
               <NavbarControls />
             </div>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Sidebar,
@@ -39,9 +40,13 @@ function isNavActive(url: string, pathname: string) {
 export function AppSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { user, activeOrg, logout } = useAuth();
-  const { state } = useSidebar();
+  const { state, isMobile, setOpenMobile } = useSidebar();
   const { t, plans } = useTranslation();
   const collapsed = state === "collapsed";
+
+  useEffect(() => {
+    if (isMobile) setOpenMobile(false);
+  }, [pathname, isMobile, setOpenMobile]);
   const planName = plans.find((p) => p.id === activeOrg?.planId)?.name ?? "Free";
 
   const items = [

@@ -23,6 +23,8 @@ export const en: TranslationDict = {
   "nav.register": "Create account",
   "nav.logout": "Sign out",
   "nav.language": "Language",
+  "nav.menu": "Menu",
+  "nav.openMenu": "Open menu",
 
   "theme.darkMode": "Dark mode",
 

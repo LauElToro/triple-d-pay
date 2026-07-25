@@ -1,31 +1,100 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Menu } from "lucide-react";
 import { LogoMark } from "./logo";
 import { NavbarControls } from "./navbar-controls";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useTranslation } from "@/lib/i18n-context";
 
-const navLinkClass =
-  "text-sm text-slate hover:text-ink transition-colors hidden lg:inline-block";
+const desktopNavLinkClass = "text-sm text-slate hover:text-ink transition-colors";
+
+const mobileNavLinkClass =
+  "text-base font-medium text-ink hover:text-signal transition-colors py-1";
+
+function usePublicNavLinks() {
+  const { t } = useTranslation();
+  return [
+    { to: "/productos/platform", label: t("product.platform.title") },
+    { to: "/productos/factura", label: t("product.factura.title") },
+    { to: "/docs", label: t("nav.docs") },
+    { to: "/tools", label: t("nav.tools") },
+    { to: "/pricing", label: t("nav.pricing") },
+    { to: "/contact", label: t("nav.contact") },
+  ] as const;
+}
 
 export function SiteHeader() {
   const { t } = useTranslation();
+  const links = usePublicNavLinks();
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="border-b border-line bg-card/70 backdrop-blur sticky top-0 z-30">
-      <div className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
         <Link to="/"><LogoMark /></Link>
-        <nav className="flex items-center gap-4 flex-1 justify-end">
-          <div className="hidden md:flex items-center gap-4 mr-2">
-            <Link to="/productos/platform" className={navLinkClass}>{t("product.platform.title")}</Link>
-            <Link to="/productos/factura" className={navLinkClass}>{t("product.factura.title")}</Link>
-            <Link to="/docs" className={navLinkClass}>{t("nav.docs")}</Link>
-            <Link to="/tools" className={navLinkClass}>{t("nav.tools")}</Link>
-            <Link to="/pricing" className={navLinkClass}>{t("nav.pricing")}</Link>
-            <Link to="/contact" className={navLinkClass}>{t("nav.contact")}</Link>
+        <nav className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
+          <div className="hidden lg:flex items-center gap-4 mr-2">
+            {links.map((link) => (
+              <Link key={link.to} to={link.to} className={desktopNavLinkClass}>
+                {link.label}
+              </Link>
+            ))}
           </div>
           <NavbarControls />
-          <Button asChild variant="ghost" size="sm"><Link to="/login">{t("nav.login")}</Link></Button>
-          <Button asChild size="sm"><Link to="/register">{t("nav.register")}</Link></Button>
+          <div className="hidden lg:flex items-center gap-2">
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/login">{t("nav.login")}</Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link to="/register">{t("nav.register")}</Link>
+            </Button>
+          </div>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden shrink-0"
+                aria-label={t("nav.openMenu")}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-full sm:max-w-xs">
+              <SheetHeader>
+                <SheetTitle className="text-left font-mono text-sm">{t("nav.menu")}</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 flex flex-col gap-4">
+                {links.map((link) => (
+                  <SheetClose asChild key={link.to}>
+                    <Link to={link.to} className={mobileNavLinkClass}>
+                      {link.label}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <div className="border-t border-line pt-4 flex flex-col gap-2">
+                  <SheetClose asChild>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link to="/login">{t("nav.login")}</Link>
+                    </Button>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Button asChild className="w-full">
+                      <Link to="/register">{t("nav.register")}</Link>
+                    </Button>
+                  </SheetClose>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </nav>
       </div>
     </header>
