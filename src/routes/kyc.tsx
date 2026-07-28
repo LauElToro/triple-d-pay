@@ -111,9 +111,6 @@ function KycPage() {
               <span>
                 {t("kyc.status")}: <span className="text-ink">{status}</span>
               </span>
-              {status === "PENDING" && (
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-signal" aria-hidden />
-              )}
             </div>
             {status === "DECLINED" && (
               <p className="text-sm text-seal">{t("kyc.declinedDesc")}</p>
@@ -122,13 +119,18 @@ function KycPage() {
               <p className="text-sm text-slate">{t("kyc.pendingDesc")}</p>
             )}
             <Button className="w-full" onClick={start} disabled={starting}>
-              {starting
-                ? t("kyc.redirecting")
-                : status === "PENDING"
-                  ? t("kyc.continue")
-                  : status === "DECLINED"
-                    ? t("kyc.retry")
-                    : t("kyc.start")}
+              {starting ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="auth-spinner h-4 w-4" aria-hidden />
+                  {t("kyc.redirecting")}
+                </span>
+              ) : status === "PENDING" ? (
+                t("kyc.continue")
+              ) : status === "DECLINED" ? (
+                t("kyc.retry")
+              ) : (
+                t("kyc.start")
+              )}
             </Button>
           </CardContent>
         </Card>

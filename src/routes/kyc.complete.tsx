@@ -89,7 +89,7 @@ function KycComplete() {
       )}
       {state === "polling" && (
         <div className="flex flex-col items-center gap-2 text-slate">
-          <Loader2 className="h-8 w-8 animate-spin" />
+          <Loader2 className="auth-spinner h-8 w-8 text-signal" />
           <p className="text-sm">{t("kyc.confirming")}</p>
         </div>
       )}

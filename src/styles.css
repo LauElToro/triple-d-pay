@@ -176,9 +176,27 @@
   color: var(--color-ink);
 }
 
+@keyframes auth-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility auth-spinner {
+  animation: auth-spin 0.75s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+
+  /* Keep auth/loading spinners visible as motion; otherwise they look frozen. */
+  .auth-spinner {
+    animation: auth-spin 0.75s linear infinite !important;
+  }
 }
+
