@@ -218,10 +218,20 @@ function Landing() {
           <h2 className="text-4xl font-display font-bold">{t("landing.plansTitle")}</h2>
           <p className="text-slate mt-2">{t("landing.plansSubtitle")}</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((p) => (
             <PlanCard key={p.id} plan={p} featured={p.id === "fixed"} />
           ))}
+          <PlanCard
+            plan={{
+              name: t("pricing.custom.name"),
+              price: t("pricing.custom.price"),
+              tagline: t("pricing.custom.tagline"),
+              features: [0, 1, 2, 3].map((i) => t(`pricing.custom.feature${i}`)),
+              cta: t("pricing.custom.cta"),
+            }}
+            to="/contact"
+          />
         </div>
       </section>
 

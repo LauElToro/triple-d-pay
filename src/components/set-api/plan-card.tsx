@@ -5,7 +5,20 @@ import { Check } from "lucide-react";
 import type { Plan } from "@/lib/plans";
 import { useTranslation } from "@/lib/i18n-context";
 
-export function PlanCard({ plan, featured = false }: { plan: Plan; featured?: boolean }) {
+type PlanCardPlan = Pick<Plan, "name" | "price" | "tagline" | "features" | "cta"> & {
+  id?: Plan["id"];
+};
+
+export function PlanCard({
+  plan,
+  featured = false,
+  to = "/register",
+}: {
+  plan: PlanCardPlan;
+  featured?: boolean;
+  /** Destination for the CTA. Custom plans use `/contact`. */
+  to?: "/register" | "/contact";
+}) {
   const { t } = useTranslation();
 
   return (
@@ -36,9 +49,13 @@ export function PlanCard({ plan, featured = false }: { plan: Plan; featured?: bo
           ))}
         </ul>
         <Button asChild className="w-full" variant={featured ? "default" : "outline"}>
-          <Link to="/register" search={{ plan: plan.id }}>
-            {plan.cta}
-          </Link>
+          {to === "/contact" ? (
+            <Link to="/contact">{plan.cta}</Link>
+          ) : (
+            <Link to="/register" search={{ plan: plan.id ?? "free" }}>
+              {plan.cta}
+            </Link>
+          )}
         </Button>
       </CardContent>
     </Card>
