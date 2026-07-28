@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { LogoMark } from "./logo";
 import { NavbarControls } from "./navbar-controls";
@@ -13,11 +13,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useTranslation } from "@/lib/i18n-context";
+import { cn } from "@/lib/utils";
 
 const desktopNavLinkClass = "text-sm text-slate hover:text-ink transition-colors";
+const desktopNavLinkActiveClass = "text-signal font-bold";
 
 const mobileNavLinkClass =
   "text-base font-medium text-ink hover:text-signal transition-colors py-1";
+const mobileNavLinkActiveClass = "text-signal font-bold";
+
+function isPublicNavActive(to: string, pathname: string) {
+  return pathname === to || pathname.startsWith(`${to}/`);
+}
 
 function usePublicNavLinks() {
   const { t } = useTranslation();
@@ -35,6 +42,7 @@ export function SiteHeader() {
   const { t } = useTranslation();
   const links = usePublicNavLinks();
   const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <header className="border-b border-line bg-card/70 backdrop-blur sticky top-0 z-30">
@@ -42,19 +50,38 @@ export function SiteHeader() {
         <Link to="/"><LogoMark /></Link>
         <nav className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
           <div className="hidden lg:flex items-center gap-4 mr-2">
-            {links.map((link) => (
-              <Link key={link.to} to={link.to} className={desktopNavLinkClass}>
-                {link.label}
-              </Link>
-            ))}
+            {links.map((link) => {
+              const active = isPublicNavActive(link.to, pathname);
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(desktopNavLinkClass, active && desktopNavLinkActiveClass)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
           <NavbarControls />
           <div className="hidden lg:flex items-center gap-2">
             <Button asChild variant="ghost" size="sm">
-              <Link to="/login">{t("nav.login")}</Link>
+              <Link
+                to="/login"
+                aria-current={pathname === "/login" ? "page" : undefined}
+                className={cn(pathname === "/login" && "text-signal font-bold")}
+              >
+                {t("nav.login")}
+              </Link>
             </Button>
             <Button asChild size="sm">
-              <Link to="/register">{t("nav.register")}</Link>
+              <Link
+                to="/register"
+                aria-current={pathname === "/register" ? "page" : undefined}
+              >
+                {t("nav.register")}
+              </Link>
             </Button>
           </div>
           <Sheet open={open} onOpenChange={setOpen}>
@@ -73,22 +100,40 @@ export function SiteHeader() {
                 <SheetTitle className="text-left font-mono text-sm">{t("nav.menu")}</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-4">
-                {links.map((link) => (
-                  <SheetClose asChild key={link.to}>
-                    <Link to={link.to} className={mobileNavLinkClass}>
-                      {link.label}
-                    </Link>
-                  </SheetClose>
-                ))}
+                {links.map((link) => {
+                  const active = isPublicNavActive(link.to, pathname);
+                  return (
+                    <SheetClose asChild key={link.to}>
+                      <Link
+                        to={link.to}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(mobileNavLinkClass, active && mobileNavLinkActiveClass)}
+                      >
+                        {link.label}
+                      </Link>
+                    </SheetClose>
+                  );
+                })}
                 <div className="border-t border-line pt-4 flex flex-col gap-2">
                   <SheetClose asChild>
-                    <Button asChild variant="outline" className="w-full">
-                      <Link to="/login">{t("nav.login")}</Link>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className={cn("w-full", pathname === "/login" && "border-signal text-signal")}
+                    >
+                      <Link to="/login" aria-current={pathname === "/login" ? "page" : undefined}>
+                        {t("nav.login")}
+                      </Link>
                     </Button>
                   </SheetClose>
                   <SheetClose asChild>
                     <Button asChild className="w-full">
-                      <Link to="/register">{t("nav.register")}</Link>
+                      <Link
+                        to="/register"
+                        aria-current={pathname === "/register" ? "page" : undefined}
+                      >
+                        {t("nav.register")}
+                      </Link>
                     </Button>
                   </SheetClose>
                 </div>
