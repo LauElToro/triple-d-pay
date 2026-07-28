@@ -61,7 +61,7 @@ export type IntegrationSlug = (typeof INTEGRATION_SLUGS)[number];
 export function catalogKey(
   kind: "ws" | "auto" | "tool" | "integration",
   slug: string,
-  field: "title" | "desc" | "body",
+  field: "title" | "desc" | "body" | "howto" | "requirements",
 ) {
   return `catalog.${kind}.${slug}.${field}`;
 }

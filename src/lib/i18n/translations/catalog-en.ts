@@ -61,6 +61,12 @@ export const catalogEn: TranslationDict = {
   "docs.example": "Example",
   "docs.comingSoonLang": "Coming soon",
   "docs.backToDocs": "Back to docs",
+  "docs.overview": "Overview",
+  "docs.howto": "How to use it",
+  "docs.requirements": "Requirements",
+  "docs.integration": "Integration code",
+  "docs.integrationHint":
+    "Use your Set-Api API Key. The SDK handles authentication and ARCA request formatting.",
 
   "pricing.title": "Pricing",
   "pricing.subtitle": "Simple plans. Change anytime from the dashboard.",
@@ -89,80 +95,204 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.facturacion-electronica.desc":
     "Issue invoices and credit/debit notes A, B, C, MiPyME, export, with CAE and QR.",
   "catalog.ws.facturacion-electronica.body":
-    "The electronic invoicing web service lets you issue valid fiscal vouchers in ARCA and obtain CAE.",
+    "Core fiscal emission service: issue valid ARCA vouchers, obtain CAE and QR payload. Covers standard invoices, credit/debit notes and common variants without hand-rolling SOAP or WSAA.",
+  "catalog.ws.facturacion-electronica.howto":
+    "Create an API Key, authorize the invoicing WS on your certificate, then call the SDK emission endpoint with CUIT, voucher type, POS, items and amounts. The response includes CAE, expiry and data for PDF/QR.",
+  "catalog.ws.facturacion-electronica.requirements":
+    "Active CUIT, digital certificate (homologation or production), authorized WS, enabled POS and a Set-Api plan with voucher quota.",
   "catalog.ws.comprobantes-turismo.title": "Tourism vouchers",
   "catalog.ws.comprobantes-turismo.desc": "Issue ARCA-validated tourism vouchers.",
-  "catalog.ws.comprobantes-turismo.body": "Integration for tourism operators.",
+  "catalog.ws.comprobantes-turismo.body":
+    "Built for tourism operators that need sector-specific vouchers with official validation and the same auth flow as other ARCA web services.",
+  "catalog.ws.comprobantes-turismo.howto":
+    "Configure the operator CUIT, enable the tourism service and issue via SDK with trip/service data. Validate in homologation before production.",
+  "catalog.ws.comprobantes-turismo.requirements":
+    "Tourism operator CUIT, certificate with the tourism WS authorized and a Set-Api API Key.",
   "catalog.ws.factura-exportacion.title": "Export invoice",
   "catalog.ws.factura-exportacion.desc": "Issue export invoices from your system.",
-  "catalog.ws.factura-exportacion.body": "Export vouchers with required fiscal data.",
+  "catalog.ws.factura-exportacion.body":
+    "Issue export vouchers with required fiscal fields (destination, currency, Incoterms when applicable) and obtain CAE without a custom SOAP stack.",
+  "catalog.ws.factura-exportacion.howto":
+    "Build the payload with exporter, buyer and goods/services detail; emit via SDK and store CAE plus response for filing and shipping.",
+  "catalog.ws.factura-exportacion.requirements":
+    "Exporter CUIT, certificate authorized for export invoicing and complete commercial/customs data.",
   "catalog.ws.padron.title": "Tax registry",
   "catalog.ws.padron.desc": "Query taxpayer data and validate CUIT/CUIL.",
-  "catalog.ws.padron.body": "Access ARCA registry to validate taxpayers before issuing.",
+  "catalog.ws.padron.body":
+    "Query ARCA’s tax registry to validate existence, legal name, tax address and status before issuing or onboarding a customer.",
+  "catalog.ws.padron.howto":
+    "Send the CUIT/CUIL to look up; the SDK returns available registry fields. Useful for onboarding, pre-invoice checks and compliance.",
+  "catalog.ws.padron.requirements":
+    "Set-Api API Key and registry WS enabled for your environment (homologation or production).",
   "catalog.ws.constatacion-comprobantes.title": "Voucher verification",
   "catalog.ws.constatacion-comprobantes.desc": "Validate electronic vouchers issued by ARCA.",
-  "catalog.ws.constatacion-comprobantes.body": "Verify CAE and issuer data against official records.",
+  "catalog.ws.constatacion-comprobantes.body":
+    "Check whether a voucher exists and is valid by matching CAE, issuer CUIT, type, POS and number against official ARCA records.",
+  "catalog.ws.constatacion-comprobantes.howto":
+    "Pass voucher identifiers (CUIT, type, POS, number and/or CAE). Use the result for reconciliation, supplier control or internal audit tools.",
+  "catalog.ws.constatacion-comprobantes.requirements":
+    "Set-Api API Key, access to the verification WS and minimum voucher identifiers.",
   "catalog.ws.carta-porte.title": "Electronic waybill",
   "catalog.ws.carta-porte.desc": "Documents for agricultural sectors.",
-  "catalog.ws.carta-porte.body": "Issue and query electronic waybills via web service.",
+  "catalog.ws.carta-porte.body":
+    "Issue and query electronic waybills for grain and agribusiness flows, aligned with official ARCA web services.",
+  "catalog.ws.carta-porte.howto":
+    "Define origin, destination, product and transport data; issue or query via SDK. Persist the official id for tracking and roadside controls.",
+  "catalog.ws.carta-porte.requirements":
+    "Agribusiness operator CUIT, certificate with waybill WS authorized and load/transport details.",
   "catalog.ws.remito-carnico.title": "Meat remittance",
   "catalog.ws.remito-carnico.desc": "Documentation for meat transport.",
-  "catalog.ws.remito-carnico.body": "Web service for meat remittance documents.",
+  "catalog.ws.remito-carnico.body":
+    "Web service to create and manage meat remittance documents under current rules, supporting transport traceability.",
+  "catalog.ws.remito-carnico.howto":
+    "Provide issuer, recipient, products and transport data; emit via API and attach the response to your internal shipping document.",
+  "catalog.ws.remito-carnico.requirements":
+    "CUIT enabled for meat remittance, authorized certificate and product/transport detail.",
   "catalog.ws.factura-mipyme.title": "MiPyME invoice",
   "catalog.ws.factura-mipyme.desc": "Queries and emissions under MiPyME regime.",
-  "catalog.ws.factura-mipyme.body": "MiPyME credit invoice operations.",
+  "catalog.ws.factura-mipyme.body":
+    "MiPyME credit invoice operations: emission and related queries without rebuilding SOAP or WSAA ticket handling.",
+  "catalog.ws.factura-mipyme.howto":
+    "Issue or query MiPyME invoices via SDK with regime and voucher data. Use response statuses and due dates in your collections flow.",
+  "catalog.ws.factura-mipyme.requirements":
+    "CUIT under MiPyME regime, authorized WS and an active Set-Api plan.",
   "catalog.ws.web-service-generico.title": "Other web service",
   "catalog.ws.web-service-generico.desc": "Any web service ARCA offers.",
-  "catalog.ws.web-service-generico.body": "Generic gateway for unlisted ARCA SOAP services.",
+  "catalog.ws.web-service-generico.body":
+    "Generic gateway for ARCA SOAP services that do not yet have a dedicated Set-Api module. Useful for special cases or newly published WS.",
+  "catalog.ws.web-service-generico.howto":
+    "Specify the target ARCA service and expected payload; Set-Api handles auth and transport. Validate the exact WS contract in homologation first.",
+  "catalog.ws.web-service-generico.requirements":
+    "Docs for the ARCA WS to consume, certificate authorized for that service and a Set-Api API Key.",
 
   "catalog.auto.mis-comprobantes.title": "My Vouchers",
   "catalog.auto.mis-comprobantes.desc": "Download issued or received vouchers by CUIT.",
-  "catalog.auto.mis-comprobantes.body": "Automation for ARCA My Vouchers app.",
+  "catalog.auto.mis-comprobantes.body":
+    "Automation over ARCA’s My Vouchers app to fetch issued/received lists and details without scraping the UI.",
+  "catalog.auto.mis-comprobantes.howto":
+    "Run with CUIT and filters (type, date range, issued/received). Feed results into BI, ERP or bank reconciliation.",
+  "catalog.auto.mis-comprobantes.requirements":
+    "Authorized credentials/CUIT for My Vouchers, Set-Api API Key and automation access on your plan.",
   "catalog.auto.monotributo.title": "Monotributo info",
   "catalog.auto.monotributo.desc": "Get taxpayer monotributo information.",
-  "catalog.auto.monotributo.body": "Automated monotributo status query.",
+  "catalog.auto.monotributo.body":
+    "Automated lookup of category, activity, status and related Monotributo fields for onboarding, scoring or internal dashboards.",
+  "catalog.auto.monotributo.howto":
+    "Pass the taxpayer CUIT and run the automation. Cache or version the response per your fiscal data refresh policy.",
+  "catalog.auto.monotributo.requirements":
+    "Accessible monotributo CUIT, Set-Api API Key and automation access.",
   "catalog.auto.certificado-desarrollo.title": "Create dev certificate",
   "catalog.auto.certificado-desarrollo.desc": "Certificate for Development web services.",
-  "catalog.auto.certificado-desarrollo.body": "Generate certificates for homologation environment.",
+  "catalog.auto.certificado-desarrollo.body":
+    "Automates digital certificate creation for the homologation environment to speed up integration setup before production.",
+  "catalog.auto.certificado-desarrollo.howto":
+    "Start with owner and CSR/certificate data. Download or attach the resulting certificate to your development WS.",
+  "catalog.auto.certificado-desarrollo.requirements":
+    "Access to the CUIT in ARCA homologation, certificate data and a Set-Api API Key.",
   "catalog.auto.certificado-produccion.title": "Create production certificate",
   "catalog.auto.certificado-produccion.desc": "Certificate for Production web services.",
-  "catalog.auto.certificado-produccion.body": "Automate production certificate creation.",
+  "catalog.auto.certificado-produccion.body":
+    "Same flow as development, targeted at production certificates for live ARCA web services.",
+  "catalog.auto.certificado-produccion.howto":
+    "Run in production with certificate data. Store material securely and link it to the live WS you operate.",
+  "catalog.auto.certificado-produccion.requirements":
+    "Production CUIT, certificate admin permissions and a Set-Api API Key.",
   "catalog.auto.autorizar-ws-desarrollo.title": "Authorize dev web service",
   "catalog.auto.autorizar-ws-desarrollo.desc": "Authorizations for development WS.",
-  "catalog.auto.autorizar-ws-desarrollo.body": "Link dev certificates to required web services.",
+  "catalog.auto.autorizar-ws-desarrollo.body":
+    "Links homologation certificates to the web services needed for test emissions and queries without repetitive manual ARCA steps.",
+  "catalog.auto.autorizar-ws-desarrollo.howto":
+    "Select certificate and services to authorize; run and confirm the WS is enabled before issuing in homologation.",
+  "catalog.auto.autorizar-ws-desarrollo.requirements":
+    "Existing development certificate and the list of WS to authorize.",
   "catalog.auto.autorizar-ws-produccion.title": "Authorize production web service",
   "catalog.auto.autorizar-ws-produccion.desc": "Authorizations for production WS.",
-  "catalog.auto.autorizar-ws-produccion.body": "Complete production authorizations on your certificate.",
+  "catalog.auto.autorizar-ws-produccion.body":
+    "Completes production authorizations on your certificate so Set-Api can operate the corresponding WS for the CUIT.",
+  "catalog.auto.autorizar-ws-produccion.howto":
+    "Provide production certificate and target WS; run and confirm authorization status before go-live.",
+  "catalog.auto.autorizar-ws-produccion.requirements":
+    "Production certificate and ARCA permissions to authorize services.",
   "catalog.auto.delegar-ws.title": "Delegate web service",
   "catalog.auto.delegar-ws.desc": "One CUIT authorizes another to use a web service.",
-  "catalog.auto.delegar-ws.body": "Ideal for multi-client software with one central certificate.",
+  "catalog.auto.delegar-ws.body":
+    "Ideal for software houses or multi-client platforms: the taxpayer delegates WS usage to your central CUIT without sharing certificates.",
+  "catalog.auto.delegar-ws.howto":
+    "From the granting CUIT run the automation with destination CUIT and WS. The recipient must then accept the delegation.",
+  "catalog.auto.delegar-ws.requirements":
+    "Access to the granting CUIT, recipient CUIT and WS to delegate.",
   "catalog.auto.aceptar-delegacion.title": "Accept WS delegation",
   "catalog.auto.aceptar-delegacion.desc": "Accept delegations from other CUITs.",
-  "catalog.auto.aceptar-delegacion.body": "Complete delegation flow and link WS to your certificate.",
+  "catalog.auto.aceptar-delegacion.body":
+    "Closes the delegation flow: the recipient CUIT accepts and links the delegated WS to its operating certificate.",
+  "catalog.auto.aceptar-delegacion.howto":
+    "List pending delegations, accept the relevant one and verify the WS is operable with your certificate.",
+  "catalog.auto.aceptar-delegacion.requirements":
+    "Pending delegation from another CUIT and a ready recipient certificate.",
   "catalog.auto.administracion-certificados.title": "Digital Certificate Admin",
   "catalog.auto.administracion-certificados.desc": "Enable certificate administration service.",
-  "catalog.auto.administracion-certificados.body": "Automate certificate module enablement in ARCA.",
+  "catalog.auto.administracion-certificados.body":
+    "Automates enabling ARCA’s digital certificate administration module to cut manual technical onboarding steps.",
+  "catalog.auto.administracion-certificados.howto":
+    "Run against the target CUIT and confirm the administration service is enabled in the portal.",
+  "catalog.auto.administracion-certificados.requirements":
+    "CUIT with admin permissions and a Set-Api API Key.",
   "catalog.auto.domicilio-fiscal-electronico.title": "Electronic Tax Domicile",
   "catalog.auto.domicilio-fiscal-electronico.desc": "DFE communications.",
-  "catalog.auto.domicilio-fiscal-electronico.body": "Get official DFE notifications.",
+  "catalog.auto.domicilio-fiscal-electronico.body":
+    "Fetch official Electronic Tax Domicile notifications for alerts, compliance and operational follow-up.",
+  "catalog.auto.domicilio-fiscal-electronico.howto":
+    "Run by CUIT and sync new messages into your inbox or ticketing system.",
+  "catalog.auto.domicilio-fiscal-electronico.requirements":
+    "CUIT with active DFE and authorized automation access.",
   "catalog.auto.mis-retenciones.title": "My Withholdings",
   "catalog.auto.mis-retenciones.desc": "Withholdings and perceptions in My Retentions.",
-  "catalog.auto.mis-retenciones.body": "Automated My Retentions query.",
+  "catalog.auto.mis-retenciones.body":
+    "Automated query of withholdings and perceptions in My Retentions for accounting and fiscal control.",
+  "catalog.auto.mis-retenciones.howto":
+    "Set CUIT and period; run and export results to your ERP or tax file.",
+  "catalog.auto.mis-retenciones.requirements":
+    "CUIT with My Retentions data and a Set-Api API Key.",
   "catalog.auto.crear-punto-venta.title": "Create point of sale",
   "catalog.auto.crear-punto-venta.desc": "New POS in Points of Sale and Addresses.",
-  "catalog.auto.crear-punto-venta.body": "Automated POS creation in ARCA.",
+  "catalog.auto.crear-punto-venta.body":
+    "Automated POS creation in ARCA to speed branch or electronic channel onboarding.",
+  "catalog.auto.crear-punto-venta.howto":
+    "Send address, POS type and required fields; the automation creates it and returns the POS identifier.",
+  "catalog.auto.crear-punto-venta.requirements":
+    "Issuer CUIT, valid tax address and permissions to manage points of sale.",
   "catalog.auto.listar-puntos-venta.title": "List points of sale",
   "catalog.auto.listar-puntos-venta.desc": "List configured points of sale.",
-  "catalog.auto.listar-puntos-venta.body": "Query all active POS for the taxpayer.",
+  "catalog.auto.listar-puntos-venta.body":
+    "Query all active points of sale for the taxpayer to sync your internal catalog before issuing.",
+  "catalog.auto.listar-puntos-venta.howto":
+    "Run by CUIT and use the list to validate POS in invoicing or configuration dashboards.",
+  "catalog.auto.listar-puntos-venta.requirements":
+    "CUIT with configured POS and a Set-Api API Key.",
   "catalog.auto.nuestra-parte.title": "Our Part",
   "catalog.auto.nuestra-parte.desc": "Our Part service information.",
-  "catalog.auto.nuestra-parte.body": "Data ARCA shows about the taxpayer.",
+  "catalog.auto.nuestra-parte.body":
+    "Retrieves data ARCA exposes about the taxpayer in Our Part for fiscal profiles and tax identity checks.",
+  "catalog.auto.nuestra-parte.howto":
+    "Query by CUIT and persist relevant fields (activity, taxes, etc.) in your CRM or client panel.",
+  "catalog.auto.nuestra-parte.requirements":
+    "Valid CUIT and access to the Our Part automation.",
   "catalog.auto.ccma.title": "CCMA",
   "catalog.auto.ccma.desc": "Monotributo and autonomous account — debt and movements.",
-  "catalog.auto.ccma.body": "Debt summary and movements by period.",
+  "catalog.auto.ccma.body":
+    "Summarizes debt and movements for the Monotributo/Autonomous current account, grouped by period for financial/fiscal analysis.",
+  "catalog.auto.ccma.howto":
+    "Provide CUIT and range; process balances and movements into reports or overdue alerts.",
+  "catalog.auto.ccma.requirements":
+    "Monotributo/autonomous CUIT with CCMA and a Set-Api API Key.",
   "catalog.auto.mis-facilidades.title": "My Payment Plans",
   "catalog.auto.mis-facilidades.desc": "Taxpayer payment plans.",
-  "catalog.auto.mis-facilidades.body": "Automated payment plan query.",
+  "catalog.auto.mis-facilidades.body":
+    "Automated query of current or historical payment plans for installment tracking and compliance.",
+  "catalog.auto.mis-facilidades.howto":
+    "Run by CUIT; show plan status and due dates in your panel or send internal reminders.",
+  "catalog.auto.mis-facilidades.requirements":
+    "CUIT with plans in My Payment Plans and Set-Api automation access.",
 
   "catalog.tool.constatar-cae.title": "Verify CAE",
   "catalog.tool.constatar-cae.desc": "Validate a CAE against ARCA.",

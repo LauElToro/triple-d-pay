@@ -61,6 +61,13 @@ export const catalogPt: TranslationDict = {
   "docs.example": "Exemplo",
   "docs.comingSoonLang": "Em breve",
   "docs.backToDocs": "Voltar à docs",
+  "docs.overview": "Descrição",
+  "docs.howto": "Como usar",
+  "docs.requirements": "Requisitos",
+  "docs.integration": "Código de integração",
+  "docs.integrationHint":
+    "Use sua API Key Set-Api. O SDK encapsula autenticação e o formato da ARCA.",
+  "docs.webServices": "Web services",
 
   "pricing.title": "Preço",
   "pricing.subtitle": "Planos simples. Mude quando quiser no painel.",

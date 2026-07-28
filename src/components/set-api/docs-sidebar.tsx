@@ -15,13 +15,13 @@ export function DocsSidebarExtra() {
         <div className="font-mono text-[10px] uppercase text-slate mb-2">
           {t("docs.webServices")}
         </div>
-        <ul className="space-y-1 max-h-40 overflow-y-auto">
+        <ul className="space-y-0.5">
           {WEB_SERVICE_SLUGS.map((slug) => (
             <li key={slug}>
               <Link
                 to="/docs/web-services/$slug"
                 params={{ slug }}
-                className="block rounded px-2 py-1 text-xs hover:bg-mist truncate"
+                className="block rounded px-2 py-1.5 text-xs leading-snug hover:bg-mist"
                 activeProps={{ className: "bg-mist text-signal font-medium" }}
               >
                 {t(catalogKey("ws", slug, "title"))}
@@ -34,13 +34,13 @@ export function DocsSidebarExtra() {
         <div className="font-mono text-[10px] uppercase text-slate mb-2">
           {t("docs.automations")}
         </div>
-        <ul className="space-y-1 max-h-40 overflow-y-auto">
+        <ul className="space-y-0.5">
           {AUTOMATION_SLUGS.map((slug) => (
             <li key={slug}>
               <Link
                 to="/docs/automations/$slug"
                 params={{ slug }}
-                className="block rounded px-2 py-1 text-xs hover:bg-mist truncate"
+                className="block rounded px-2 py-1.5 text-xs leading-snug hover:bg-mist"
                 activeProps={{ className: "bg-mist text-signal font-medium" }}
               >
                 {t(catalogKey("auto", slug, "title"))}

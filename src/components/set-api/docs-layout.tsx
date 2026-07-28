@@ -14,8 +14,8 @@ export function DocsLayout({
 
   return (
     <PublicShell>
-      <div className="mx-auto max-w-6xl px-6 py-10 grid md:grid-cols-[220px_1fr] gap-10">
-        <aside className="md:sticky md:top-24 md:self-start space-y-4">
+      <div className="mx-auto max-w-6xl px-6 py-10 grid md:grid-cols-[240px_1fr] gap-10">
+        <aside className="space-y-6 md:sticky md:top-24 md:self-start">
           <nav className="text-sm space-y-1">
             <div className="font-mono text-[10px] uppercase text-slate mb-2">{t("docs.title")}</div>
             <Link
