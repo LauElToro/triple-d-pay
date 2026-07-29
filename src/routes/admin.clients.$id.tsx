@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import { formatARS, formatDate } from "@/lib/format";
+import { useTranslation } from "@/lib/i18n-context";
 import { ArrowLeft } from "lucide-react";
 
 export const Route = createFileRoute("/admin/clients/$id")({
@@ -66,13 +67,14 @@ interface Detail {
 
 function AdminClientDetail() {
   const { id } = Route.useParams();
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["admin-client", id],
     queryFn: () => api.get<Detail>(`/api/admin/clients/${id}`),
   });
 
   if (isLoading || !data) {
-    return <p className="text-slate text-sm font-mono">Cargando cliente…</p>;
+    return <p className="text-slate text-sm font-mono">{t("admin.clients.loadingDetail")}</p>;
   }
 
   const { client, owner, members, keys, invoices, usage30d } = data;
@@ -82,7 +84,9 @@ function AdminClientDetail() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <Button asChild variant="ghost" size="sm" className="mb-2 -ml-2">
-            <Link to="/admin/clients"><ArrowLeft className="h-4 w-4 mr-1" /> Clientes</Link>
+            <Link to="/admin/clients">
+              <ArrowLeft className="h-4 w-4 mr-1" /> {t("admin.clients.back")}
+            </Link>
           </Button>
           <h1 className="text-3xl font-display font-bold">{client.name}</h1>
           <p className="text-sm text-slate font-mono">
@@ -94,29 +98,31 @@ function AdminClientDetail() {
 
       <div className="grid md:grid-cols-2 gap-4">
         <Card className="border-line">
-          <CardHeader><CardTitle className="font-display text-lg">Owner</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.owner")}</CardTitle></CardHeader>
           <CardContent className="text-sm space-y-1">
             <div>{owner.name ?? "—"}</div>
             <div className="font-mono text-slate">{owner.email}</div>
-            <div className="text-slate">Último login: {formatDate(owner.lastLoginAt)}</div>
+            <div className="text-slate">
+              {t("admin.clients.lastLogin", { date: formatDate(owner.lastLoginAt) })}
+            </div>
           </CardContent>
         </Card>
         <Card className="border-line">
-          <CardHeader><CardTitle className="font-display text-lg">Onboarding</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.onboarding")}</CardTitle></CardHeader>
           <CardContent className="text-sm space-y-1">
-            <div>Uso: {client.intendedUse ?? "—"}</div>
-            <div>Rol: {client.companyRole ?? "—"}</div>
-            <div>Tamaño: {client.companySize ?? "—"}</div>
-            <div>Cómo nos conoció: {client.heardAbout ?? "—"}</div>
+            <div>{t("admin.clients.use", { value: client.intendedUse ?? "—" })}</div>
+            <div>{t("admin.clients.role", { value: client.companyRole ?? "—" })}</div>
+            <div>{t("admin.clients.size", { value: client.companySize ?? "—" })}</div>
+            <div>{t("admin.clients.heardAbout", { value: client.heardAbout ?? "—" })}</div>
             <div className="text-slate">
-              Completado: {formatDate(client.onboardingCompletedAt)}
+              {t("admin.clients.completed", { date: formatDate(client.onboardingCompletedAt) })}
             </div>
           </CardContent>
         </Card>
       </div>
 
       <Card className="border-line">
-        <CardHeader><CardTitle className="font-display text-lg">Miembros</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.members")}</CardTitle></CardHeader>
         <CardContent className="space-y-2">
           {members.map((m) => (
             <div key={m.id} className="flex justify-between text-sm border-b border-line pb-2 last:border-0">
@@ -126,7 +132,9 @@ function AdminClientDetail() {
               </div>
               <div className="text-right text-xs text-slate">
                 <div>{m.orgRole}{m.subRole ? ` · ${m.subRole}` : ""}</div>
-                <div>login {formatDate(m.user.lastLoginAt)}</div>
+                <div>
+                  {t("admin.loginLabel")} {formatDate(m.user.lastLoginAt)}
+                </div>
               </div>
             </div>
           ))}
@@ -135,7 +143,7 @@ function AdminClientDetail() {
 
       <div className="grid md:grid-cols-2 gap-4">
         <Card className="border-line">
-          <CardHeader><CardTitle className="font-display text-lg">Keys</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.keys")}</CardTitle></CardHeader>
           <CardContent className="space-y-2">
             {keys.map((k) => (
               <div key={k.id} className="flex justify-between text-sm">
@@ -143,16 +151,16 @@ function AdminClientDetail() {
                 <Badge variant="outline">{k.status}</Badge>
               </div>
             ))}
-            {keys.length === 0 && <p className="text-sm text-slate">Sin keys.</p>}
+            {keys.length === 0 && <p className="text-sm text-slate">{t("admin.clients.noKeys")}</p>}
           </CardContent>
         </Card>
         <Card className="border-line">
-          <CardHeader><CardTitle className="font-display text-lg">Uso 30d</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.usage30d")}</CardTitle></CardHeader>
           <CardContent className="text-sm space-y-2">
-            <div>Units: {usage30d.units}</div>
-            <div>Ingreso: {formatARS(usage30d.revenue)}</div>
-            <div>Costo est.: {formatARS(usage30d.providerCost)}</div>
-            <div>Margen: {formatARS(usage30d.margin)}</div>
+            <div>{t("admin.clients.units", { value: usage30d.units })}</div>
+            <div>{t("admin.clients.revenue", { value: formatARS(usage30d.revenue) })}</div>
+            <div>{t("admin.clients.estCost", { value: formatARS(usage30d.providerCost) })}</div>
+            <div>{t("admin.clients.margin", { value: formatARS(usage30d.margin) })}</div>
             {usage30d.byService.map((s) => (
               <div key={s.service} className="flex justify-between border-t border-line pt-2">
                 <span className="font-mono">{s.service}</span>
@@ -164,15 +172,21 @@ function AdminClientDetail() {
       </div>
 
       <Card className="border-line">
-        <CardHeader><CardTitle className="font-display text-lg">Facturas</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.invoices")}</CardTitle></CardHeader>
         <CardContent className="space-y-2">
           {invoices.map((inv) => (
             <div key={inv.id} className="flex justify-between text-sm">
               <span className="font-mono text-xs">{inv.id.slice(0, 8)}…</span>
-              <span>{formatARS(inv.amount)} · {inv.status} · vence {formatDate(inv.dueAt)}</span>
+              <span>
+                {t("admin.clients.invoiceLine", {
+                  amount: formatARS(inv.amount),
+                  status: inv.status,
+                  due: formatDate(inv.dueAt),
+                })}
+              </span>
             </div>
           ))}
-          {invoices.length === 0 && <p className="text-sm text-slate">Sin facturas.</p>}
+          {invoices.length === 0 && <p className="text-sm text-slate">{t("admin.clients.noInvoices")}</p>}
         </CardContent>
       </Card>
     </div>

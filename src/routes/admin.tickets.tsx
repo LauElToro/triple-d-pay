@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { api } from "@/lib/api";
+import { useTranslation } from "@/lib/i18n-context";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/tickets")({
@@ -40,7 +41,14 @@ const statusStyle: Record<string, string> = {
   closed: "bg-mist text-slate border-line",
 };
 
+const localeTag: Record<string, string> = {
+  es: "es-AR",
+  en: "en-US",
+  pt: "pt-BR",
+};
+
 function AdminTickets() {
+  const { t, locale } = useTranslation();
   const qc = useQueryClient();
   const [selected, setSelected] = useState<string | null>(null);
   const [reply, setReply] = useState("");
@@ -61,7 +69,7 @@ function AdminTickets() {
       setReply("");
       qc.invalidateQueries({ queryKey: ["admin-ticket", selected] });
       qc.invalidateQueries({ queryKey: ["admin-tickets"] });
-      toast.success("Ticket actualizado");
+      toast.success(t("admin.tickets.updated"));
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -69,30 +77,32 @@ function AdminTickets() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">Tickets</h1>
-        <p className="text-slate text-sm">Soporte a clientes — respondé y resolvé rápido.</p>
+        <h1 className="text-3xl font-display font-bold">{t("admin.tickets.title")}</h1>
+        <p className="text-slate text-sm">{t("admin.tickets.subtitle")}</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         <Card className="border-line">
-          <CardHeader><CardTitle className="font-display">Cola</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="font-display">{t("admin.tickets.queue")}</CardTitle></CardHeader>
           <CardContent className="space-y-2 max-h-[70vh] overflow-y-auto">
-            {list.data?.tickets.map((t) => (
+            {list.data?.tickets.map((ticket) => (
               <button
-                key={t.id}
-                onClick={() => setSelected(t.id)}
-                className={`w-full text-left border rounded-md p-3 transition ${selected === t.id ? "border-signal bg-signal/5" : "border-line"}`}
+                key={ticket.id}
+                onClick={() => setSelected(ticket.id)}
+                className={`w-full text-left border rounded-md p-3 transition ${selected === ticket.id ? "border-signal bg-signal/5" : "border-line"}`}
               >
                 <div className="flex justify-between items-center gap-2">
-                  <span className="font-medium truncate">{t.subject}</span>
-                  <Badge variant="outline" className={statusStyle[t.status]}>{t.status}</Badge>
+                  <span className="font-medium truncate">{ticket.subject}</span>
+                  <Badge variant="outline" className={statusStyle[ticket.status]}>{ticket.status}</Badge>
                 </div>
                 <div className="text-xs text-slate mt-1">
-                  {t.org} · {t.author} · {t.priority}
+                  {ticket.org} · {ticket.author} · {ticket.priority}
                 </div>
               </button>
             ))}
-            {list.data?.tickets.length === 0 && <p className="text-slate text-sm">Sin tickets.</p>}
+            {list.data?.tickets.length === 0 && (
+              <p className="text-slate text-sm">{t("admin.tickets.empty")}</p>
+            )}
           </CardContent>
         </Card>
 
@@ -106,10 +116,10 @@ function AdminTickets() {
               >
                 <SelectTrigger className="w-36 h-8"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="open">Abierto</SelectItem>
-                  <SelectItem value="pending">Pendiente</SelectItem>
-                  <SelectItem value="resolved">Resuelto</SelectItem>
-                  <SelectItem value="closed">Cerrado</SelectItem>
+                  <SelectItem value="open">{t("admin.tickets.statusOpen")}</SelectItem>
+                  <SelectItem value="pending">{t("admin.tickets.statusPending")}</SelectItem>
+                  <SelectItem value="resolved">{t("admin.tickets.statusResolved")}</SelectItem>
+                  <SelectItem value="closed">{t("admin.tickets.statusClosed")}</SelectItem>
                 </SelectContent>
               </Select>
             </CardHeader>
@@ -118,15 +128,22 @@ function AdminTickets() {
                 {detail.data.messages.map((m) => (
                   <div key={m.id} className={`rounded-md p-3 text-sm ${m.isStaff ? "bg-signal/5 border border-signal/20" : "bg-mist border border-line"}`}>
                     <div className="text-xs text-slate font-mono mb-1">
-                      {m.isStaff ? "Soporte" : m.author} · {new Date(m.createdAt).toLocaleString("es-AR")}
+                      {m.isStaff ? t("admin.tickets.staff") : m.author} ·{" "}
+                      {new Date(m.createdAt).toLocaleString(localeTag[locale] ?? "es-AR")}
                     </div>
                     {m.body}
                   </div>
                 ))}
               </div>
               <div className="flex gap-2">
-                <Input value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Responder…" />
-                <Button onClick={() => update.mutate({ message: reply })} disabled={!reply}>Enviar</Button>
+                <Input
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
+                  placeholder={t("admin.tickets.replyPlaceholder")}
+                />
+                <Button onClick={() => update.mutate({ message: reply })} disabled={!reply}>
+                  {t("admin.tickets.send")}
+                </Button>
               </div>
             </CardContent>
           </Card>

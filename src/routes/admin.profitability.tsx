@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatChip } from "@/components/set-api/stat-chip";
 import { api } from "@/lib/api";
 import { formatARS } from "@/lib/format";
+import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/admin/profitability")({
   component: AdminProfitability,
@@ -30,30 +31,31 @@ interface Profitability {
 }
 
 function AdminProfitability() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["admin-profitability"],
     queryFn: () => api.get<Profitability>("/api/admin/profitability"),
   });
 
   if (isLoading || !data) {
-    return <p className="text-slate text-sm font-mono">Cargando rentabilidad…</p>;
+    return <p className="text-slate text-sm font-mono">{t("admin.profit.loading")}</p>;
   }
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">Rentabilidad</h1>
+        <h1 className="text-3xl font-display font-bold">{t("admin.profit.title")}</h1>
         <p className="text-slate text-sm">
-          Ingreso cobrado vs costo estimado del proveedor ARCA (últimos {data.periodDays} días).
+          {t("admin.profit.subtitle", { days: data.periodDays })}
         </p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatChip label="Units" value={data.totals.units} />
-        <StatChip label="Ingreso" value={formatARS(data.totals.revenue)} />
-        <StatChip label="Costo estimado" value={formatARS(data.totals.providerCost)} />
+        <StatChip label={t("admin.profit.units")} value={data.totals.units} />
+        <StatChip label={t("admin.profit.revenue")} value={formatARS(data.totals.revenue)} />
+        <StatChip label={t("admin.profit.estCost")} value={formatARS(data.totals.providerCost)} />
         <StatChip
-          label="Margen"
+          label={t("admin.profit.margin")}
           value={`${formatARS(data.totals.margin)}${
             data.totals.marginPct != null ? ` (${data.totals.marginPct.toFixed(0)}%)` : ""
           }`}
@@ -62,7 +64,7 @@ function AdminProfitability() {
 
       <Card className="border-line">
         <CardHeader>
-          <CardTitle className="font-display text-lg">Por servicio</CardTitle>
+          <CardTitle className="font-display text-lg">{t("admin.profit.byService")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {data.services.map((s) => (
@@ -79,13 +81,17 @@ function AdminProfitability() {
                 </span>
               </div>
               <div className="text-xs text-slate mt-1">
-                {s.calls} calls · {s.units} units · ingreso {formatARS(s.revenue)} · costo{" "}
-                {formatARS(s.providerCost)}
+                {t("admin.profit.serviceLine", {
+                  calls: s.calls,
+                  units: s.units,
+                  revenue: formatARS(s.revenue),
+                  cost: formatARS(s.providerCost),
+                })}
               </div>
             </div>
           ))}
           {data.services.length === 0 && (
-            <p className="text-sm text-slate">Sin uso metered todavía.</p>
+            <p className="text-sm text-slate">{t("admin.profit.empty")}</p>
           )}
         </CardContent>
       </Card>

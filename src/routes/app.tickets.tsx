@@ -81,7 +81,7 @@ function TicketsPage() {
   });
 
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6 w-full">
       <div>
         <h1 className="text-3xl font-display font-bold">Soporte</h1>
         <p className="text-slate text-sm">Reportá problemas y seguí el estado de tus tickets.</p>

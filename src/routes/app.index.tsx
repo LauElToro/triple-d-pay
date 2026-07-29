@@ -71,7 +71,7 @@ function DashboardHome() {
   }
 
   return (
-    <div className="space-y-8 max-w-6xl">
+    <div className="space-y-8 w-full">
       <AppPageHeader
         title={t("sidebar.home")}
         description={user?.email}
@@ -82,10 +82,10 @@ function DashboardHome() {
 
       {keys.isLoading ? (
         <p className="text-sm text-slate font-mono">{t("common.loading")}</p>
-      ) : activeKey ? (
-        <AccessTokenCard apiKey={activeKey} />
       ) : (
-        <AccessTokenCard apiKey={null} />
+        <div className="w-full lg:w-1/2">
+          <AccessTokenCard apiKey={activeKey} />
+        </div>
       )}
 
       <section className="space-y-4">

@@ -186,6 +186,17 @@
   animation: auth-spin 0.75s linear infinite;
 }
 
+/* Dashboard sidebar: active nav = brand green (signal) */
+[data-sidebar="menu-button"][data-active="true"] {
+  background-color: color-mix(in oklch, var(--signal) 18%, transparent) !important;
+  color: var(--signal) !important;
+  font-weight: 700 !important;
+}
+
+[data-sidebar="menu-button"][data-active="true"] svg {
+  color: var(--signal) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

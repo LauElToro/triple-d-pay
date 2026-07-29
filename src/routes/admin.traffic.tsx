@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatChip } from "@/components/set-api/stat-chip";
 import { api } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/admin/traffic")({
   component: AdminTraffic,
@@ -30,7 +31,7 @@ interface Traffic {
   }[];
 }
 
-function Rank({ title, data }: { title: string; data: { label: string; count: number }[] }) {
+function Rank({ title, data, empty }: { title: string; data: { label: string; count: number }[]; empty: string }) {
   return (
     <Card className="border-line">
       <CardHeader><CardTitle className="font-display text-lg">{title}</CardTitle></CardHeader>
@@ -41,33 +42,36 @@ function Rank({ title, data }: { title: string; data: { label: string; count: nu
             <span className="font-mono shrink-0">{d.count}</span>
           </div>
         ))}
-        {data.length === 0 && <p className="text-sm text-slate">Sin datos.</p>}
+        {data.length === 0 && <p className="text-sm text-slate">{empty}</p>}
       </CardContent>
     </Card>
   );
 }
 
 function AdminTraffic() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["admin-traffic"],
     queryFn: () => api.get<Traffic>("/api/admin/traffic"),
   });
 
-  if (isLoading || !data) return <p className="text-slate text-sm font-mono">Cargando tráfico…</p>;
+  if (isLoading || !data) {
+    return <p className="text-slate text-sm font-mono">{t("admin.traffic.loading")}</p>;
+  }
 
   const maxDay = Math.max(1, ...data.daily.map((d) => d.count));
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">Tráfico</h1>
-        <p className="text-slate text-sm">Dónde y cuándo entran los usuarios (últimos 30 días).</p>
+        <h1 className="text-3xl font-display font-bold">{t("admin.traffic.title")}</h1>
+        <p className="text-slate text-sm">{t("admin.traffic.subtitle")}</p>
       </div>
 
-      <StatChip label="Logins 30d" value={data.totals.logins30d} />
+      <StatChip label={t("admin.traffic.logins30d")} value={data.totals.logins30d} />
 
       <Card className="border-line">
-        <CardHeader><CardTitle className="font-display text-lg">Logins por día</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="font-display text-lg">{t("admin.traffic.loginsByDay")}</CardTitle></CardHeader>
         <CardContent>
           <div className="flex items-end gap-1 h-32 overflow-x-auto">
             {data.daily.map((d) => (
@@ -84,13 +88,13 @@ function AdminTraffic() {
       </Card>
 
       <div className="grid md:grid-cols-3 gap-4">
-        <Rank title="Países" data={data.byCountry} />
-        <Rank title="Referrers" data={data.byReferrer} />
-        <Rank title="Landing" data={data.byLanding} />
+        <Rank title={t("admin.traffic.countries")} data={data.byCountry} empty={t("admin.noData")} />
+        <Rank title={t("admin.traffic.referrers")} data={data.byReferrer} empty={t("admin.noData")} />
+        <Rank title={t("admin.traffic.landing")} data={data.byLanding} empty={t("admin.noData")} />
       </div>
 
       <Card className="border-line">
-        <CardHeader><CardTitle className="font-display text-lg">Últimos accesos</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="font-display text-lg">{t("admin.traffic.recentAccess")}</CardTitle></CardHeader>
         <CardContent className="space-y-2 max-h-[480px] overflow-y-auto">
           {data.recent.map((e) => (
             <div key={e.id} className="text-sm border-b border-line pb-2 last:border-0">
@@ -102,7 +106,7 @@ function AdminTraffic() {
                 {e.org ?? "—"} · {e.planId ?? "—"} · {e.country ?? "??"} · {e.ip ?? "—"}
               </div>
               <div className="text-xs text-slate truncate">
-                {e.landingPath ?? "/"} · ref {e.referrer ?? "direct"}
+                {e.landingPath ?? "/"} · {t("admin.ref")} {e.referrer ?? t("admin.direct")}
                 {e.utmSource ? ` · utm ${e.utmSource}` : ""}
               </div>
             </div>

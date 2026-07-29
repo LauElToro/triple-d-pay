@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/admin/clients")({
   component: AdminClients,
@@ -35,6 +36,7 @@ interface Client {
 }
 
 function AdminClients() {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({
     queryKey: ["admin-clients"],
     queryFn: () => api.get<{ clients: Client[] }>("/api/admin/clients"),
@@ -43,23 +45,23 @@ function AdminClients() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-display font-bold">Clientes</h1>
-        <p className="text-slate text-sm">Organizaciones, origen, plan y último acceso.</p>
+        <h1 className="text-3xl font-display font-bold">{t("admin.clients.title")}</h1>
+        <p className="text-slate text-sm">{t("admin.clients.subtitle")}</p>
       </div>
       {isLoading ? (
-        <p className="text-slate text-sm font-mono">Cargando…</p>
+        <p className="text-slate text-sm font-mono">{t("admin.clients.loading")}</p>
       ) : (
         <div className="border border-line rounded-md bg-card overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="font-mono text-xs uppercase">Cliente</TableHead>
-                <TableHead className="font-mono text-xs uppercase">Owner</TableHead>
-                <TableHead className="font-mono text-xs uppercase">Plan</TableHead>
-                <TableHead className="font-mono text-xs uppercase">Origen</TableHead>
-                <TableHead className="font-mono text-xs uppercase">KYC</TableHead>
-                <TableHead className="font-mono text-xs uppercase">Último login</TableHead>
-                <TableHead className="font-mono text-xs uppercase">Miembros</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colClient")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colOwner")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colPlan")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colSource")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colKyc")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colLastLogin")}</TableHead>
+                <TableHead className="font-mono text-xs uppercase">{t("admin.clients.colMembers")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

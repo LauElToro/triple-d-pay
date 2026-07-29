@@ -13,7 +13,7 @@ function CuitsPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 w-full">
       <AppPageHeader
         title={t("cuits.title")}
         description={t("cuits.subtitle")}

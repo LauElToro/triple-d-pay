@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import type { PlanId } from "@/lib/api-types";
 import { useAuth } from "@/lib/auth-context";
@@ -49,8 +49,16 @@ function SubscriptionPage() {
     }
   };
 
+  const customPlan = {
+    name: t("pricing.custom.name"),
+    price: t("pricing.custom.price"),
+    tagline: t("pricing.custom.tagline"),
+    features: [0, 1, 2, 3].map((i) => t(`pricing.custom.feature${i}`)),
+    cta: t("pricing.custom.cta"),
+  };
+
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 w-full">
       <AppPageHeader
         title={t("subscription.title")}
         description={t("subscription.subtitle")}
@@ -66,7 +74,7 @@ function SubscriptionPage() {
         </TabsList>
 
         <TabsContent value="plan" className="mt-6" data-tour="sub-plans">
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((p) => {
               const current = activeOrg?.planId === p.id;
               return (
@@ -102,6 +110,26 @@ function SubscriptionPage() {
                 </Card>
               );
             })}
+            <Card className="border-line">
+              <CardHeader>
+                <CardTitle className="font-display text-2xl">{customPlan.name}</CardTitle>
+                <p className="text-sm text-slate">{customPlan.tagline}</p>
+                <p className="font-mono text-2xl mt-2 text-ink">{customPlan.price}</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-2 text-sm">
+                  {customPlan.features.map((f) => (
+                    <li key={f} className="flex gap-2">
+                      <Check className="h-4 w-4 text-signal shrink-0 mt-0.5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild className="w-full" variant="outline">
+                  <Link to="/contact">{customPlan.cta}</Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 

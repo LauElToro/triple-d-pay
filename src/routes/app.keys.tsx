@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyField } from "@/components/set-api/copy-field";
+import { CodeBlock } from "@/components/set-api/code-block";
 import { KeyStatusBadge } from "@/components/set-api/key-status-badge";
 import { AppPageHeader } from "@/components/set-api/app-page-header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -71,7 +72,7 @@ function KeysPage() {
   const activeKey = list.find((k) => k.status === "active") ?? list[0] ?? null;
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 w-full">
       <AppPageHeader
         title={t("keys.title")}
         description={t("keys.subtitle")}
@@ -169,15 +170,16 @@ function KeysPage() {
           <CardTitle className="font-display">{t("keys.sdkTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <pre className="bg-ink text-paper rounded-md p-4 text-sm font-mono overflow-x-auto">
-{`import { SetApi } from "@set-api/sdk";
+          <CodeBlock
+            comment="// npm i @set-api/sdk"
+            code={`import { SetApi } from "@set-api/sdk";
 
 const api = new SetApi({
   apiKey: process.env.SET_API_KEY, // tu API Key
 });
 
 const inv = await api.invoices.create({ /* ... */ });`}
-          </pre>
+          />
         </CardContent>
       </Card>
     </div>

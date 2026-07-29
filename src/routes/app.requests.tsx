@@ -29,7 +29,7 @@ function RequestsPage() {
   const avg = daily.length ? Math.round(total7d / daily.length) : 0;
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 w-full">
       <AppPageHeader
         title={t("usage.title")}
         description={

@@ -93,7 +93,7 @@ function TeamPage() {
   });
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 w-full">
       <div>
         <h1 className="text-3xl font-display font-bold">Equipo</h1>
         <p className="text-slate text-sm">Invitá colaboradores y asigná permisos por sub-rol.</p>

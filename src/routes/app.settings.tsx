@@ -92,7 +92,7 @@ function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-2xl" data-tour="settings-page">
+    <div className="space-y-6 w-full" data-tour="settings-page">
       <div>
         <h1 className="text-3xl font-display font-bold">{t("settings.title")}</h1>
         <p className="text-slate text-sm">{t("settings.subtitle")}</p>
