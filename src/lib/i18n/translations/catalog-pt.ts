@@ -54,6 +54,8 @@ export const catalogPt: TranslationDict = {
   "docs.title": "Documentação",
   "docs.subtitle": "Guias, referência e exemplos para conectar com ARCA.",
   "docs.quickstart": "Início rápido",
+  "docs.toc": "Índice",
+  "docs.openToc": "Abrir índice da documentação",
   "docs.automations": "Automações",
   "docs.quickstartTitle": "Comece em minutos",
   "docs.quickstartDesc": "Instale o SDK, configure sua API Key e emita seu primeiro comprovante.",

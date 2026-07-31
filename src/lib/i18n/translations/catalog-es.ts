@@ -53,6 +53,8 @@ export const catalogEs: TranslationDict = {
   "docs.title": "Documentación",
   "docs.subtitle": "Guías, referencia y ejemplos para conectar con ARCA.",
   "docs.quickstart": "Quickstart",
+  "docs.toc": "Índice",
+  "docs.openToc": "Abrir índice de documentación",
   "docs.webServices": "Web services",
   "docs.automations": "Automatizaciones",
   "docs.quickstartTitle": "Empezá en minutos",

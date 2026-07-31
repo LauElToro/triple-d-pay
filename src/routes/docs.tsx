@@ -1,6 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { DocsLayout } from "@/components/set-api/docs-layout";
-import { DocsSidebarExtra } from "@/components/set-api/docs-sidebar";
 
 export const Route = createFileRoute("/docs")({
   component: DocsRouteLayout,
@@ -8,7 +7,7 @@ export const Route = createFileRoute("/docs")({
 
 function DocsRouteLayout() {
   return (
-    <DocsLayout aside={<DocsSidebarExtra />}>
+    <DocsLayout>
       <Outlet />
     </DocsLayout>
   );
