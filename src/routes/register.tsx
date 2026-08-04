@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { AuthShell } from "@/components/set-api/auth-shell";
 import { AuthBusyOverlay } from "@/components/set-api/auth-busy-overlay";
-import { GoogleButton } from "@/components/set-api/google-button";
+import { GoogleButton, isGoogleSignInEnabled } from "@/components/set-api/google-button";
 import { PasswordInput } from "@/components/set-api/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -244,26 +244,30 @@ function RegisterPage() {
                   {loading ? t("register.submitting") : t("register.submit")}
                 </Button>
               </form>
-              <div className="my-5 flex items-center gap-3 text-xs text-slate">
-                <div className="h-px flex-1 bg-line" />
-                <span>{t("auth.or")}</span>
-                <div className="h-px flex-1 bg-line" />
-              </div>
-              <GoogleButton
-                onCredential={async (credential) => {
-                  startLoading(t("register.googleLoading"));
-                  try {
-                    await loginWithGoogle(credential);
-                    navigate({ to: "/onboarding" });
-                  } catch (err) {
-                    toast.error(
-                      err instanceof ApiError ? err.message : t("register.googleError"),
-                    );
-                  } finally {
-                    setLoading(false);
-                  }
-                }}
-              />
+              {isGoogleSignInEnabled() && (
+                <>
+                  <div className="my-5 flex items-center gap-3 text-xs text-slate">
+                    <div className="h-px flex-1 bg-line" />
+                    <span>{t("auth.or")}</span>
+                    <div className="h-px flex-1 bg-line" />
+                  </div>
+                  <GoogleButton
+                    onCredential={async (credential) => {
+                      startLoading(t("register.googleLoading"));
+                      try {
+                        await loginWithGoogle(credential);
+                        navigate({ to: "/onboarding" });
+                      } catch (err) {
+                        toast.error(
+                          err instanceof ApiError ? err.message : t("register.googleError"),
+                        );
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                  />
+                </>
+              )}
               <p className="text-sm text-center text-slate mt-5">
                 {t("register.hasAccount")}{" "}
                 <Link to="/login" className="text-signal font-medium hover:underline">

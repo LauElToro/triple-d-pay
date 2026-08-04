@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AuthShell } from "@/components/set-api/auth-shell";
 import { AuthBusyOverlay } from "@/components/set-api/auth-busy-overlay";
-import { GoogleButton } from "@/components/set-api/google-button";
+import { GoogleButton, isGoogleSignInEnabled } from "@/components/set-api/google-button";
 import { PasswordInput } from "@/components/set-api/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -216,26 +216,30 @@ function LoginPage() {
                   {loading ? t("login.submitting") : t("login.submit")}
                 </Button>
               </form>
-              <div className="my-5 flex items-center gap-3 text-xs text-slate">
-                <div className="h-px flex-1 bg-line" />
-                <span>{t("auth.or")}</span>
-                <div className="h-px flex-1 bg-line" />
-              </div>
-              <GoogleButton
-                onCredential={async (credential) => {
-                  startLoading(t("login.googleLoading"));
-                  try {
-                    await afterLogin(await loginWithGoogle(credential));
-                    setRememberedEmail(remember ? email : null);
-                  } catch (err) {
-                    toast.error(
-                      err instanceof ApiError ? err.message : t("login.googleError"),
-                    );
-                  } finally {
-                    setLoading(false);
-                  }
-                }}
-              />
+              {isGoogleSignInEnabled() && (
+                <>
+                  <div className="my-5 flex items-center gap-3 text-xs text-slate">
+                    <div className="h-px flex-1 bg-line" />
+                    <span>{t("auth.or")}</span>
+                    <div className="h-px flex-1 bg-line" />
+                  </div>
+                  <GoogleButton
+                    onCredential={async (credential) => {
+                      startLoading(t("login.googleLoading"));
+                      try {
+                        await afterLogin(await loginWithGoogle(credential));
+                        setRememberedEmail(remember ? email : null);
+                      } catch (err) {
+                        toast.error(
+                          err instanceof ApiError ? err.message : t("login.googleError"),
+                        );
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                  />
+                </>
+              )}
               <p className="text-sm text-center text-slate mt-5">
                 {t("login.noAccount")}{" "}
                 <Link to="/register" className="text-signal font-medium hover:underline">
