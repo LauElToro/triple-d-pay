@@ -27,17 +27,33 @@ function GoogleOriginHint() {
   const [origin, setOrigin] = useState<string | null>(null);
 
   useEffect(() => {
-    setOrigin(window.location.origin);
+    const current = window.location.origin;
+    setOrigin(current);
+    console.info(
+      "[Set-Api] Google Sign-In: registrá este origen en Google Cloud → Credentials → Orígenes de JavaScript:",
+      current,
+    );
   }, []);
 
   if (!import.meta.env.DEV || !origin) return null;
 
   return (
-    <p className="mt-2 text-center text-[10px] leading-relaxed text-slate font-mono px-2">
-      Google Cloud → Credentials → OAuth client →{" "}
-      <span className="text-ink">Orígenes de JavaScript</span>:{" "}
-      <code className="text-signal">{origin}</code>
-    </p>
+    <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-left">
+      <p className="text-[11px] font-medium text-amber-900">
+        Si Google falla con &quot;no registered origin&quot;, agregá estos orígenes en Google Cloud:
+      </p>
+      <ul className="mt-1 space-y-0.5 text-[10px] font-mono text-amber-950">
+        <li>
+          <code>{origin}</code> ← origen actual
+        </li>
+        <li>
+          <code>http://localhost:3000</code>
+        </li>
+        <li>
+          <code>http://127.0.0.1:3000</code>
+        </li>
+      </ul>
+    </div>
   );
 }
 

@@ -8,6 +8,8 @@ import { nitro } from "nitro/vite";
 export default defineConfig({
   server: {
     port: 3000,
+    /** Fail loudly if 3000 is taken — Google OAuth origins must match this port. */
+    strictPort: true,
   },
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
