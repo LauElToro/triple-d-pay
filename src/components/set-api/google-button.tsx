@@ -52,6 +52,15 @@ function GoogleOriginHint() {
         <li>
           <code>http://127.0.0.1:3000</code>
         </li>
+        <li>
+          <code>https://www.set-api.com</code>
+        </li>
+        <li>
+          <code>https://set-api.com</code>
+        </li>
+        <li>
+          <code>https://set-api-web.vercel.app</code>
+        </li>
       </ul>
     </div>
   );
