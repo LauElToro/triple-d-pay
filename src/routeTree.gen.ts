@@ -21,6 +21,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminClientsRouteImport } from './routes/admin.clients'
+import { Route as AdminHealthRouteImport } from './routes/admin.health'
 import { Route as AdminProfitabilityRouteImport } from './routes/admin.profitability'
 import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
 import { Route as AdminTrafficRouteImport } from './routes/admin.traffic'
@@ -106,6 +107,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AdminClientsRoute = AdminClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminHealthRoute = AdminHealthRouteImport.update({
+  id: '/health',
+  path: '/health',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminProfitabilityRoute = AdminProfitabilityRouteImport.update({
@@ -251,6 +257,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
@@ -288,6 +295,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
@@ -329,6 +337,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/register': typeof RegisterRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
+  '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
@@ -371,6 +380,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/health'
     | '/admin/profitability'
     | '/admin/tickets'
     | '/admin/traffic'
@@ -408,6 +418,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/health'
     | '/admin/profitability'
     | '/admin/tickets'
     | '/admin/traffic'
@@ -448,6 +459,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/register'
     | '/admin/clients'
+    | '/admin/health'
     | '/admin/profitability'
     | '/admin/tickets'
     | '/admin/traffic'
@@ -579,6 +591,13 @@ declare module '@tanstack/react-router' {
       path: '/clients'
       fullPath: '/admin/clients'
       preLoaderRoute: typeof AdminClientsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/health': {
+      id: '/admin/health'
+      path: '/health'
+      fullPath: '/admin/health'
+      preLoaderRoute: typeof AdminHealthRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/profitability': {
@@ -780,6 +799,7 @@ const AdminClientsRouteWithChildren = AdminClientsRoute._addFileChildren(
 
 interface AdminRouteChildren {
   AdminClientsRoute: typeof AdminClientsRouteWithChildren
+  AdminHealthRoute: typeof AdminHealthRoute
   AdminProfitabilityRoute: typeof AdminProfitabilityRoute
   AdminTicketsRoute: typeof AdminTicketsRoute
   AdminTrafficRoute: typeof AdminTrafficRoute
@@ -788,6 +808,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminClientsRoute: AdminClientsRouteWithChildren,
+  AdminHealthRoute: AdminHealthRoute,
   AdminProfitabilityRoute: AdminProfitabilityRoute,
   AdminTicketsRoute: AdminTicketsRoute,
   AdminTrafficRoute: AdminTrafficRoute,

@@ -24,6 +24,7 @@ import {
   ArrowLeft,
   Activity,
   Wallet,
+  HeartPulse,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
@@ -52,6 +53,7 @@ export function AdminSidebar() {
     { title: t("admin.nav.kpis"), url: "/admin", icon: BarChart3 },
     { title: t("admin.nav.clients"), url: "/admin/clients", icon: Building2 },
     { title: t("admin.nav.traffic"), url: "/admin/traffic", icon: Activity },
+    { title: t("admin.nav.health"), url: "/admin/health", icon: HeartPulse },
     { title: t("admin.nav.profitability"), url: "/admin/profitability", icon: Wallet },
     { title: t("admin.nav.tickets"), url: "/admin/tickets", icon: LifeBuoy },
   ];
