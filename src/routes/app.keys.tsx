@@ -180,7 +180,7 @@ const api = new SetApi({
 
 const cae = await api.comprobantes.create({
   cbteTipo: 1,
-  ptoVta: 1,
+  ptoVta: 2, // usá un PV válido de api.puntosVenta.list()
   concepto: 1,
   docTipo: 99,
   docNro: 0,

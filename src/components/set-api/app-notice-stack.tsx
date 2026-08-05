@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { ShieldAlert, KeyRound, X } from "lucide-react";
+import { ShieldAlert, KeyRound, X, Building2 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import type { ApiKeyView, InvoiceView } from "@/lib/api-types";
@@ -98,6 +98,32 @@ export function AppNoticeStack() {
       });
     }
 
+    if (activeOrg && !activeOrg.arcaCuit && !dismissed.cuit) {
+      list.push({
+        id: "cuit",
+        node: (
+          <Alert className="border-signal bg-signal/5 relative pr-10">
+            <Building2 className="h-4 w-4 text-signal" />
+            <AlertTitle className="font-display">{t("notices.cuitTitle")}</AlertTitle>
+            <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <span>{t("notices.cuitDesc")}</span>
+              <Button size="sm" asChild>
+                <Link to="/app/settings">{t("notices.cuitCta")}</Link>
+              </Button>
+            </AlertDescription>
+            <button
+              type="button"
+              className="absolute top-3 right-3 text-slate hover:text-ink"
+              aria-label={t("common.dismiss")}
+              onClick={() => dismiss("cuit")}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </Alert>
+        ),
+      });
+    }
+
     if (pendingInvoice && !dismissed[`inv-${pendingInvoice.id}`]) {
       list.push({
         id: `inv-${pendingInvoice.id}`,
@@ -133,7 +159,7 @@ export function AppNoticeStack() {
 
     return list;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [kycNeeded, dismissed, pendingInvoice, suspendedKey, t, user?.kycStatus]);
+  }, [kycNeeded, dismissed, pendingInvoice, suspendedKey, activeOrg?.arcaCuit, t, user?.kycStatus]);
 
   if (notices.length === 0) return null;
 

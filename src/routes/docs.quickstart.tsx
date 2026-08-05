@@ -31,8 +31,9 @@ function DocsQuickstart() {
             <TabsTrigger value="php" disabled>{t("docs.comingSoonLang")} PHP</TabsTrigger>
             <TabsTrigger value="py" disabled>{t("docs.comingSoonLang")} Python</TabsTrigger>
           </TabsList>
-          <TabsContent value="js" className="mt-4">
+          <TabsContent value="js" className="mt-4 space-y-3">
             <CodeBlock code={QUICKSTART_CODE} comment="// npm i @set-api/sdk" />
+            <p className="text-sm text-slate">{t("docs.ptoVtaNote")}</p>
           </TabsContent>
         </Tabs>
       </section>

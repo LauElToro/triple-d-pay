@@ -62,6 +62,8 @@ export const catalogEs: TranslationDict = {
   "docs.install": "Instalación",
   "docs.example": "Ejemplo",
   "docs.comingSoonLang": "Próximamente",
+  "docs.ptoVtaNote":
+    "Usá ptoVta 2 o 10 según tu delegación en ARCA. Monotributo suele facturar con punto de venta 2.",
   "docs.backToDocs": "Volver a docs",
   "docs.overview": "Descripción",
   "docs.howto": "Cómo usarlo",

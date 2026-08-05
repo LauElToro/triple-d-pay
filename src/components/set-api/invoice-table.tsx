@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import type { InvoiceView } from "@/lib/api-types";
 import { formatARS, formatDate } from "@/lib/format";
@@ -78,12 +77,9 @@ export function InvoiceTable({ invoices: invoicesProp }: { invoices?: InvoiceVie
               <TableCell className="font-mono text-sm">{formatDate(inv.dueAt)}</TableCell>
               <TableCell>
                 {(inv.status === "pending" || inv.status === "overdue") && (
-                  <Button
-                    size="sm"
-                    onClick={() => alert(t("billing.paySoon"))}
-                  >
-                    {t("common.pay")}
-                  </Button>
+                  <Badge variant="outline" className="font-mono uppercase">
+                    {t("common.comingSoon")}
+                  </Badge>
                 )}
               </TableCell>
             </TableRow>

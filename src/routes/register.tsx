@@ -15,7 +15,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { ApiError } from "@/lib/api";
+import { ApiError, api } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
 import type { PlanId } from "@/lib/api-types";
@@ -55,6 +55,7 @@ function RegisterPage() {
   const [loadingLabel, setLoadingLabel] = useState("");
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
   const [code, setCode] = useState("");
+  const [resending, setResending] = useState(false);
 
   const startLoading = (label: string) => {
     setLoadingLabel(label);
@@ -140,6 +141,26 @@ function RegisterPage() {
                 </div>
                 <Button type="submit" className="w-full" size="lg" disabled={loading || code.length < 6}>
                   {loading ? t("register.verifying") : t("register.verifySubmit")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  disabled={loading || resending}
+                  onClick={async () => {
+                    if (!pendingEmail) return;
+                    setResending(true);
+                    try {
+                      await api.post("/api/auth/resend-verification", { email: pendingEmail });
+                      toast.success(t("register.resendSent"));
+                    } catch (err) {
+                      toast.error(err instanceof ApiError ? err.message : t("register.resendError"));
+                    } finally {
+                      setResending(false);
+                    }
+                  }}
+                >
+                  {resending ? t("register.resending") : t("register.resendCode")}
                 </Button>
                 <Button
                   type="button"

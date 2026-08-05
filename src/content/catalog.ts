@@ -78,9 +78,10 @@ const api = new SetApi({
 });
 
 // Factura A — cbteTipo 1 (WSFE). cuit_emisor opcional si está en la org.
+// ptoVta: usá 2 o 10 según tu delegación ARCA (Monotributo suele usar PV 2).
 const result = await api.comprobantes.create({
   cbteTipo: 1,
-  ptoVta: 1,
+  ptoVta: 2,
   concepto: 1,
   docTipo: 99,
   docNro: 0,
@@ -98,7 +99,7 @@ export const AUTOMATION_SAMPLE_CODE = `import { SetApi } from "@set-api/sdk";
 const api = new SetApi({ apiKey: process.env.SET_API_KEY! });
 
 // Último comprobante emitido en el punto de venta
-const ultimo = await api.comprobantes.ultimo(1, 1);
+const ultimo = await api.comprobantes.ultimo(1, 2);
 
 // Padrón + constancia del receptor
 const padron = await api.contribuyente.get("30123456789");`;

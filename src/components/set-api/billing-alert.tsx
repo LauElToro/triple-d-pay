@@ -1,5 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Clock } from "lucide-react";
 import type { InvoiceView } from "@/lib/api-types";
 import { formatARS, formatDate } from "@/lib/format";
@@ -31,9 +31,9 @@ export function BillingAlert({ invoice }: { invoice: InvoiceView }) {
                 due: formatDate(invoice.dueAt),
               })}
         </span>
-        <Button size="sm" onClick={() => alert(t("billing.paySoon"))}>
-          {t("billing.payMercadoPago")}
-        </Button>
+        <Badge variant="outline" className="shrink-0 font-mono uppercase">
+          {t("common.comingSoon")}
+        </Badge>
       </AlertDescription>
     </Alert>
   );

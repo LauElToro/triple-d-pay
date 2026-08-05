@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LogoMark } from "@/components/set-api/logo";
 import { Button } from "@/components/ui/button";
@@ -89,11 +89,8 @@ function KycPage() {
 
   return (
     <div className="min-h-screen bg-paper flex flex-col">
-      <header className="p-6 flex items-center justify-between">
+      <header className="p-6">
         <LogoMark />
-        <Button variant="ghost" asChild>
-          <Link to="/app">{t("kyc.skipToApp")}</Link>
-        </Button>
       </header>
       <div className="flex-1 flex items-center justify-center px-4">
         <Card className="w-full max-w-md border-line">

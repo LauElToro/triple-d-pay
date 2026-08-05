@@ -32,6 +32,14 @@ function AppLayout() {
   }, [hydrated, user, activeOrg, navigate]);
 
   useEffect(() => {
+    if (!hydrated || !user) return;
+    if (user.systemRole === "SUPERADMIN") return;
+    if (user.kycStatus === "NOT_STARTED" || user.kycStatus === "PENDING") {
+      navigate({ to: "/kyc" });
+    }
+  }, [hydrated, user, navigate]);
+
+  useEffect(() => {
     if (!user) return;
     void refreshMe().catch(() => undefined);
   }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps

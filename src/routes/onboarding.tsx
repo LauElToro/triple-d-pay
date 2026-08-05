@@ -13,8 +13,15 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/auth-context";
 import { api, ApiError } from "@/lib/api";
+import type { SessionUser } from "@/lib/api-types";
 import { useTranslation } from "@/lib/i18n-context";
 import { toast } from "sonner";
+
+function postOnboardingPath(user: { systemRole: string; kycStatus: string }): "/kyc" | "/app" {
+  if (user.systemRole === "SUPERADMIN") return "/app";
+  if (user.kycStatus === "NOT_STARTED" || user.kycStatus === "PENDING") return "/kyc";
+  return "/app";
+}
 
 export const Route = createFileRoute("/onboarding")({
   head: () => ({ meta: [{ title: "Conocete · Set-Api" }] }),
@@ -44,7 +51,7 @@ function OnboardingPage() {
       return;
     }
     if (activeOrg?.onboardingCompletedAt || user.onboardingSkippedAt) {
-      navigate({ to: "/app" });
+      navigate({ to: postOnboardingPath(user) });
     }
   }, [hydrated, user, activeOrg, navigate]);
 
@@ -64,7 +71,8 @@ function OnboardingPage() {
         });
       }
       await refreshMe();
-      navigate({ to: "/app" });
+      const me = await api.get<{ user: SessionUser }>("/api/me");
+      navigate({ to: postOnboardingPath(me.user) });
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : t("onboarding.error"));
     } finally {

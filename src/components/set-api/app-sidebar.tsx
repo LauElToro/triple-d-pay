@@ -18,9 +18,7 @@ import { Button } from "@/components/ui/button";
 import { LogoMark } from "./logo";
 import {
   Home,
-  Hash,
   Activity,
-  Zap,
   CreditCard,
   LogOut,
   KeyRound,
@@ -56,9 +54,7 @@ export function AppSidebar() {
   const items = [
     { title: t("sidebar.home"), url: "/app", icon: Home, tour: "nav-home" },
     { title: t("sidebar.apiKey"), url: "/app/keys", icon: KeyRound, tour: "nav-keys" },
-    { title: t("sidebar.cuits"), url: "/app/cuits", icon: Hash, tour: "nav-cuits" },
     { title: t("sidebar.requests"), url: "/app/requests", icon: Activity, tour: "nav-requests" },
-    { title: t("sidebar.automations"), url: "/app/automations", icon: Zap, tour: "nav-automations" },
     { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard, tour: "nav-subscription" },
     { title: t("sidebar.team"), url: "/app/team", icon: Users, tour: "nav-team" },
     { title: t("sidebar.tickets"), url: "/app/tickets", icon: LifeBuoy, tour: "nav-tickets" },

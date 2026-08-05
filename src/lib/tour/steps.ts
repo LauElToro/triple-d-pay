@@ -12,6 +12,7 @@ export type TourRoute =
   | "/app/subscription"
   | "/app/requests"
   | "/app/team"
+  | "/app/settings"
   | "/admin";
 
 const LOCAL_KEY = "sa_tours_done";
@@ -59,6 +60,10 @@ export function tourStepsFor(route: string, t: (key: string) => string): TourSte
     ],
     "/app/team": [
       { target: "team-invite", title: t("tour.team.s0title"), body: t("tour.team.s0body") },
+    ],
+    "/app/settings": [
+      { target: "settings-org", title: t("tour.settings.s0title"), body: t("tour.settings.s0body") },
+      { target: "settings-cuit", title: t("tour.settings.s1title"), body: t("tour.settings.s1body") },
     ],
     "/admin": [
       { target: "admin-kpis", title: t("tour.admin.s0title"), body: t("tour.admin.s0body") },

@@ -62,6 +62,8 @@ export const catalogEn: TranslationDict = {
   "docs.install": "Installation",
   "docs.example": "Example",
   "docs.comingSoonLang": "Coming soon",
+  "docs.ptoVtaNote":
+    "Use ptoVta 2 or 10 depending on your ARCA delegation. Monotributo taxpayers often use point of sale 2.",
   "docs.backToDocs": "Back to docs",
   "docs.overview": "Overview",
   "docs.howto": "How to use it",

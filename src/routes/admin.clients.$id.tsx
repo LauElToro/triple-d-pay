@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
+import { api, ApiError } from "@/lib/api";
 import { formatARS, formatDate } from "@/lib/format";
 import { useTranslation } from "@/lib/i18n-context";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/clients/$id")({
   component: AdminClientDetail,
@@ -68,9 +69,46 @@ interface Detail {
 function AdminClientDetail() {
   const { id } = Route.useParams();
   const { t } = useTranslation();
+  const qc = useQueryClient();
+
   const { data, isLoading } = useQuery({
     queryKey: ["admin-client", id],
     queryFn: () => api.get<Detail>(`/api/admin/clients/${id}`),
+  });
+
+  const invalidate = () => qc.invalidateQueries({ queryKey: ["admin-client", id] });
+
+  const closeCycle = useMutation({
+    mutationFn: () => api.post(`/api/admin/clients/${id}/close-cycle`),
+    onSuccess: () => {
+      toast.success(t("admin.clients.closeCycleDone"));
+      void invalidate();
+    },
+    onError: (err) => {
+      toast.error(err instanceof ApiError ? err.message : t("admin.clients.closeCycleError"));
+    },
+  });
+
+  const reactivate = useMutation({
+    mutationFn: () => api.post(`/api/admin/clients/${id}/reactivate`),
+    onSuccess: () => {
+      toast.success(t("admin.clients.reactivateDone"));
+      void invalidate();
+    },
+    onError: (err) => {
+      toast.error(err instanceof ApiError ? err.message : t("admin.clients.reactivateError"));
+    },
+  });
+
+  const markPaid = useMutation({
+    mutationFn: (invoiceId: string) => api.post(`/api/admin/invoices/${invoiceId}/mark-paid`),
+    onSuccess: () => {
+      toast.success(t("admin.clients.markPaidDone"));
+      void invalidate();
+    },
+    onError: (err) => {
+      toast.error(err instanceof ApiError ? err.message : t("admin.clients.markPaidError"));
+    },
   });
 
   if (isLoading || !data) {
@@ -78,10 +116,13 @@ function AdminClientDetail() {
   }
 
   const { client, owner, members, keys, invoices, usage30d } = data;
+  const hasSuspendedKeys = keys.some((k) => k.status === "suspended");
+  const pendingInvoices = invoices.filter((i) => i.status === "pending" || i.status === "overdue");
+  const actionPending = closeCycle.isPending || reactivate.isPending || markPaid.isPending;
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <Button asChild variant="ghost" size="sm" className="mb-2 -ml-2">
             <Link to="/admin/clients">
@@ -93,7 +134,29 @@ function AdminClientDetail() {
             {client.planId} · {client.source ?? "direct"} · {client.clientType ?? "standard"}
           </p>
         </div>
-        <Badge variant="outline">{client.kycStatus}</Badge>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="outline">{client.kycStatus}</Badge>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={actionPending}
+            onClick={() => closeCycle.mutate()}
+          >
+            {closeCycle.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+            {t("admin.clients.closeCycle")}
+          </Button>
+          {hasSuspendedKeys && (
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={actionPending}
+              onClick={() => reactivate.mutate()}
+            >
+              {reactivate.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+              {t("admin.clients.reactivateKeys")}
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -175,7 +238,7 @@ function AdminClientDetail() {
         <CardHeader><CardTitle className="font-display text-lg">{t("admin.clients.invoices")}</CardTitle></CardHeader>
         <CardContent className="space-y-2">
           {invoices.map((inv) => (
-            <div key={inv.id} className="flex justify-between text-sm">
+            <div key={inv.id} className="flex justify-between items-center gap-3 text-sm flex-wrap">
               <span className="font-mono text-xs">{inv.id.slice(0, 8)}…</span>
               <span>
                 {t("admin.clients.invoiceLine", {
@@ -184,9 +247,25 @@ function AdminClientDetail() {
                   due: formatDate(inv.dueAt),
                 })}
               </span>
+              {(inv.status === "pending" || inv.status === "overdue") && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={actionPending}
+                  onClick={() => markPaid.mutate(inv.id)}
+                >
+                  {markPaid.isPending && markPaid.variables === inv.id && (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  )}
+                  {t("admin.clients.markPaid")}
+                </Button>
+              )}
             </div>
           ))}
           {invoices.length === 0 && <p className="text-sm text-slate">{t("admin.clients.noInvoices")}</p>}
+          {pendingInvoices.length === 0 && invoices.length > 0 && (
+            <p className="text-xs text-slate">{t("admin.clients.noPendingInvoices")}</p>
+          )}
         </CardContent>
       </Card>
     </div>

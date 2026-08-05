@@ -1,4 +1,5 @@
 export type PlanId = "free" | "fixed" | "usage";
+export type PlanStatus = "active" | "pending_payment";
 export type SystemRole = "SUPERADMIN" | "ADMIN" | "USER";
 export type KycStatus = "NOT_STARTED" | "PENDING" | "APPROVED" | "DECLINED";
 export type SubRole = "DEV" | "CONTABILIDAD" | "ADMINISTRACION";
@@ -37,6 +38,8 @@ export interface OrgSummary {
   id: string;
   name: string;
   planId: PlanId;
+  pendingPlanId?: PlanId | null;
+  planStatus?: PlanStatus;
   kycStatus: KycStatus;
   arcaCuit: string | null;
   clientType: string | null;
