@@ -73,21 +73,32 @@ export const PLATFORM_STATS = {
 
 export const QUICKSTART_CODE = `import { SetApi } from "@set-api/sdk";
 
-const api = new SetApi({ apiKey: process.env.SET_API_KEY });
+const api = new SetApi({
+  apiKey: process.env.SET_API_KEY!,
+});
 
-await api.invoices.create({
-  cuit: "30-71234567-8",
-  tipo: "FC_A",
-  items: [{ descripcion: "Servicio", total: 155364 }],
-});`;
-
-export const AUTOMATION_SAMPLE_CODE = `import { SetApi } from "@set-api/sdk";
-
-const api = new SetApi({ apiKey: process.env.SET_API_KEY });
-
-const result = await api.automations.run("mis-comprobantes", {
-  cuit: "30123456789",
-  filters: { tipo: "E", fechaEmision: "01/01/2026 - 31/01/2026" },
+// Factura A — cbteTipo 1 (WSFE). cuit_emisor opcional si está en la org.
+const result = await api.comprobantes.create({
+  cbteTipo: 1,
+  ptoVta: 1,
+  concepto: 1,
+  docTipo: 99,
+  docNro: 0,
+  cbteFch: "20260805",
+  impTotal: 1210,
+  impNeto: 1000,
+  impIVA: 210,
+  iva: [{ id: 5, baseImp: 1000, importe: 210 }],
 });
 
 console.log(result);`;
+
+export const AUTOMATION_SAMPLE_CODE = `import { SetApi } from "@set-api/sdk";
+
+const api = new SetApi({ apiKey: process.env.SET_API_KEY! });
+
+// Último comprobante emitido en el punto de venta
+const ultimo = await api.comprobantes.ultimo(1, 1);
+
+// Padrón + constancia del receptor
+const padron = await api.contribuyente.get("30123456789");`;

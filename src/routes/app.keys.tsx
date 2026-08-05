@@ -175,10 +175,21 @@ function KeysPage() {
             code={`import { SetApi } from "@set-api/sdk";
 
 const api = new SetApi({
-  apiKey: process.env.SET_API_KEY, // tu API Key
+  apiKey: process.env.SET_API_KEY!,
 });
 
-const inv = await api.invoices.create({ /* ... */ });`}
+const cae = await api.comprobantes.create({
+  cbteTipo: 1,
+  ptoVta: 1,
+  concepto: 1,
+  docTipo: 99,
+  docNro: 0,
+  cbteFch: "20260805",
+  impTotal: 1210,
+  impNeto: 1000,
+  impIVA: 210,
+  iva: [{ id: 5, baseImp: 1000, importe: 210 }],
+});`}
           />
         </CardContent>
       </Card>
