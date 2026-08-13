@@ -7,6 +7,7 @@ import { ShieldCheck, Loader2, ExternalLink } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { api, ApiError } from "@/lib/api";
 import { useTranslation } from "@/lib/i18n-context";
+import { KYC_REQUIRED } from "@/lib/kyc";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/kyc")({
@@ -27,7 +28,13 @@ function KycPage() {
   }, [hydrated, user, navigate]);
 
   useEffect(() => {
-    if (!user) return;
+    if (hydrated && user && !KYC_REQUIRED) {
+      navigate({ to: "/app" });
+    }
+  }, [hydrated, user, navigate]);
+
+  useEffect(() => {
+    if (!user || !KYC_REQUIRED) return;
     if (user.systemRole === "SUPERADMIN" || user.kycStatus === "APPROVED") {
       navigate({ to: "/app" });
       return;
@@ -37,16 +44,20 @@ function KycPage() {
       .get<{ kycStatus: string; session: { url: string | null; status: string } | null }>(
         "/api/kyc/status",
       )
-      .then((d) => {
+      .then(async (d) => {
         setStatus(d.kycStatus);
         if (d.session?.url) setSessionUrl(d.session.url);
+        if (d.kycStatus === "APPROVED") {
+          await refreshMe();
+          navigate({ to: "/app" });
+        }
       })
       .catch(() => undefined);
-  }, [user, navigate]);
+  }, [user, navigate, refreshMe]);
 
   // When PENDING, poll status — Didit webhook updates the DB; we just reflect it.
   useEffect(() => {
-    if (!user || status !== "PENDING") return;
+    if (!KYC_REQUIRED || !user || status !== "PENDING") return;
     let cancelled = false;
     const tick = async () => {
       if (cancelled) return;

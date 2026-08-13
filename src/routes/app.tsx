@@ -8,6 +8,7 @@ import { TourLauncher } from "@/components/set-api/tour-launcher";
 import { TourProvider } from "@/lib/tour/tour-context";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
+import { isKycBlocking } from "@/lib/kyc";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -33,8 +34,7 @@ function AppLayout() {
 
   useEffect(() => {
     if (!hydrated || !user) return;
-    if (user.systemRole === "SUPERADMIN") return;
-    if (user.kycStatus === "NOT_STARTED" || user.kycStatus === "PENDING") {
+    if (isKycBlocking(user)) {
       navigate({ to: "/kyc" });
     }
   }, [hydrated, user, navigate]);

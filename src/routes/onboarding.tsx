@@ -15,11 +15,11 @@ import { useAuth } from "@/lib/auth-context";
 import { api, ApiError } from "@/lib/api";
 import type { SessionUser } from "@/lib/api-types";
 import { useTranslation } from "@/lib/i18n-context";
+import { isKycBlocking } from "@/lib/kyc";
 import { toast } from "sonner";
 
 function postOnboardingPath(user: { systemRole: string; kycStatus: string }): "/kyc" | "/app" {
-  if (user.systemRole === "SUPERADMIN") return "/app";
-  if (user.kycStatus === "NOT_STARTED" || user.kycStatus === "PENDING") return "/kyc";
+  if (isKycBlocking(user)) return "/kyc";
   return "/app";
 }
 

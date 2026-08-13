@@ -9,6 +9,7 @@ import { api } from "@/lib/api";
 import type { ApiKeyView, InvoiceView } from "@/lib/api-types";
 import { BillingAlert } from "@/components/set-api/billing-alert";
 import { useTranslation } from "@/lib/i18n-context";
+import { isKycBlocking } from "@/lib/kyc";
 
 const DISMISS_KEY = "sa_notices_dismissed";
 
@@ -50,10 +51,7 @@ export function AppNoticeStack() {
   );
   const suspendedKey = keys.data?.keys.find((k) => k.status === "suspended");
 
-  const kycNeeded =
-    Boolean(user) &&
-    user!.systemRole !== "SUPERADMIN" &&
-    user!.kycStatus !== "APPROVED";
+  const kycNeeded = isKycBlocking(user);
 
   const dismiss = (id: string) => {
     const next = { ...dismissed, [id]: true };

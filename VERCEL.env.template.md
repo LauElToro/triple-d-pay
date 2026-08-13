@@ -21,6 +21,7 @@ Copiá en **Settings → Environment Variables → Production** (build time).
 | Variable | Valor en Vercel |
 |----------|-----------------|
 | `VITE_GOOGLE_CLIENT_ID` | Mismo Client ID que `GOOGLE_CLIENT_ID` en Backend |
+| `VITE_KYC_REQUIRED` | `true` para exigir KYC. Ausente/`false` = flujo deshabilitado (temporal) |
 
 ---
 

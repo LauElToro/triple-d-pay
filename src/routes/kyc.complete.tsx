@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
 import { useTranslation } from "@/lib/i18n-context";
+import { KYC_REQUIRED } from "@/lib/kyc";
 
 export const Route = createFileRoute("/kyc/complete")({
   head: () => ({ meta: [{ title: "Verificación en proceso · Set-Api" }] }),
@@ -19,6 +20,11 @@ function KycComplete() {
   const [state, setState] = useState<"polling" | "approved" | "declined" | "timeout">("polling");
 
   useEffect(() => {
+    if (!KYC_REQUIRED) navigate({ to: "/app" });
+  }, [navigate]);
+
+  useEffect(() => {
+    if (!KYC_REQUIRED) return;
     let attempts = 0;
     let cancelled = false;
     const poll = async () => {

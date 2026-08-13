@@ -13,6 +13,7 @@ import { api, ApiError } from "@/lib/api";
 import type { ApiKeyView, CreateKeyResponse } from "@/lib/api-types";
 import { formatDate } from "@/lib/format";
 import { useTranslation } from "@/lib/i18n-context";
+import { isKycBlocking } from "@/lib/kyc";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/keys")({
@@ -25,7 +26,7 @@ function KeysPage() {
   const qc = useQueryClient();
   const canWrite = hasPermission("keys:write");
   const canRead = hasPermission("keys:read");
-  const kycOk = user?.kycStatus === "APPROVED" || user?.systemRole === "SUPERADMIN";
+  const kycOk = !isKycBlocking(user);
 
   const keys = useQuery({
     queryKey: ["keys", activeOrg?.id],

@@ -22,6 +22,7 @@ import {
   setRememberedEmail,
 } from "@/lib/remembered-account";
 import { useTranslation } from "@/lib/i18n-context";
+import { isKycBlocking } from "@/lib/kyc";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
@@ -75,8 +76,8 @@ function LoginPage() {
       );
       return;
     }
-    const authUser = (res as { user?: { kycStatus?: string } }).user;
-    if (authUser?.kycStatus && authUser.kycStatus !== "APPROVED") {
+    const authUser = (res as { user?: { kycStatus?: string; systemRole?: string } }).user;
+    if (isKycBlocking(authUser)) {
       toast.info("Completá la verificación de identidad cuando puedas", {
         action: { label: "KYC", onClick: () => navigate({ to: "/kyc" }) },
       });
