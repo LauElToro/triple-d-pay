@@ -4,6 +4,7 @@ export const catalogEs: TranslationDict = {
   "nav.products": "Productos",
   "nav.docs": "Docs",
   "nav.tools": "Herramientas",
+  "nav.referrals": "Referidos",
   "nav.pricing": "Precio",
   "nav.contact": "Contacto",
   "nav.automations": "Automatizaciones",
@@ -49,6 +50,15 @@ export const catalogEs: TranslationDict = {
   "landing.whyAuthDesc": "Nos encargamos automáticamente de la autenticación al WSAA.",
   "landing.whyDevs": "Hecho para developers",
   "landing.whyDevsDesc": "SDK + API Key, pensado para integraciones en producción.",
+
+  "landing.referrals.title": "Programa de referidos",
+  "landing.referrals.subtitle":
+    "Invitá a otros equipos a Set-Api. Compartí tu link y seguí cómo crece tu red desde el panel.",
+  "landing.referrals.step1": "Creá tu cuenta y entrá al panel de Referidos",
+  "landing.referrals.step2": "Copiá tu link único y compartilo con quien quieras",
+  "landing.referrals.step3": "Cuando se registren con tu código, vas a ver el progreso en tus estadísticas",
+  "landing.referrals.cta": "Crear cuenta gratis",
+  "landing.referrals.ctaSecondary": "Ver planes",
 
   "docs.title": "Documentación",
   "docs.subtitle": "Guías, referencia y ejemplos para conectar con ARCA.",

@@ -31,6 +31,7 @@ import { Route as AppCuitsRouteImport } from './routes/app.cuits'
 import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
 import { Route as AppKeysRouteImport } from './routes/app.keys'
 import { Route as AppPlansRouteImport } from './routes/app.plans'
+import { Route as AppReferralsRouteImport } from './routes/app.referrals'
 import { Route as AppRequestsRouteImport } from './routes/app.requests'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppSubscriptionRouteImport } from './routes/app.subscription'
@@ -159,6 +160,11 @@ const AppPlansRoute = AppPlansRouteImport.update({
   path: '/plans',
   getParentRoute: () => AppRoute,
 } as any)
+const AppReferralsRoute = AppReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppRequestsRoute = AppRequestsRouteImport.update({
   id: '/requests',
   path: '/requests',
@@ -266,6 +272,7 @@ export interface FileRoutesByFullPath {
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/referrals': typeof AppReferralsRoute
   '/app/requests': typeof AppRequestsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscription': typeof AppSubscriptionRoute
@@ -304,6 +311,7 @@ export interface FileRoutesByTo {
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/referrals': typeof AppReferralsRoute
   '/app/requests': typeof AppRequestsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscription': typeof AppSubscriptionRoute
@@ -346,6 +354,7 @@ export interface FileRoutesById {
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
   '/app/plans': typeof AppPlansRoute
+  '/app/referrals': typeof AppReferralsRoute
   '/app/requests': typeof AppRequestsRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/subscription': typeof AppSubscriptionRoute
@@ -389,6 +398,7 @@ export interface FileRouteTypes {
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/referrals'
     | '/app/requests'
     | '/app/settings'
     | '/app/subscription'
@@ -427,6 +437,7 @@ export interface FileRouteTypes {
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/referrals'
     | '/app/requests'
     | '/app/settings'
     | '/app/subscription'
@@ -468,6 +479,7 @@ export interface FileRouteTypes {
     | '/app/invoices'
     | '/app/keys'
     | '/app/plans'
+    | '/app/referrals'
     | '/app/requests'
     | '/app/settings'
     | '/app/subscription'
@@ -663,6 +675,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPlansRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/referrals': {
+      id: '/app/referrals'
+      path: '/referrals'
+      fullPath: '/app/referrals'
+      preLoaderRoute: typeof AppReferralsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/requests': {
       id: '/app/requests'
       path: '/requests'
@@ -823,6 +842,7 @@ interface AppRouteChildren {
   AppInvoicesRoute: typeof AppInvoicesRoute
   AppKeysRoute: typeof AppKeysRoute
   AppPlansRoute: typeof AppPlansRoute
+  AppReferralsRoute: typeof AppReferralsRoute
   AppRequestsRoute: typeof AppRequestsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppSubscriptionRoute: typeof AppSubscriptionRoute
@@ -838,6 +858,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppInvoicesRoute: AppInvoicesRoute,
   AppKeysRoute: AppKeysRoute,
   AppPlansRoute: AppPlansRoute,
+  AppReferralsRoute: AppReferralsRoute,
   AppRequestsRoute: AppRequestsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppSubscriptionRoute: AppSubscriptionRoute,

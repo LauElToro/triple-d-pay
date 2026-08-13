@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { createFileRoute, Link, useRouterState } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { SiteHeader, SiteFooter } from "@/components/set-api/site-chrome";
 import { HeroComprobante } from "@/components/set-api/hero-comprobante";
@@ -22,6 +23,9 @@ import {
   BookOpen,
   KeyRound,
   Code2,
+  Gift,
+  Link2,
+  BarChart3,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -30,6 +34,14 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   const { t, plans } = useTranslation();
+  const hash = useRouterState({ select: (s) => s.location.hash });
+
+  useEffect(() => {
+    const id = hash.replace(/^#/, "");
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [hash]);
 
   const cycles = [
     { icon: Zap, title: t("landing.cycle1Title"), body: t("landing.cycle1Body") },
@@ -209,6 +221,41 @@ function Landing() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* REFERIDOS */}
+      <section id="referidos" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">
+            {t("landing.referrals.title")}
+          </h2>
+          <p className="text-slate mt-3 text-lg">{t("landing.referrals.subtitle")}</p>
+        </div>
+        <ol className="mt-10 grid md:grid-cols-3 gap-8">
+          {[
+            { icon: Gift, body: t("landing.referrals.step1") },
+            { icon: Link2, body: t("landing.referrals.step2") },
+            { icon: BarChart3, body: t("landing.referrals.step3") },
+          ].map(({ icon: Icon, body }, i) => (
+            <li key={i} className="flex gap-3">
+              <span className="font-mono text-xs text-signal mt-1 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <Icon className="h-5 w-5 text-signal mb-2" />
+                <p className="text-sm text-slate leading-relaxed">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button asChild>
+            <Link to="/register" search={{ plan: "free" }}>
+              {t("landing.referrals.cta")} <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link to="/pricing">{t("landing.referrals.ctaSecondary")}</Link>
+          </Button>
         </div>
       </section>
 

@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 const searchSchema = z.object({
   plan: z.enum(["free", "fixed", "usage"]).optional(),
+  ref: z.string().optional(),
 });
 
 export const Route = createFileRoute("/register")({
@@ -43,7 +44,7 @@ export const Route = createFileRoute("/register")({
 });
 
 function RegisterPage() {
-  const { plan: initialPlan } = Route.useSearch();
+  const { plan: initialPlan, ref: initialRef } = Route.useSearch();
   const { register, verifyEmail, loginWithGoogle, user, hydrated } = useAuth();
   const { t, plans } = useTranslation();
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [plan, setPlan] = useState<PlanId>(initialPlan ?? "free");
+  const [referralCode, setReferralCode] = useState(initialRef?.trim() ?? "");
   const [loading, setLoading] = useState(false);
   const [loadingLabel, setLoadingLabel] = useState("");
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
@@ -260,6 +262,17 @@ function RegisterPage() {
                     ))}
                   </RadioGroup>
                   <p className="text-xs text-slate">{t("register.planHint")}</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="referral">{t("register.referralLabel")}</Label>
+                  <Input
+                    id="referral"
+                    value={referralCode}
+                    onChange={(e) => setReferralCode(e.target.value)}
+                    placeholder={t("register.referralPlaceholder")}
+                    autoComplete="off"
+                  />
+                  <p className="text-xs text-slate">{t("register.referralHint")}</p>
                 </div>
                 <Button type="submit" className="w-full" size="lg" disabled={loading}>
                   {loading ? t("register.submitting") : t("register.submit")}

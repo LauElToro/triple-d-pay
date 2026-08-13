@@ -26,6 +26,7 @@ import {
   Users,
   LifeBuoy,
   Shield,
+  Gift,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useTranslation } from "@/lib/i18n-context";
@@ -58,6 +59,7 @@ export function AppSidebar() {
     { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard, tour: "nav-subscription" },
     { title: t("sidebar.team"), url: "/app/team", icon: Users, tour: "nav-team" },
     { title: t("sidebar.tickets"), url: "/app/tickets", icon: LifeBuoy, tour: "nav-tickets" },
+    { title: t("sidebar.referrals"), url: "/app/referrals", icon: Gift, tour: "nav-referrals" },
     { title: t("sidebar.settings"), url: "/app/settings", icon: Settings, tour: "nav-settings" },
   ];
 

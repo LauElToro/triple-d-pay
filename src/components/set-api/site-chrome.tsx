@@ -22,27 +22,41 @@ const mobileNavLinkClass =
   "text-base font-medium text-ink hover:text-signal transition-colors py-1";
 const mobileNavLinkActiveClass = "text-signal font-bold";
 
-function isPublicNavActive(to: string, pathname: string) {
-  return pathname === to || pathname.startsWith(`${to}/`);
+type PublicNavLink = {
+  to: "/" | "/productos/platform" | "/productos/factura" | "/docs" | "/tools" | "/pricing" | "/contact";
+  hash?: string;
+  label: string;
+};
+
+function isPublicNavActive(link: PublicNavLink, pathname: string, hash: string) {
+  const normalizedHash = hash.replace(/^#/, "");
+  if (link.hash) {
+    return pathname === link.to && normalizedHash === link.hash;
+  }
+  if (link.to === "/") return false;
+  return pathname === link.to || pathname.startsWith(`${link.to}/`);
 }
 
-function usePublicNavLinks() {
+function usePublicNavLinks(): PublicNavLink[] {
   const { t } = useTranslation();
   return [
     { to: "/productos/platform", label: t("product.platform.title") },
     { to: "/productos/factura", label: t("product.factura.title") },
     { to: "/docs", label: t("nav.docs") },
     { to: "/tools", label: t("nav.tools") },
+    { to: "/", hash: "referidos", label: t("nav.referrals") },
     { to: "/pricing", label: t("nav.pricing") },
     { to: "/contact", label: t("nav.contact") },
-  ] as const;
+  ];
 }
 
 export function SiteHeader() {
   const { t } = useTranslation();
   const links = usePublicNavLinks();
   const [open, setOpen] = useState(false);
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { pathname, hash } = useRouterState({
+    select: (s) => ({ pathname: s.location.pathname, hash: s.location.hash }),
+  });
 
   return (
     <header className="border-b border-line bg-card/70 backdrop-blur sticky top-0 z-30">
@@ -51,11 +65,12 @@ export function SiteHeader() {
         <nav className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
           <div className="hidden lg:flex items-center gap-4 mr-2">
             {links.map((link) => {
-              const active = isPublicNavActive(link.to, pathname);
+              const active = isPublicNavActive(link, pathname, hash);
               return (
                 <Link
-                  key={link.to}
+                  key={`${link.to}#${link.hash ?? ""}`}
                   to={link.to}
+                  hash={link.hash}
                   aria-current={active ? "page" : undefined}
                   className={cn(desktopNavLinkClass, active && desktopNavLinkActiveClass)}
                 >
@@ -101,11 +116,12 @@ export function SiteHeader() {
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-4">
                 {links.map((link) => {
-                  const active = isPublicNavActive(link.to, pathname);
+                  const active = isPublicNavActive(link, pathname, hash);
                   return (
-                    <SheetClose asChild key={link.to}>
+                    <SheetClose asChild key={`${link.to}#${link.hash ?? ""}`}>
                       <Link
                         to={link.to}
+                        hash={link.hash}
                         aria-current={active ? "page" : undefined}
                         className={cn(mobileNavLinkClass, active && mobileNavLinkActiveClass)}
                       >
@@ -170,6 +186,11 @@ export function SiteFooter() {
           <ul className="space-y-2">
             <li><Link to="/docs" className="hover:text-signal">{t("nav.docs")}</Link></li>
             <li><Link to="/docs/quickstart" className="hover:text-signal">{t("docs.quickstart")}</Link></li>
+            <li>
+              <Link to="/" hash="referidos" className="hover:text-signal">
+                {t("nav.referrals")}
+              </Link>
+            </li>
             <li><Link to="/contact" className="hover:text-signal">{t("nav.contact")}</Link></li>
           </ul>
         </div>
