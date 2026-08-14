@@ -1,9 +1,10 @@
-import type { ComponentType, SVGProps } from "react";
 import { BR, ES, US } from "country-flag-icons/react/3x2";
 import type { Locale } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
 
-const FLAGS: Record<Locale, ComponentType<SVGProps<SVGSVGElement>>> = {
+type FlagComponent = typeof ES;
+
+const FLAGS: Record<Locale, FlagComponent> = {
   es: ES,
   en: US,
   pt: BR,

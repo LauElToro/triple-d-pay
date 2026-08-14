@@ -41,7 +41,7 @@ export const catalogEn: TranslationDict = {
   "landing.wsTitle": "Available web services",
   "landing.wsSubtitle": "Integrate all ARCA web services simply and quickly.",
   "landing.integrationsTitle": "Integrations",
-  "landing.integrationsSubtitle": "SDKs and REST APIs for your favorite languages and platforms.",
+  "landing.integrationsSubtitle": "REST APIs for your favorite languages and platforms.",
   "landing.viewAllDocs": "View documentation",
   "landing.whyTitle": "Why Set-Api?",
   "landing.whyDocs": "Documentation",
@@ -49,7 +49,7 @@ export const catalogEn: TranslationDict = {
   "landing.whyAuth": "Authentication",
   "landing.whyAuthDesc": "We handle WSAA authentication automatically.",
   "landing.whyDevs": "Built for developers",
-  "landing.whyDevsDesc": "SDK + API Key, ready for production integrations.",
+  "landing.whyDevsDesc": "API REST + API Key, ready for production integrations.",
 
   "landing.referrals.title": "Referral program",
   "landing.referrals.subtitle":
@@ -68,7 +68,7 @@ export const catalogEn: TranslationDict = {
   "docs.webServices": "Web services",
   "docs.automations": "Automations",
   "docs.quickstartTitle": "Get started in minutes",
-  "docs.quickstartDesc": "Install the SDK, set your API Key and issue your first voucher.",
+  "docs.quickstartDesc": "Use the REST API, set your API Key and issue your first voucher.",
   "docs.install": "Installation",
   "docs.example": "Example",
   "docs.comingSoonLang": "Coming soon",
@@ -80,7 +80,7 @@ export const catalogEn: TranslationDict = {
   "docs.requirements": "Requirements",
   "docs.integration": "Integration code",
   "docs.integrationHint":
-    "Use your Set-Api API Key. The SDK handles authentication and ARCA request formatting.",
+    "Use your Set-Api API Key. The REST API handles authentication and ARCA-compatible payloads.",
 
   "pricing.title": "Pricing",
   "pricing.subtitle": "Simple plans. Change anytime from the dashboard.",
@@ -119,7 +119,7 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.facturacion-electronica.body":
     "Core fiscal emission service: issue valid ARCA vouchers, obtain CAE and QR payload. Covers standard invoices, credit/debit notes and common variants without hand-rolling SOAP or WSAA.",
   "catalog.ws.facturacion-electronica.howto":
-    "Create an API Key, authorize the invoicing WS on your certificate, then call the SDK emission endpoint with CUIT, voucher type, POS, items and amounts. The response includes CAE, expiry and data for PDF/QR.",
+    "Create an API Key, authorize the invoicing WS on your certificate, then call the API REST emission endpoint with CUIT, voucher type, POS, items and amounts. The response includes CAE, expiry and data for PDF/QR.",
   "catalog.ws.facturacion-electronica.requirements":
     "Active CUIT, digital certificate (homologation or production), authorized WS, enabled POS and a Set-Api plan with voucher quota.",
   "catalog.ws.comprobantes-turismo.title": "Tourism vouchers",
@@ -127,7 +127,7 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.comprobantes-turismo.body":
     "Built for tourism operators that need sector-specific vouchers with official validation and the same auth flow as other ARCA web services.",
   "catalog.ws.comprobantes-turismo.howto":
-    "Configure the operator CUIT, enable the tourism service and issue via SDK with trip/service data. Validate in homologation before production.",
+    "Configure the operator CUIT, enable the tourism service and issue via REST with trip/service data. Validate in homologation before production.",
   "catalog.ws.comprobantes-turismo.requirements":
     "Tourism operator CUIT, certificate with the tourism WS authorized and a Set-Api API Key.",
   "catalog.ws.factura-exportacion.title": "Export invoice",
@@ -135,15 +135,15 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.factura-exportacion.body":
     "Issue export vouchers with required fiscal fields (destination, currency, Incoterms when applicable) and obtain CAE without a custom SOAP stack.",
   "catalog.ws.factura-exportacion.howto":
-    "Build the payload with exporter, buyer and goods/services detail; emit via SDK and store CAE plus response for filing and shipping.",
+    "Build the payload with exporter, buyer and goods/services detail; emit via REST and store CAE plus response for filing and shipping.",
   "catalog.ws.factura-exportacion.requirements":
     "Exporter CUIT, certificate authorized for export invoicing and complete commercial/customs data.",
   "catalog.ws.padron.title": "Tax registry",
   "catalog.ws.padron.desc": "Query taxpayer data and validate CUIT/CUIL.",
   "catalog.ws.padron.body":
-    "Query ARCA’s tax registry to validate existence, legal name, tax address and status before issuing or onboarding a customer.",
+    "Query ARCAÃ¢â‚¬â„¢s tax registry to validate existence, legal name, tax address and status before issuing or onboarding a customer.",
   "catalog.ws.padron.howto":
-    "Send the CUIT/CUIL to look up; the SDK returns available registry fields. Useful for onboarding, pre-invoice checks and compliance.",
+    "Send the CUIT/CUIL to look up; the API REST returns available registry fields. Useful for onboarding, pre-invoice checks and compliance.",
   "catalog.ws.padron.requirements":
     "Set-Api API Key and registry WS enabled for your environment (homologation or production).",
   "catalog.ws.constatacion-comprobantes.title": "Voucher verification",
@@ -159,7 +159,7 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.carta-porte.body":
     "Issue and query electronic waybills for grain and agribusiness flows, aligned with official ARCA web services.",
   "catalog.ws.carta-porte.howto":
-    "Define origin, destination, product and transport data; issue or query via SDK. Persist the official id for tracking and roadside controls.",
+    "Define origin, destination, product and transport data; issue or query via REST. Persist the official id for tracking and roadside controls.",
   "catalog.ws.carta-porte.requirements":
     "Agribusiness operator CUIT, certificate with waybill WS authorized and load/transport details.",
   "catalog.ws.remito-carnico.title": "Meat remittance",
@@ -175,7 +175,7 @@ export const catalogEn: TranslationDict = {
   "catalog.ws.factura-mipyme.body":
     "MiPyME credit invoice operations: emission and related queries without rebuilding SOAP or WSAA ticket handling.",
   "catalog.ws.factura-mipyme.howto":
-    "Issue or query MiPyME invoices via SDK with regime and voucher data. Use response statuses and due dates in your collections flow.",
+    "Issue or query MiPyME invoices via REST with regime and voucher data. Use response statuses and due dates in your collections flow.",
   "catalog.ws.factura-mipyme.requirements":
     "CUIT under MiPyME regime, authorized WS and an active Set-Api plan.",
   "catalog.ws.web-service-generico.title": "Other web service",
@@ -190,7 +190,7 @@ export const catalogEn: TranslationDict = {
   "catalog.auto.mis-comprobantes.title": "My Vouchers",
   "catalog.auto.mis-comprobantes.desc": "Download issued or received vouchers by CUIT.",
   "catalog.auto.mis-comprobantes.body":
-    "Automation over ARCA’s My Vouchers app to fetch issued/received lists and details without scraping the UI.",
+    "Automation over ARCAÃ¢â‚¬â„¢s My Vouchers app to fetch issued/received lists and details without scraping the UI.",
   "catalog.auto.mis-comprobantes.howto":
     "Run with CUIT and filters (type, date range, issued/received). Feed results into BI, ERP or bank reconciliation.",
   "catalog.auto.mis-comprobantes.requirements":
@@ -254,7 +254,7 @@ export const catalogEn: TranslationDict = {
   "catalog.auto.administracion-certificados.title": "Digital Certificate Admin",
   "catalog.auto.administracion-certificados.desc": "Enable certificate administration service.",
   "catalog.auto.administracion-certificados.body":
-    "Automates enabling ARCA’s digital certificate administration module to cut manual technical onboarding steps.",
+    "Automates enabling ARCAÃ¢â‚¬â„¢s digital certificate administration module to cut manual technical onboarding steps.",
   "catalog.auto.administracion-certificados.howto":
     "Run against the target CUIT and confirm the administration service is enabled in the portal.",
   "catalog.auto.administracion-certificados.requirements":
@@ -300,7 +300,7 @@ export const catalogEn: TranslationDict = {
   "catalog.auto.nuestra-parte.requirements":
     "Valid CUIT and access to the Our Part automation.",
   "catalog.auto.ccma.title": "CCMA",
-  "catalog.auto.ccma.desc": "Monotributo and autonomous account — debt and movements.",
+  "catalog.auto.ccma.desc": "Monotributo and autonomous account Ã¢â‚¬â€ debt and movements.",
   "catalog.auto.ccma.body":
     "Summarizes debt and movements for the Monotributo/Autonomous current account, grouped by period for financial/fiscal analysis.",
   "catalog.auto.ccma.howto":
@@ -330,45 +330,45 @@ export const catalogEn: TranslationDict = {
   "catalog.tool.constancia-inscripcion.body": "Registration certificate lookup tool.",
 
   "catalog.integration.javascript.title": "JavaScript / TypeScript",
-  "catalog.integration.javascript.desc": "Official SDK for Node.js and browsers.",
-  "catalog.integration.javascript.body": "npm i @set-api/sdk",
+  "catalog.integration.javascript.desc": "REST API for Node.js and browsers.",
+  "catalog.integration.javascript.body": "curl https://set-api-backend.vercel.app/api/arca/comprobantes",
   "catalog.integration.api-rest.title": "REST API",
-  "catalog.integration.api-rest.desc": "Direct HTTP integration without SDK.",
+  "catalog.integration.api-rest.desc": "Direct HTTP integration without an additional client.",
   "catalog.integration.api-rest.body": "OpenAPI docs and curl examples.",
   "catalog.integration.php.title": "PHP",
-  "catalog.integration.php.desc": "PHP SDK — coming soon.",
+  "catalog.integration.php.desc": "PHP API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.php.body": "Coming soon.",
   "catalog.integration.python.title": "Python",
-  "catalog.integration.python.desc": "Python SDK — coming soon.",
+  "catalog.integration.python.desc": "Python API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.python.body": "Coming soon.",
   "catalog.integration.ruby.title": "Ruby",
-  "catalog.integration.ruby.desc": "Ruby SDK — coming soon.",
+  "catalog.integration.ruby.desc": "Ruby API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.ruby.body": "Coming soon.",
   "catalog.integration.java.title": "Java",
-  "catalog.integration.java.desc": "Java SDK — coming soon.",
+  "catalog.integration.java.desc": "Java API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.java.body": "Coming soon.",
   "catalog.integration.dotnet.title": ".NET",
-  "catalog.integration.dotnet.desc": ".NET SDK — coming soon.",
+  "catalog.integration.dotnet.desc": ".NET API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.dotnet.body": "Coming soon.",
   "catalog.integration.flutter.title": "Flutter",
-  "catalog.integration.flutter.desc": "Flutter SDK — coming soon.",
+  "catalog.integration.flutter.desc": "Flutter API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.flutter.body": "Coming soon.",
   "catalog.integration.golang.title": "Go",
-  "catalog.integration.golang.desc": "Go SDK — coming soon.",
+  "catalog.integration.golang.desc": "Go API REST Ã¢â‚¬â€ coming soon.",
   "catalog.integration.golang.body": "Coming soon.",
   "catalog.integration.n8n.title": "n8n",
-  "catalog.integration.n8n.desc": "n8n connector — coming soon.",
+  "catalog.integration.n8n.desc": "n8n connector Ã¢â‚¬â€ coming soon.",
   "catalog.integration.n8n.body": "Coming soon.",
   "catalog.integration.make.title": "Make",
-  "catalog.integration.make.desc": "Make connector — coming soon.",
+  "catalog.integration.make.desc": "Make connector Ã¢â‚¬â€ coming soon.",
   "catalog.integration.make.body": "Coming soon.",
   "catalog.integration.bubble.title": "Bubble",
-  "catalog.integration.bubble.desc": "Bubble plugin — coming soon.",
+  "catalog.integration.bubble.desc": "Bubble plugin Ã¢â‚¬â€ coming soon.",
   "catalog.integration.bubble.body": "Coming soon.",
   "catalog.integration.zapier.title": "Zapier",
-  "catalog.integration.zapier.desc": "Zapier connector — coming soon.",
+  "catalog.integration.zapier.desc": "Zapier connector Ã¢â‚¬â€ coming soon.",
   "catalog.integration.zapier.body": "Coming soon.",
   "catalog.integration.pipedream.title": "Pipedream",
-  "catalog.integration.pipedream.desc": "Pipedream connector — coming soon.",
+  "catalog.integration.pipedream.desc": "Pipedream connector Ã¢â‚¬â€ coming soon.",
   "catalog.integration.pipedream.body": "Coming soon.",
 };

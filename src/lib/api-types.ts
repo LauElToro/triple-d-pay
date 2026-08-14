@@ -54,6 +54,17 @@ export interface OrgSummary {
   permissions: Permission[];
 }
 
+export interface OrganizationCuit {
+  id: string;
+  orgId: string;
+  cuit: string;
+  displayName: string | null;
+  isDefault: boolean;
+  status: "active" | "revoked";
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AuthResponse {
   accessToken: string;
   expiresIn: number;
@@ -82,6 +93,9 @@ export interface ApiKeyView {
   usageStartedAt: string;
   cycleEndsAt: string | null;
   createdAt: string;
+  permissions?: string[];
+  cuitIds?: string[];
+  cuits?: string[];
 }
 
 export interface InvoiceView {
@@ -116,4 +130,38 @@ export interface UsageView {
 export interface CreateKeyResponse {
   key: ApiKeyView;
   plaintext: string;
+}
+
+export interface IssuedComprobanteView {
+  id: string;
+  cuitEmisor: string;
+  emisorNombre: string | null;
+  cbteTipo: number;
+  cbteTipoLabel: string;
+  ptoVta: number;
+  cbteNro: number;
+  numero: string;
+  cbteFch: string;
+  cbteFchFormatted: string;
+  docTipoReceptor: number;
+  docNroReceptor: string;
+  receptorNombre: string | null;
+  impTotal: number;
+  impNeto: number;
+  impIVA: number;
+  cae: string;
+  caeVto: string;
+  caeVtoFormatted: string;
+  resultado: string;
+  createdAt: string;
+}
+
+export interface IssuedComprobantesResponse {
+  comprobantes: IssuedComprobanteView[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
 }

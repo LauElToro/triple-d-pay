@@ -39,7 +39,9 @@ export class ApiError extends Error {
     public status: number,
     message: string,
     public code?: string,
-    public details?: unknown
+    public details?: unknown,
+    public requestId?: string,
+    public retryAfter?: number
   ) {
     super(message);
   }
@@ -58,12 +60,19 @@ async function raw(path: string, opts: RequestOptions = {}): Promise<Response> {
   if (accessToken && opts.auth !== false) headers.set("Authorization", `Bearer ${accessToken}`);
   if (activeOrgId) headers.set("X-Org-Id", activeOrgId);
 
-  return fetch(`${API_URL}${path}`, {
-    ...opts,
-    headers,
-    credentials: "include",
-    body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30_000);
+  try {
+    return await fetch(`${API_URL}${path}`, {
+      ...opts,
+      headers,
+      credentials: "include",
+      body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
+      signal: opts.signal ?? controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 let refreshPromise: Promise<boolean> | null = null;
@@ -89,20 +98,48 @@ export async function refreshSession(): Promise<boolean> {
 }
 
 export async function apiFetch<T = unknown>(path: string, opts: RequestOptions = {}): Promise<T> {
-  let res = await raw(path, opts);
+  let res: Response;
+  try {
+    res = await raw(path, opts);
+  } catch (cause) {
+    const message = cause instanceof DOMException && cause.name === "AbortError"
+      ? "La solicitud tardó demasiado"
+      : "No se pudo conectar con Set-Api";
+    throw new ApiError(0, message, cause instanceof DOMException ? "timeout" : "network_error");
+  }
 
   if (res.status === 401 && !opts.skipRefresh && opts.auth !== false) {
     const refreshed = await refreshSession();
     if (refreshed) {
-      res = await raw(path, opts);
+      try {
+        res = await raw(path, opts);
+      } catch {
+        throw new ApiError(0, "No se pudo renovar la sesión", "refresh_network_error");
+      }
     }
   }
 
   const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
+  let data: { error?: string; code?: string; details?: unknown } | null = null;
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { error: "Respuesta inválida del servidor", code: "invalid_response" };
+    }
+  }
 
   if (!res.ok) {
-    throw new ApiError(res.status, data?.error ?? "Error de red", data?.code, data?.details);
+    const retryAfterRaw = res.headers.get("retry-after");
+    const retryAfter = retryAfterRaw ? Number(retryAfterRaw) : undefined;
+    throw new ApiError(
+      res.status,
+      data?.error ?? "Error de API",
+      data?.code,
+      data?.details,
+      res.headers.get("x-correlation-id") ?? undefined,
+      Number.isFinite(retryAfter) ? retryAfter : undefined
+    );
   }
   return data as T;
 }
@@ -113,4 +150,28 @@ export const api = {
   patch: <T>(path: string, body?: unknown) => apiFetch<T>(path, { method: "PATCH", body }),
   put: <T>(path: string, body?: unknown) => apiFetch<T>(path, { method: "PUT", body }),
   del: <T>(path: string) => apiFetch<T>(path, { method: "DELETE" }),
+  async download(path: string, filename: string): Promise<void> {
+    let res = await raw(path, { method: "GET" });
+    if (res.status === 401) {
+      const refreshed = await refreshSession();
+      if (refreshed) res = await raw(path, { method: "GET" });
+    }
+    if (!res.ok) {
+      const text = await res.text();
+      let data: { error?: string; code?: string } | null = null;
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        // ignore
+      }
+      throw new ApiError(res.status, data?.error ?? "Error de descarga", data?.code);
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  },
 };

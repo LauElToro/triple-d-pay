@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/input-otp";
 import { useAuth } from "@/lib/auth-context";
 import { api } from "@/lib/api";
-import { isValidCuit, normalizeCuit } from "@/lib/cuit";
 import { useTranslation } from "@/lib/i18n-context";
 import { toast } from "sonner";
 import { ShieldCheck, Copy, Check } from "lucide-react";
@@ -29,8 +28,6 @@ function SettingsPage() {
   const [setup, setSetup] = useState<{ qr: string; secret: string } | null>(null);
   const [step, setStep] = useState<0 | 1 | 2>(0);
   const [code, setCode] = useState("");
-  const [cuit, setCuit] = useState(activeOrg?.arcaCuit ?? "");
-  const [cuitError, setCuitError] = useState<string | null>(null);
   const [orgName, setOrgName] = useState(activeOrg?.name ?? "");
   const [copied, setCopied] = useState(false);
 
@@ -69,23 +66,9 @@ function SettingsPage() {
   };
 
   const saveOrg = async () => {
-    const trimmedCuit = cuit.trim();
-    if (trimmedCuit) {
-      const normalized = normalizeCuit(trimmedCuit);
-      if (!/^\d{11}$/.test(normalized)) {
-        setCuitError(t("settings.orgCuitInvalid"));
-        return;
-      }
-      if (!isValidCuit(normalized)) {
-        setCuitError(t("settings.orgCuitCheckDigit"));
-        return;
-      }
-    }
-    setCuitError(null);
     try {
       await api.patch("/api/organizations", {
         name: orgName || undefined,
-        arcaCuit: trimmedCuit ? normalizeCuit(trimmedCuit) : undefined,
       });
       await refreshMe();
       toast.success(t("settings.orgSaved"));
@@ -211,25 +194,15 @@ function SettingsPage() {
               disabled={!canManage}
             />
           </div>
-          <div className="space-y-2" data-tour="settings-cuit">
-            <Label htmlFor="cuit">{t("settings.orgCuit")}</Label>
-            <Input
-              id="cuit"
-              value={cuit}
-              onChange={(e) => {
-                setCuit(e.target.value);
-                setCuitError(null);
-              }}
-              placeholder="20111111112"
-              disabled={!canManage}
-              className="font-mono"
-              aria-invalid={Boolean(cuitError)}
-            />
-            {cuitError ? (
-              <p className="text-xs text-seal">{cuitError}</p>
-            ) : (
-              <p className="text-xs text-slate">{t("settings.orgCuitHint")}</p>
-            )}
+          <div className="rounded-md border border-line bg-mist/40 p-4 space-y-2" data-tour="settings-cuit">
+            <p className="font-medium">CUITs autorizados</p>
+            <p className="text-sm text-slate">
+              Una organización puede operar varios CUITs. Administrá altas,
+              alias, default y revocaciones desde la sección dedicada.
+            </p>
+            <Link to="/app/cuits" className="text-sm text-signal hover:underline">
+              Administrar CUITs
+            </Link>
           </div>
           {canManage && <Button onClick={saveOrg}>{t("common.save")}</Button>}
         </CardContent>

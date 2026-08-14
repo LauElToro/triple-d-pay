@@ -110,6 +110,17 @@ function KeysPage() {
 
       {keys.isLoading ? (
         <p className="text-sm text-slate font-mono">{t("common.loading")}</p>
+      ) : keys.isError ? (
+        <Alert variant="destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription className="flex items-center gap-3">
+            <span>{keys.error instanceof ApiError ? keys.error.message : t("keys.createError")}</span>
+            <Button size="sm" variant="outline" onClick={() => keys.refetch()}>
+              {t("common.retry")}
+            </Button>
+          </AlertDescription>
+        </Alert>
       ) : !activeKey ? (
         <Card className="border-line">
           <CardContent className="py-8 text-sm text-slate">{t("keys.empty")}</CardContent>
@@ -125,6 +136,13 @@ function KeysPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <CopyField value={key.prefix} masked label={t("keys.prefix")} />
+              <div className="space-y-1 text-sm">
+                <div className="text-xs text-slate uppercase tracking-wider font-mono">Alcance</div>
+                <p className="text-slate">
+                  {key.permissions?.join(", ") || "Permisos heredados"}
+                  {key.cuits?.length ? ` · CUITs: ${key.cuits.join(", ")}` : ""}
+                </p>
+              </div>
               <div className="grid grid-cols-2 gap-4 text-sm" data-tour="keys-prefix">
                 <div>
                   <div className="text-xs text-slate uppercase tracking-wider font-mono">{t("keys.usageSince")}</div>
@@ -168,29 +186,16 @@ function KeysPage() {
 
       <Card className="border-line">
         <CardHeader>
-          <CardTitle className="font-display">{t("keys.sdkTitle")}</CardTitle>
+          <CardTitle className="font-display">{t("keys.restTitle")}</CardTitle>
         </CardHeader>
         <CardContent>
           <CodeBlock
-            comment="// npm i @set-api/sdk"
-            code={`import { SetApi } from "@set-api/sdk";
-
-const api = new SetApi({
-  apiKey: process.env.SET_API_KEY!,
-});
-
-const cae = await api.comprobantes.create({
-  cbteTipo: 1,
-  ptoVta: 2, // usá un PV válido de api.puntosVenta.list()
-  concepto: 1,
-  docTipo: 99,
-  docNro: 0,
-  cbteFch: "20260805",
-  impTotal: 1210,
-  impNeto: 1000,
-  impIVA: 210,
-  iva: [{ id: 5, baseImp: 1000, importe: 210 }],
-});`}
+            comment="// Ejecutá desde tu servidor"
+            code={`curl -X POST https://set-api-backend.vercel.app/api/arca/comprobantes \\
+  -H "Authorization: Bearer $SET_API_KEY" \\
+  -H "Idempotency-Key: invoice-unique-id" \\
+  -H "Content-Type: application/json" \\
+  -d '{"cuit_emisor":"20111111112","cbteTipo":11,"ptoVta":10,"concepto":1,"docTipo":99,"docNro":0,"cbteFch":"20260814","impTotal":121,"impNeto":100,"impIVA":21}'`}
           />
         </CardContent>
       </Card>

@@ -71,35 +71,11 @@ export const PLATFORM_STATS = {
   cuits: "4.238",
 } as const;
 
-export const QUICKSTART_CODE = `import { SetApi } from "@set-api/sdk";
+export const QUICKSTART_CODE = `curl -X POST https://set-api-backend.vercel.app/api/arca/comprobantes \\
+  -H "Authorization: Bearer $SET_API_KEY" \\
+  -H "Idempotency-Key: invoice-unique-id" \\
+  -H "Content-Type: application/json" \\
+  -d '{"cuit_emisor":"20111111112","cbteTipo":11,"ptoVta":10,"concepto":1,"docTipo":99,"docNro":0,"cbteFch":"20260814","impTotal":121,"impNeto":100,"impIVA":21}'`;
 
-const api = new SetApi({
-  apiKey: process.env.SET_API_KEY!,
-});
-
-// Factura A — cbteTipo 1 (WSFE). cuit_emisor opcional si está en la org.
-// ptoVta: usá 2 o 10 según tu delegación ARCA (Monotributo suele usar PV 2).
-const result = await api.comprobantes.create({
-  cbteTipo: 1,
-  ptoVta: 2,
-  concepto: 1,
-  docTipo: 99,
-  docNro: 0,
-  cbteFch: "20260805",
-  impTotal: 1210,
-  impNeto: 1000,
-  impIVA: 210,
-  iva: [{ id: 5, baseImp: 1000, importe: 210 }],
-});
-
-console.log(result);`;
-
-export const AUTOMATION_SAMPLE_CODE = `import { SetApi } from "@set-api/sdk";
-
-const api = new SetApi({ apiKey: process.env.SET_API_KEY! });
-
-// Último comprobante emitido en el punto de venta
-const ultimo = await api.comprobantes.ultimo(1, 2);
-
-// Padrón + constancia del receptor
-const padron = await api.contribuyente.get("30123456789");`;
+export const AUTOMATION_SAMPLE_CODE = `curl https://set-api-backend.vercel.app/api/arca/comprobantes/ultimo/11/10 \\
+  -H "Authorization: Bearer $SET_API_KEY"`;

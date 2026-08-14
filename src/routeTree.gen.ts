@@ -27,6 +27,7 @@ import { Route as AdminTicketsRouteImport } from './routes/admin.tickets'
 import { Route as AdminTrafficRouteImport } from './routes/admin.traffic'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAutomationsRouteImport } from './routes/app.automations'
+import { Route as AppComprobantesRouteImport } from './routes/app.comprobantes'
 import { Route as AppCuitsRouteImport } from './routes/app.cuits'
 import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
 import { Route as AppKeysRouteImport } from './routes/app.keys'
@@ -138,6 +139,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const AppAutomationsRoute = AppAutomationsRouteImport.update({
   id: '/automations',
   path: '/automations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppComprobantesRoute = AppComprobantesRouteImport.update({
+  id: '/comprobantes',
+  path: '/comprobantes',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCuitsRoute = AppCuitsRouteImport.update({
@@ -268,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/comprobantes': typeof AppComprobantesRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
@@ -307,6 +314,7 @@ export interface FileRoutesByTo {
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/comprobantes': typeof AppComprobantesRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
@@ -350,6 +358,7 @@ export interface FileRoutesById {
   '/admin/tickets': typeof AdminTicketsRoute
   '/admin/traffic': typeof AdminTrafficRoute
   '/app/automations': typeof AppAutomationsRoute
+  '/app/comprobantes': typeof AppComprobantesRoute
   '/app/cuits': typeof AppCuitsRoute
   '/app/invoices': typeof AppInvoicesRoute
   '/app/keys': typeof AppKeysRoute
@@ -394,6 +403,7 @@ export interface FileRouteTypes {
     | '/admin/tickets'
     | '/admin/traffic'
     | '/app/automations'
+    | '/app/comprobantes'
     | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
@@ -433,6 +443,7 @@ export interface FileRouteTypes {
     | '/admin/tickets'
     | '/admin/traffic'
     | '/app/automations'
+    | '/app/comprobantes'
     | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
@@ -475,6 +486,7 @@ export interface FileRouteTypes {
     | '/admin/tickets'
     | '/admin/traffic'
     | '/app/automations'
+    | '/app/comprobantes'
     | '/app/cuits'
     | '/app/invoices'
     | '/app/keys'
@@ -645,6 +657,13 @@ declare module '@tanstack/react-router' {
       path: '/automations'
       fullPath: '/app/automations'
       preLoaderRoute: typeof AppAutomationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/comprobantes': {
+      id: '/app/comprobantes'
+      path: '/comprobantes'
+      fullPath: '/app/comprobantes'
+      preLoaderRoute: typeof AppComprobantesRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/cuits': {
@@ -838,6 +857,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AppRouteChildren {
   AppAutomationsRoute: typeof AppAutomationsRoute
+  AppComprobantesRoute: typeof AppComprobantesRoute
   AppCuitsRoute: typeof AppCuitsRoute
   AppInvoicesRoute: typeof AppInvoicesRoute
   AppKeysRoute: typeof AppKeysRoute
@@ -854,6 +874,7 @@ interface AppRouteChildren {
 
 const AppRouteChildren: AppRouteChildren = {
   AppAutomationsRoute: AppAutomationsRoute,
+  AppComprobantesRoute: AppComprobantesRoute,
   AppCuitsRoute: AppCuitsRoute,
   AppInvoicesRoute: AppInvoicesRoute,
   AppKeysRoute: AppKeysRoute,

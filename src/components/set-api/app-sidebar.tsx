@@ -26,6 +26,7 @@ import {
   Users,
   LifeBuoy,
   Shield,
+  FileText,
   Gift,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -56,6 +57,7 @@ export function AppSidebar() {
     { title: t("sidebar.home"), url: "/app", icon: Home, tour: "nav-home" },
     { title: t("sidebar.apiKey"), url: "/app/keys", icon: KeyRound, tour: "nav-keys" },
     { title: t("sidebar.requests"), url: "/app/requests", icon: Activity, tour: "nav-requests" },
+    { title: t("sidebar.comprobantes"), url: "/app/comprobantes", icon: FileText, tour: "nav-comprobantes" },
     { title: t("sidebar.subscription"), url: "/app/subscription", icon: CreditCard, tour: "nav-subscription" },
     { title: t("sidebar.team"), url: "/app/team", icon: Users, tour: "nav-team" },
     { title: t("sidebar.tickets"), url: "/app/tickets", icon: LifeBuoy, tour: "nav-tickets" },

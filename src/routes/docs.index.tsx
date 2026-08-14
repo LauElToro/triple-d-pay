@@ -29,6 +29,18 @@ function DocsIndex() {
         {t("docs.quickstart")} <ArrowRight className="h-4 w-4" />
       </Link>
 
+      <section className="rounded-lg border border-signal/30 bg-signal/5 p-5 space-y-2">
+        <h2 className="font-display text-xl">Integración REST</h2>
+        <p className="text-sm text-slate">
+          El contrato público usa API Keys con permisos y CUITs autorizados. Las
+          emisiones requieren idempotencia y deben ejecutarse desde tu servidor.
+        </p>
+        <p className="text-sm text-slate">
+          Consultá también los códigos de error, límites, rotación de keys y
+          reconciliación de timeouts en el quickstart.
+        </p>
+      </section>
+
       <section>
         <h2 className="font-display text-xl mb-4">{t("docs.webServices")}</h2>
         <div className="grid sm:grid-cols-2 gap-4">

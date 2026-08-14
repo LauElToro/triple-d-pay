@@ -23,7 +23,7 @@ function WebServiceDoc() {
       kind="ws"
       slug={slug}
       code={QUICKSTART_CODE}
-      comment="// Ejemplo con @set-api/sdk"
+      comment="// Ejemplo REST contra Backend"
     />
   );
 }

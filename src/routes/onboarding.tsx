@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LogoMark } from "@/components/set-api/logo";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import {
@@ -16,6 +17,7 @@ import { api, ApiError } from "@/lib/api";
 import type { SessionUser } from "@/lib/api-types";
 import { useTranslation } from "@/lib/i18n-context";
 import { isKycBlocking } from "@/lib/kyc";
+import { isValidCuit, normalizeCuit } from "@/lib/cuit";
 import { toast } from "sonner";
 
 function postOnboardingPath(user: { systemRole: string; kycStatus: string }): "/kyc" | "/app" {
@@ -38,6 +40,8 @@ function OnboardingPage() {
   const [companyRole, setCompanyRole] = useState("");
   const [companySize, setCompanySize] = useState("");
   const [clientType, setClientType] = useState("standard");
+  const [arcaCuit, setArcaCuit] = useState(activeOrg?.arcaCuit ?? "");
+  const [cuitError, setCuitError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -61,6 +65,12 @@ function OnboardingPage() {
       if (skip) {
         await api.post("/api/onboarding", { skip: true });
       } else {
+        const normalizedCuit = normalizeCuit(arcaCuit);
+        if (!normalizedCuit || !isValidCuit(normalizedCuit)) {
+          setCuitError("Ingresá un CUIT válido para poder configurar la emisión.");
+          setSaving(false);
+          return;
+        }
         await api.post("/api/onboarding", {
           source,
           heardAbout: heardAbout || undefined,
@@ -69,6 +79,9 @@ function OnboardingPage() {
           companySize: companySize || undefined,
           clientType,
         });
+        if (!activeOrg?.arcaCuit) {
+          await api.post("/api/organizations/cuits", { cuit: normalizedCuit, isDefault: true });
+        }
       }
       await refreshMe();
       const me = await api.get<{ user: SessionUser }>("/api/me");
@@ -98,6 +111,22 @@ function OnboardingPage() {
             <p className="text-sm text-slate">{t("onboarding.subtitle")}</p>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Field label="CUIT emisor">
+              <Input
+                value={arcaCuit}
+                onChange={(event) => {
+                  setArcaCuit(event.target.value);
+                  setCuitError(null);
+                }}
+                placeholder="20-12345678-9"
+                className="font-mono"
+                aria-invalid={Boolean(cuitError)}
+              />
+              <p className="text-xs text-slate">
+                Es el CUIT que Set-Api autorizará para consultar y emitir comprobantes.
+              </p>
+              {cuitError && <p className="text-xs text-seal">{cuitError}</p>}
+            </Field>
             <Field label={t("onboarding.source")}>
               <Select value={source} onValueChange={setSource}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
