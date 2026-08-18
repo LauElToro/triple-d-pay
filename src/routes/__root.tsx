@@ -76,15 +76,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Set-Api — Facturación electrónica ARCA para desarrolladores" },
-      { name: "description", content: "API REST con API Key para facturar electrónicamente en Argentina. Planes free, fijo o por uso." },
+      {
+        name: "description",
+        content:
+          "API REST con API Key para facturar electrónicamente en Argentina. Planes free, fijo o por uso.",
+      },
       { property: "og:title", content: "Set-Api — Facturación electrónica ARCA" },
-      { property: "og:description", content: "API REST para facturar en ARCA. Integrá desde tu servidor en minutos." },
+      {
+        property: "og:description",
+        content: "API REST para facturar en ARCA. Integrá desde tu servidor en minutos.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://www.set-api.com/" },
+      { property: "og:image", content: "https://www.set-api.com/logo.png" },
+      { property: "og:image:alt", content: "Set-Api" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:image", content: "https://www.set-api.com/logo.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/logo.png" },
+      { rel: "shortcut icon", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

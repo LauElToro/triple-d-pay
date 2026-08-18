@@ -61,7 +61,9 @@ export function SiteHeader() {
   return (
     <header className="border-b border-line bg-card/70 backdrop-blur sticky top-0 z-30">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-        <Link to="/"><LogoMark /></Link>
+        <Link to="/" className="inline-flex h-full items-center shrink-0">
+          <LogoMark />
+        </Link>
         <nav className="flex items-center gap-2 sm:gap-3 flex-1 justify-end min-w-0">
           <div className="hidden lg:flex items-center gap-4 mr-2">
             {links.map((link) => {
