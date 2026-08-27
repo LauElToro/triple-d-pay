@@ -205,6 +205,11 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
+      <div className="mx-auto max-w-6xl px-6 pb-10 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate border-t border-line pt-6">
+        <Link to="/terms" className="hover:text-signal">{t("nav.terms")}</Link>
+        <Link to="/privacy" className="hover:text-signal">{t("nav.privacy")}</Link>
+        <span>© {new Date().getFullYear()} Set-Api</span>
+      </div>
     </footer>
   );
 }

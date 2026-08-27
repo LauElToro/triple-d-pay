@@ -29,6 +29,17 @@ function DocsIndex() {
         {t("docs.quickstart")} <ArrowRight className="h-4 w-4" />
       </Link>
 
+      <Link
+        to="/docs/delegacion-arca"
+        className="block rounded-lg border border-line bg-card p-5 hover:border-signal/40 transition-colors"
+      >
+        <h2 className="font-display text-xl">{t("docs.delegation")}</h2>
+        <p className="text-sm text-slate mt-2">{t("docs.delegationDesc")}</p>
+        <span className="inline-flex items-center gap-1 text-sm text-signal mt-3">
+          {t("docs.delegationCta")} <ArrowRight className="h-4 w-4" />
+        </span>
+      </Link>
+
       <section className="rounded-lg border border-signal/30 bg-signal/5 p-5 space-y-2">
         <h2 className="font-display text-xl">Integración REST</h2>
         <p className="text-sm text-slate">

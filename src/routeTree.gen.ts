@@ -18,7 +18,9 @@ import { Route as KycRouteImport } from './routes/kyc'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminClientsRouteImport } from './routes/admin.clients'
 import { Route as AdminHealthRouteImport } from './routes/admin.health'
@@ -40,6 +42,7 @@ import { Route as AppTeamRouteImport } from './routes/app.team'
 import { Route as AppTicketsRouteImport } from './routes/app.tickets'
 import { Route as AppUsageRouteImport } from './routes/app.usage'
 import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as DocsDelegacionArcaRouteImport } from './routes/docs.delegacion-arca'
 import { Route as DocsQuickstartRouteImport } from './routes/docs.quickstart'
 import { Route as InviteAcceptRouteImport } from './routes/invite.accept'
 import { Route as KycCompleteRouteImport } from './routes/kyc.complete'
@@ -96,9 +99,19 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -206,6 +219,11 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DocsRoute,
 } as any)
+const DocsDelegacionArcaRoute = DocsDelegacionArcaRouteImport.update({
+  id: '/delegacion-arca',
+  path: '/delegacion-arca',
+  getParentRoute: () => DocsRoute,
+} as any)
 const DocsQuickstartRoute = DocsQuickstartRouteImport.update({
   id: '/quickstart',
   path: '/quickstart',
@@ -267,7 +285,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
   '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
@@ -286,6 +306,7 @@ export interface FileRoutesByFullPath {
   '/app/team': typeof AppTeamRoute
   '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/delegacion-arca': typeof DocsDelegacionArcaRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/invite/accept': typeof InviteAcceptRoute
   '/kyc/complete': typeof KycCompleteRoute
@@ -307,7 +328,9 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
   '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
@@ -326,6 +349,7 @@ export interface FileRoutesByTo {
   '/app/team': typeof AppTeamRoute
   '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/delegacion-arca': typeof DocsDelegacionArcaRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/invite/accept': typeof InviteAcceptRoute
   '/kyc/complete': typeof KycCompleteRoute
@@ -351,7 +375,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
   '/admin/health': typeof AdminHealthRoute
   '/admin/profitability': typeof AdminProfitabilityRoute
@@ -370,6 +396,7 @@ export interface FileRoutesById {
   '/app/team': typeof AppTeamRoute
   '/app/tickets': typeof AppTicketsRoute
   '/app/usage': typeof AppUsageRoute
+  '/docs/delegacion-arca': typeof DocsDelegacionArcaRoute
   '/docs/quickstart': typeof DocsQuickstartRoute
   '/invite/accept': typeof InviteAcceptRoute
   '/kyc/complete': typeof KycCompleteRoute
@@ -396,7 +423,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/pricing'
+    | '/privacy'
     | '/register'
+    | '/terms'
     | '/admin/clients'
     | '/admin/health'
     | '/admin/profitability'
@@ -415,6 +444,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/tickets'
     | '/app/usage'
+    | '/docs/delegacion-arca'
     | '/docs/quickstart'
     | '/invite/accept'
     | '/kyc/complete'
@@ -436,7 +466,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/pricing'
+    | '/privacy'
     | '/register'
+    | '/terms'
     | '/admin/clients'
     | '/admin/health'
     | '/admin/profitability'
@@ -455,6 +487,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/tickets'
     | '/app/usage'
+    | '/docs/delegacion-arca'
     | '/docs/quickstart'
     | '/invite/accept'
     | '/kyc/complete'
@@ -479,7 +512,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/onboarding'
     | '/pricing'
+    | '/privacy'
     | '/register'
+    | '/terms'
     | '/admin/clients'
     | '/admin/health'
     | '/admin/profitability'
@@ -498,6 +533,7 @@ export interface FileRouteTypes {
     | '/app/team'
     | '/app/tickets'
     | '/app/usage'
+    | '/docs/delegacion-arca'
     | '/docs/quickstart'
     | '/invite/accept'
     | '/kyc/complete'
@@ -523,7 +559,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
+  TermsRoute: typeof TermsRoute
   InviteAcceptRoute: typeof InviteAcceptRoute
   ProductosFacturaRoute: typeof ProductosFacturaRoute
   ProductosPlatformRoute: typeof ProductosPlatformRoute
@@ -596,11 +634,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -750,6 +802,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/docs/delegacion-arca': {
+      id: '/docs/delegacion-arca'
+      path: '/delegacion-arca'
+      fullPath: '/docs/delegacion-arca'
+      preLoaderRoute: typeof DocsDelegacionArcaRouteImport
+      parentRoute: typeof DocsRoute
+    }
     '/docs/quickstart': {
       id: '/docs/quickstart'
       path: '/quickstart'
@@ -892,6 +951,7 @@ const AppRouteChildren: AppRouteChildren = {
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface DocsRouteChildren {
+  DocsDelegacionArcaRoute: typeof DocsDelegacionArcaRoute
   DocsQuickstartRoute: typeof DocsQuickstartRoute
   DocsIndexRoute: typeof DocsIndexRoute
   DocsAutomationsSlugRoute: typeof DocsAutomationsSlugRoute
@@ -899,6 +959,7 @@ interface DocsRouteChildren {
 }
 
 const DocsRouteChildren: DocsRouteChildren = {
+  DocsDelegacionArcaRoute: DocsDelegacionArcaRoute,
   DocsQuickstartRoute: DocsQuickstartRoute,
   DocsIndexRoute: DocsIndexRoute,
   DocsAutomationsSlugRoute: DocsAutomationsSlugRoute,
@@ -927,7 +988,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
+  TermsRoute: TermsRoute,
   InviteAcceptRoute: InviteAcceptRoute,
   ProductosFacturaRoute: ProductosFacturaRoute,
   ProductosPlatformRoute: ProductosPlatformRoute,

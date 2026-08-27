@@ -24,6 +24,7 @@ export const es: TranslationDict = {
   "docs.restIssueTitle": "2. Emitir un comprobante",
   "docs.restIssueDesc": "Cada emisión requiere un Idempotency-Key único y el CUIT debe estar autorizado para la API Key.",
   "docs.restErrors": "Las respuestas pueden ser 401, 403, 409, 422, 429, 502 o 504. Conservá el X-Correlation-ID para soporte.",
+  "docs.delegationQuickstartHint": "En producción, antes de emitir, completá la delegación de Web Services y el PV RECE:",
 
   "nav.login": "Entrar",
   "nav.register": "Crear cuenta",

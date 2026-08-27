@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -9,12 +9,14 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { api, ApiError } from "@/lib/api";
 import { toast } from "sonner";
+import { useTranslation } from "@/lib/i18n-context";
 
 export const Route = createFileRoute("/app/cuits")({
   component: CuitsPage,
 });
 
 function CuitsPage() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   const [cuit, setCuit] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -42,8 +44,16 @@ function CuitsPage() {
       />
 
       <Alert className="border-signal/30 bg-signal/5">
-        <AlertDescription className="text-sm">
-          Cada API Key debe tener un grant explícito sobre los CUITs que puede utilizar.
+        <AlertDescription className="text-sm space-y-2">
+          <p>
+            Cada API Key debe tener un grant explícito sobre los CUITs que puede utilizar.
+            En producción también necesitás delegar los Web Services a Set-Api y un PV RECE / Web Services.
+          </p>
+          <p>
+            <Link to="/docs/delegacion-arca" className="text-signal hover:underline font-medium">
+              {t("docs.delegationCta")} → {t("docs.delegation")}
+            </Link>
+          </p>
         </AlertDescription>
       </Alert>
 

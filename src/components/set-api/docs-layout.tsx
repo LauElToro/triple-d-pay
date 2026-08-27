@@ -26,6 +26,7 @@ function useDocsCurrentTitle() {
 
   if (pathname === "/docs" || pathname === "/docs/") return t("docs.title");
   if (pathname.startsWith("/docs/quickstart")) return t("docs.quickstart");
+  if (pathname.startsWith("/docs/delegacion-arca")) return t("docs.delegation");
 
   const wsMatch = pathname.match(/^\/docs\/web-services\/([^/]+)\/?$/);
   if (wsMatch && WEB_SERVICE_SLUGS.includes(wsMatch[1] as WebServiceSlug)) {
@@ -61,6 +62,13 @@ function DocsNav() {
           activeProps={{ className: "bg-mist text-signal font-medium" }}
         >
           {t("docs.quickstart")}
+        </Link>
+        <Link
+          to="/docs/delegacion-arca"
+          className="block rounded px-2 py-1 hover:bg-mist"
+          activeProps={{ className: "bg-mist text-signal font-medium" }}
+        >
+          {t("docs.delegation")}
         </Link>
       </nav>
       <DocsSidebarExtra />

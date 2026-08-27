@@ -53,6 +53,13 @@ function DocsQuickstart() {
         <p className="text-sm text-slate">
           {t("docs.restErrors")}
         </p>
+        <p className="text-sm text-slate">
+          {t("docs.delegationQuickstartHint")}{" "}
+          <Link to="/docs/delegacion-arca" className="text-signal hover:underline">
+            {t("docs.delegation")}
+          </Link>
+          .
+        </p>
       </section>
 
       <Link to="/docs" className="text-sm text-signal hover:underline">

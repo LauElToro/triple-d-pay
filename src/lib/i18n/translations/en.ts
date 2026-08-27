@@ -24,6 +24,7 @@ export const en: TranslationDict = {
   "docs.restIssueTitle": "2. Issue an invoice",
   "docs.restIssueDesc": "Every issuance requires a unique Idempotency-Key and the CUIT must be authorized for the API Key.",
   "docs.restErrors": "Responses may be 401, 403, 409, 422, 429, 502 or 504. Keep the X-Correlation-ID for support.",
+  "docs.delegationQuickstartHint": "In production, before issuing, complete Web Service delegation and the RECE POS:",
 
   "nav.login": "Sign in",
   "nav.register": "Create account",

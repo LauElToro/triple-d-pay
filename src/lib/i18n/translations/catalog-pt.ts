@@ -9,6 +9,8 @@ export const catalogPt: TranslationDict = {
   "nav.referrals": "Indicados",
   "nav.pricing": "Preço",
   "nav.contact": "Contato",
+  "nav.terms": "Termos",
+  "nav.privacy": "Privacidade",
   "nav.automations": "Automações",
   "nav.webServices": "Serviços web",
 
@@ -17,6 +19,7 @@ export const catalogPt: TranslationDict = {
   "footer.products": "Produtos",
   "footer.resources": "Recursos",
   "footer.tools": "Ferramentas",
+  "footer.legal": "Legal",
   "footer.integrations": "Integrações",
 
   "landing.connectTitle": "Conecte-se à ARCA hoje",
@@ -67,6 +70,12 @@ export const catalogPt: TranslationDict = {
   "docs.quickstart": "Início rápido",
   "docs.toc": "Índice",
   "docs.openToc": "Abrir índice da documentação",
+  "docs.delegation": "Delegação ARCA",
+  "docs.delegationDesc":
+    "Passos do cliente e do Set-Api para delegar Web Services em produção (PV, F.3283/E e Computador Fiscal).",
+  "docs.delegationCta": "Ver guia completa",
+  "docs.delegation.client": "Cliente",
+  "docs.delegation.attention": "Atenção",
   "docs.automations": "Automações",
   "docs.quickstartTitle": "Comece em minutos",
   "docs.quickstartDesc": "Use a API REST, configure sua API Key e emita seu primeiro comprovante.",

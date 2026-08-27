@@ -7,6 +7,8 @@ export const catalogEn: TranslationDict = {
   "nav.referrals": "Referrals",
   "nav.pricing": "Pricing",
   "nav.contact": "Contact",
+  "nav.terms": "Terms",
+  "nav.privacy": "Privacy",
   "nav.automations": "Automations",
   "nav.webServices": "Web services",
 
@@ -15,6 +17,7 @@ export const catalogEn: TranslationDict = {
   "footer.products": "Products",
   "footer.resources": "Resources",
   "footer.tools": "Tools",
+  "footer.legal": "Legal",
   "footer.integrations": "Integrations",
 
   "landing.connectTitle": "Connect to ARCA today",
@@ -65,6 +68,12 @@ export const catalogEn: TranslationDict = {
   "docs.quickstart": "Quickstart",
   "docs.toc": "Contents",
   "docs.openToc": "Open documentation contents",
+  "docs.delegation": "ARCA delegation",
+  "docs.delegationDesc":
+    "Customer and Set-Api steps to delegate Web Services in production (POS, F.3283/E and Fiscal Computer).",
+  "docs.delegationCta": "Read the full guide",
+  "docs.delegation.client": "Customer",
+  "docs.delegation.attention": "Attention",
   "docs.webServices": "Web services",
   "docs.automations": "Automations",
   "docs.quickstartTitle": "Get started in minutes",
@@ -236,21 +245,21 @@ export const catalogEn: TranslationDict = {
   "catalog.auto.autorizar-ws-produccion.requirements":
     "Production certificate and ARCA permissions to authorize services.",
   "catalog.auto.delegar-ws.title": "Delegate web service",
-  "catalog.auto.delegar-ws.desc": "One CUIT authorizes another to use a web service.",
+  "catalog.auto.delegar-ws.desc": "A CUIT authorizes Set-Api to use a web service on its behalf.",
   "catalog.auto.delegar-ws.body":
-    "Ideal for software houses or multi-client platforms: the taxpayer delegates WS usage to your central CUIT without sharing certificates.",
+    "In production the customer delegates each WS from the Relationships Administrator to Set-Api’s CUIT, with a Web Services POS and F.3283/E certificate. See the full guide at /docs/delegacion-arca (example data only).",
   "catalog.auto.delegar-ws.howto":
-    "From the granting CUIT run the automation with destination CUIT and WS. The recipient must then accept the delegation.",
+    "Follow Part A of the guide: RECE POS first, then New Relationship per service, and send F.3283/E to Set-Api.",
   "catalog.auto.delegar-ws.requirements":
-    "Access to the granting CUIT, recipient CUIT and WS to delegate.",
+    "Fiscal Key level 3, company CUIT, Web Services POS and Set-Api representative CUIT.",
   "catalog.auto.aceptar-delegacion.title": "Accept WS delegation",
-  "catalog.auto.aceptar-delegacion.desc": "Accept delegations from other CUITs.",
+  "catalog.auto.aceptar-delegacion.desc": "Set-Api accepts designations and assigns the Fiscal Computer.",
   "catalog.auto.aceptar-delegacion.body":
-    "Closes the delegation flow: the recipient CUIT accepts and links the delegated WS to its operating certificate.",
+    "Part B of the guide: accept designations, sub-delegate to the production certificate and configure the CUIT on the account. Without that stage ARCA may respond “Computer not authorized”.",
   "catalog.auto.aceptar-delegacion.howto":
-    "List pending delegations, accept the relevant one and verify the WS is operable with your certificate.",
+    "See /docs/delegacion-arca — Set-Api checklist and a no-side-effect verification call.",
   "catalog.auto.aceptar-delegacion.requirements":
-    "Pending delegation from another CUIT and a ready recipient certificate.",
+    "Pending customer designation, F.3283/E certificates and production Fiscal Computer.",
   "catalog.auto.administracion-certificados.title": "Digital Certificate Admin",
   "catalog.auto.administracion-certificados.desc": "Enable certificate administration service.",
   "catalog.auto.administracion-certificados.body":
