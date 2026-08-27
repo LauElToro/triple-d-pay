@@ -147,6 +147,10 @@
   * {
     border-color: var(--color-border);
   }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--signal) 65%, transparent) var(--mist);
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -164,6 +168,27 @@
     outline: 2px solid var(--color-signal);
     outline-offset: 2px;
     border-radius: 4px;
+  }
+
+  /* Scrollbars: signal thumb + mist track (Firefox + WebKit) */
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: var(--mist);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklch, var(--signal) 55%, transparent);
+    border-radius: 999px;
+    border: 2px solid var(--mist);
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--signal);
+  }
+  *::-webkit-scrollbar-corner {
+    background: var(--mist);
   }
 }
 
