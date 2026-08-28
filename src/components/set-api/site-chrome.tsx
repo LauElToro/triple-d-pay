@@ -23,7 +23,15 @@ const mobileNavLinkClass =
 const mobileNavLinkActiveClass = "text-signal font-bold";
 
 type PublicNavLink = {
-  to: "/" | "/productos/platform" | "/productos/factura" | "/docs" | "/tools" | "/pricing" | "/contact";
+  to:
+    | "/"
+    | "/productos/platform"
+    | "/productos/factura"
+    | "/docs"
+    | "/tools"
+    | "/referidos"
+    | "/pricing"
+    | "/contact";
   hash?: string;
   label: string;
 };
@@ -44,7 +52,7 @@ function usePublicNavLinks(): PublicNavLink[] {
     { to: "/productos/factura", label: t("product.factura.title") },
     { to: "/docs", label: t("nav.docs") },
     { to: "/tools", label: t("nav.tools") },
-    { to: "/", hash: "referidos", label: t("nav.referrals") },
+    { to: "/referidos", label: t("nav.referrals") },
     { to: "/pricing", label: t("nav.pricing") },
     { to: "/contact", label: t("nav.contact") },
   ];
@@ -188,12 +196,10 @@ export function SiteFooter() {
           <ul className="space-y-2">
             <li><Link to="/docs" className="hover:text-signal">{t("nav.docs")}</Link></li>
             <li><Link to="/docs/quickstart" className="hover:text-signal">{t("docs.quickstart")}</Link></li>
-            <li>
-              <Link to="/" hash="referidos" className="hover:text-signal">
-                {t("nav.referrals")}
-              </Link>
-            </li>
+            <li><Link to="/referidos" className="hover:text-signal">{t("nav.referrals")}</Link></li>
             <li><Link to="/contact" className="hover:text-signal">{t("nav.contact")}</Link></li>
+            <li><Link to="/terms" className="hover:text-signal">{t("nav.terms")}</Link></li>
+            <li><Link to="/privacy" className="hover:text-signal">{t("nav.privacy")}</Link></li>
           </ul>
         </div>
         <div>
@@ -205,10 +211,8 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="mx-auto max-w-6xl px-6 pb-10 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate border-t border-line pt-6">
-        <Link to="/terms" className="hover:text-signal">{t("nav.terms")}</Link>
-        <Link to="/privacy" className="hover:text-signal">{t("nav.privacy")}</Link>
-        <span>© {new Date().getFullYear()} Set-Api</span>
+      <div className="mx-auto max-w-6xl px-6 pb-10 border-t border-line pt-6">
+        <p className="text-xs text-slate text-center">© {new Date().getFullYear()} Set-Api</p>
       </div>
     </footer>
   );

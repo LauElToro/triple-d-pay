@@ -45,6 +45,15 @@ export const catalogEn: TranslationDict = {
   "landing.wsSubtitle": "Integrate all ARCA web services simply and quickly.",
   "landing.integrationsTitle": "Integrations",
   "landing.integrationsSubtitle": "REST APIs for your favorite languages and platforms.",
+  "landing.partners.title": "We work with",
+  "landing.partners.subtitle": "Teams that trust Set-Api to operate with ARCA in production.",
+  "landing.pathsTitle": "Choose how to integrate",
+  "landing.pathsSubtitle":
+    "Two clear products: the API and WS platform, or end-to-end invoicing ready for your product.",
+  "landing.pathPlatformHeadline": "REST API to operate ARCA",
+  "landing.pathPlatformCta": "View Set-Api Platform",
+  "landing.pathFacturaHeadline": "End-to-end invoicing",
+  "landing.pathFacturaCta": "View Set-Api Factura",
   "landing.viewAllDocs": "View documentation",
   "landing.whyTitle": "Why Set-Api?",
   "landing.whyDocs": "Documentation",
@@ -57,6 +66,11 @@ export const catalogEn: TranslationDict = {
   "landing.referrals.title": "Referral program",
   "landing.referrals.subtitle":
     "Invite other teams to Set-Api. Share your link and track how your network grows from the dashboard.",
+  "landing.referrals.teaser":
+    "Invite teams, share your link and track progress from the dashboard.",
+  "landing.referrals.teaserCta": "View program",
+  "landing.referrals.howTitle": "How it works",
+  "landing.referrals.panelCta": "Go to referrals dashboard",
   "landing.referrals.step1": "Create your account and open Referrals in the dashboard",
   "landing.referrals.step2": "Copy your unique link and share it with anyone",
   "landing.referrals.step3": "When they sign up with your code, you'll see progress in your stats",
@@ -121,6 +135,53 @@ export const catalogEn: TranslationDict = {
   "product.factura.title": "Set-Api Factura",
   "product.factura.desc":
     "End-to-end invoicing: emission, states, PDF, QR and webhooks for your product.",
+  "product.factura.capsTitle": "What it solves",
+  "product.factura.capsSubtitle":
+    "The commercial layer on top of fiscal emission: from request to a voucher usable in your product.",
+  "product.factura.cap0Title": "Tax emission",
+  "product.factura.cap0Body":
+    "Issue vouchers via REST and get CAE plus expiry without hand-rolling SOAP or WSAA.",
+  "product.factura.cap1Title": "States & retries",
+  "product.factura.cap1Body":
+    "Check voucher status and retry with Idempotency-Key to avoid duplicates on network failures.",
+  "product.factura.cap2Title": "PDF + QR",
+  "product.factura.cap2Body":
+    "Responses include data for the official QR and a PDF-ready flow for your product or customer.",
+  "product.factura.cap3Title": "Webhooks",
+  "product.factura.cap3Body":
+    "Receive emission and status events in your backend so your app can update without constant polling.",
+  "product.factura.flowTitle": "How it works",
+  "product.factura.flowSubtitle": "A typical production integration path.",
+  "product.factura.step0":
+    "Create your account, get an API Key and link the issuer CUIT with explicit grants.",
+  "product.factura.step1":
+    "Complete RECE / Web Services POS and ARCA delegation to Set-Api’s CUIT.",
+  "product.factura.step2":
+    "Issue via REST with Bearer auth and Idempotency-Key; store CAE and correlation IDs.",
+  "product.factura.step3":
+    "Deliver PDF/QR to your user and listen to webhooks or poll status as your flow needs.",
+  "product.factura.coverTitle": "Fiscal coverage",
+  "product.factura.coverSubtitle": "Common electronic issuance types and variants.",
+  "product.factura.cover0": "Invoices and credit/debit notes A, B and C",
+  "product.factura.cover1": "MiPyME regime",
+  "product.factura.cover2": "Export invoice",
+  "product.factura.cover3": "Tourism vouchers (when applicable)",
+  "product.factura.cover4": "CAE, expiry and official QR payload data",
+  "product.factura.coverDocs": "See electronic invoicing web service",
+  "product.factura.reqTitle": "Requirements",
+  "product.factura.reqSubtitle": "Minimum to issue in production.",
+  "product.factura.req0": "Active CUIT and digital certificate (homologation or production)",
+  "product.factura.req1": "RECE / Web Services POS and share the number with Set-Api",
+  "product.factura.req2": "Delegate each WS to Set-Api’s CUIT (F.3283/E)",
+  "product.factura.req3": "Set-Api plan with voucher quota and an API Key granted for the CUIT",
+  "product.factura.exampleTitle": "Emission example",
+  "product.factura.exampleBody":
+    "Same REST auth as the quickstart: API Key on the server, idempotency key per emission, payload with CUIT, type, POS and amounts.",
+  "product.factura.audienceTitle": "Who it’s for",
+  "product.factura.audienceBody":
+    "Built for SaaS, ERPs and platforms that need to issue and manage vouchers without building the full fiscal stack from scratch.",
+  "product.factura.audienceNote":
+    "If you only need WS access or ARCA automations, start with Set-Api Platform.",
 
   "catalog.ws.facturacion-electronica.title": "Electronic invoicing",
   "catalog.ws.facturacion-electronica.desc":

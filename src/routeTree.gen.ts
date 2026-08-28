@@ -19,6 +19,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReferidosRouteImport } from './routes/referidos'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -102,6 +103,11 @@ const PricingRoute = PricingRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferidosRoute = ReferidosRouteImport.update({
+  id: '/referidos',
+  path: '/referidos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegisterRoute = RegisterRouteImport.update({
@@ -286,6 +292,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referidos': typeof ReferidosRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referidos': typeof ReferidosRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
@@ -376,6 +384,7 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referidos': typeof ReferidosRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/admin/clients': typeof AdminClientsRouteWithChildren
@@ -424,6 +433,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/privacy'
+    | '/referidos'
     | '/register'
     | '/terms'
     | '/admin/clients'
@@ -467,6 +477,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/privacy'
+    | '/referidos'
     | '/register'
     | '/terms'
     | '/admin/clients'
@@ -513,6 +524,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/privacy'
+    | '/referidos'
     | '/register'
     | '/terms'
     | '/admin/clients'
@@ -560,6 +572,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
+  ReferidosRoute: typeof ReferidosRoute
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
   InviteAcceptRoute: typeof InviteAcceptRoute
@@ -639,6 +652,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referidos': {
+      id: '/referidos'
+      path: '/referidos'
+      fullPath: '/referidos'
+      preLoaderRoute: typeof ReferidosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/register': {
@@ -989,6 +1009,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
+  ReferidosRoute: ReferidosRoute,
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
   InviteAcceptRoute: InviteAcceptRoute,

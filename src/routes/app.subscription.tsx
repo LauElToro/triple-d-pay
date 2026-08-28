@@ -188,7 +188,7 @@ function SubscriptionPage() {
 
         <TabsContent value="plan" className="mt-6" data-tour="sub-plans">
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
 
             {plans.map((p) => {
 
@@ -204,7 +204,7 @@ function SubscriptionPage() {
 
               return (
 
-                <Card key={p.id} className={current ? "border-signal border-2" : "border-line"}>
+                <Card key={p.id} className={`flex h-full flex-col ${current ? "border-signal border-2" : "border-line"}`}>
 
                   <CardHeader>
 
@@ -240,7 +240,7 @@ function SubscriptionPage() {
 
                   </CardHeader>
 
-                  <CardContent className="space-y-4">
+                  <CardContent className="flex flex-1 flex-col gap-4">
 
                     <ul className="space-y-2 text-sm">
 
@@ -266,7 +266,7 @@ function SubscriptionPage() {
 
                     <Button
 
-                      className="w-full"
+                      className="mt-auto w-full"
 
                       variant={current ? "outline" : "default"}
 
@@ -296,7 +296,7 @@ function SubscriptionPage() {
 
             })}
 
-            <Card className="border-line">
+            <Card className="flex h-full flex-col border-line">
 
               <CardHeader>
 
@@ -308,7 +308,7 @@ function SubscriptionPage() {
 
               </CardHeader>
 
-              <CardContent className="space-y-4">
+              <CardContent className="flex flex-1 flex-col gap-4">
 
                 <ul className="space-y-2 text-sm">
 
@@ -326,7 +326,7 @@ function SubscriptionPage() {
 
                 </ul>
 
-                <Button asChild className="w-full" variant="outline">
+                <Button asChild className="mt-auto w-full" variant="outline">
 
                   <Link to="/contact">{customPlan.cta}</Link>
 

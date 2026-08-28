@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import type { Plan } from "@/lib/plans";
 import { useTranslation } from "@/lib/i18n-context";
+import { cn } from "@/lib/utils";
 
 type PlanCardPlan = Pick<Plan, "name" | "price" | "tagline" | "features" | "cta"> & {
   id?: Plan["id"];
@@ -23,11 +24,10 @@ export function PlanCard({
 
   return (
     <Card
-      className={
-        featured
-          ? "border-signal border-2 shadow-md relative"
-          : "border-line"
-      }
+      className={cn(
+        "flex h-full flex-col",
+        featured ? "border-signal border-2 shadow-md relative" : "border-line",
+      )}
     >
       {featured && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-signal text-primary-foreground text-xs px-3 py-1 rounded-full font-mono uppercase tracking-wider">
@@ -39,7 +39,7 @@ export function PlanCard({
         <p className="text-sm text-muted-foreground">{plan.tagline}</p>
         <p className="font-mono text-2xl mt-2 text-ink">{plan.price}</p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="flex flex-1 flex-col gap-4">
         <ul className="space-y-2 text-sm">
           {plan.features.map((f) => (
             <li key={f} className="flex gap-2">
@@ -48,7 +48,7 @@ export function PlanCard({
             </li>
           ))}
         </ul>
-        <Button asChild className="w-full" variant={featured ? "default" : "outline"}>
+        <Button asChild className="mt-auto w-full" variant={featured ? "default" : "outline"}>
           {to === "/contact" ? (
             <Link to="/contact">{plan.cta}</Link>
           ) : (

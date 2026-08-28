@@ -45,6 +45,15 @@ export const catalogEs: TranslationDict = {
   "landing.wsSubtitle": "Integrá todos los web services de ARCA de manera simple y rápida.",
   "landing.integrationsTitle": "Integraciones",
   "landing.integrationsSubtitle": "APIs REST para tus lenguajes y plataformas favoritas.",
+  "landing.partners.title": "Trabajamos con",
+  "landing.partners.subtitle": "Equipos que confían en Set-Api para operar con ARCA en producción.",
+  "landing.pathsTitle": "Elegí cómo integrar",
+  "landing.pathsSubtitle":
+    "Dos productos claros: la plataforma de API y WS, o facturación punta a punta lista para tu producto.",
+  "landing.pathPlatformHeadline": "API REST para operar ARCA",
+  "landing.pathPlatformCta": "Ver Set-Api Platform",
+  "landing.pathFacturaHeadline": "Facturación punta a punta",
+  "landing.pathFacturaCta": "Ver Set-Api Factura",
   "landing.viewAllDocs": "Ver documentación",
   "landing.whyTitle": "¿Por qué usar Set-Api?",
   "landing.whyDocs": "Documentación",
@@ -57,6 +66,11 @@ export const catalogEs: TranslationDict = {
   "landing.referrals.title": "Programa de referidos",
   "landing.referrals.subtitle":
     "Invitá a otros equipos a Set-Api. Compartí tu link y seguí cómo crece tu red desde el panel.",
+  "landing.referrals.teaser":
+    "Invitá equipos, compartí tu link y seguí el progreso desde el panel.",
+  "landing.referrals.teaserCta": "Ver programa",
+  "landing.referrals.howTitle": "Cómo funciona",
+  "landing.referrals.panelCta": "Ir al panel de referidos",
   "landing.referrals.step1": "Creá tu cuenta y entrá al panel de Referidos",
   "landing.referrals.step2": "Copiá tu link único y compartilo con quien quieras",
   "landing.referrals.step3": "Cuando se registren con tu código, vas a ver el progreso en tus estadísticas",
@@ -121,6 +135,54 @@ export const catalogEs: TranslationDict = {
   "product.factura.title": "Set-Api Factura",
   "product.factura.desc":
     "Facturación punta a punta: emisión, estados, PDF, QR y webhooks para tu producto.",
+  "product.factura.capsTitle": "Qué resuelve",
+  "product.factura.capsSubtitle":
+    "La capa comercial sobre la emisión fiscal: del request a un comprobante usable en tu producto.",
+  "product.factura.cap0Title": "Emisión fiscal",
+  "product.factura.cap0Body":
+    "Emití comprobantes vía API REST y obtené CAE y vencimiento sin armar SOAP ni WSAA a mano.",
+  "product.factura.cap1Title": "Estados y reintentos",
+  "product.factura.cap1Body":
+    "Consultá el estado del comprobante y reintentá con Idempotency-Key para evitar duplicados en fallos de red.",
+  "product.factura.cap2Title": "PDF + QR",
+  "product.factura.cap2Body":
+    "La respuesta incluye los datos para armar el QR oficial y el flujo de PDF listo para tu producto o cliente.",
+  "product.factura.cap3Title": "Webhooks",
+  "product.factura.cap3Body":
+    "Recibí eventos de emisión y cambios de estado en tu backend para actualizar tu app sin polling constante.",
+  "product.factura.flowTitle": "Cómo funciona",
+  "product.factura.flowSubtitle":
+    "Un recorrido típico de integración en producción.",
+  "product.factura.step0":
+    "Creá tu cuenta, obtené una API Key y vinculá el CUIT emisor con grants explícitos.",
+  "product.factura.step1":
+    "Completá PV RECE / Web Services y la delegación ARCA al CUIT de Set-Api.",
+  "product.factura.step2":
+    "Emití por REST con Authorization Bearer e Idempotency-Key; guardá CAE y correlación.",
+  "product.factura.step3":
+    "Entregá PDF/QR a tu usuario y escuchá webhooks o consultá estados según tu flujo.",
+  "product.factura.coverTitle": "Cobertura fiscal",
+  "product.factura.coverSubtitle": "Tipos y variantes habituales de emisión electrónica.",
+  "product.factura.cover0": "Facturas y notas de crédito/débito A, B y C",
+  "product.factura.cover1": "Régimen MiPyME",
+  "product.factura.cover2": "Factura de exportación",
+  "product.factura.cover3": "Comprobantes de turismo (cuando aplique)",
+  "product.factura.cover4": "CAE, vencimiento y datos para QR oficial",
+  "product.factura.coverDocs": "Ver web service de facturación electrónica",
+  "product.factura.reqTitle": "Requisitos",
+  "product.factura.reqSubtitle": "Lo mínimo para emitir en producción.",
+  "product.factura.req0": "CUIT activo y certificado digital (homologación o producción)",
+  "product.factura.req1": "Punto de venta RECE / Web Services e informar el número a Set-Api",
+  "product.factura.req2": "Delegación de cada WS al CUIT de Set-Api (F.3283/E)",
+  "product.factura.req3": "Plan Set-Api con cupo de comprobantes y API Key con grant del CUIT",
+  "product.factura.exampleTitle": "Ejemplo de emisión",
+  "product.factura.exampleBody":
+    "Misma autenticación REST del quickstart: API Key en el servidor, clave de idempotencia por emisión y payload con CUIT, tipo, PV e importes.",
+  "product.factura.audienceTitle": "Para quién es",
+  "product.factura.audienceBody":
+    "Pensado para SaaS, ERPs y plataformas que necesitan emitir y gestionar comprobantes sin armar toda la capa fiscal desde cero.",
+  "product.factura.audienceNote":
+    "Si solo necesitás consumir WS o automatizar ARCA, empezá por Set-Api Platform.",
 
   "catalog.ws.facturacion-electronica.title": "Facturación electrónica",
   "catalog.ws.facturacion-electronica.desc":

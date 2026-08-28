@@ -26,7 +26,7 @@ function PricingPage() {
           <h1 className="text-4xl font-display font-bold">{t("pricing.title")}</h1>
           <p className="text-slate mt-2">{t("pricing.subtitle")}</p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {plans.map((p) => (
             <PlanCard key={p.id} plan={p} featured={p.id === "fixed"} />
           ))}
