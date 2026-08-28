@@ -67,15 +67,16 @@ export const catalogPt: TranslationDict = {
 
   "landing.referrals.title": "Programa de indicados",
   "landing.referrals.subtitle":
-    "Convide outras equipes para o Set-Api. Compartilhe seu link e acompanhe o crescimento da sua rede no painel.",
+    "Convide equipes para o Set-Api e ganhe 50% de cada fatura que elas pagarem. Compartilhe seu link e acompanhe a rede no painel.",
   "landing.referrals.teaser":
-    "Convide equipes, compartilhe seu link e acompanhe o progresso no painel.",
+    "50/50 em cada fatura dos seus indicados. Compartilhe seu link e acompanhe o progresso no painel.",
   "landing.referrals.teaserCta": "Ver programa",
   "landing.referrals.howTitle": "Como funciona",
   "landing.referrals.panelCta": "Ir ao painel de indicados",
   "landing.referrals.step1": "Crie sua conta e abra Indicados no painel",
   "landing.referrals.step2": "Copie seu link único e compartilhe com quem quiser",
-  "landing.referrals.step3": "Quando se cadastrarem com seu código, você verá o progresso nas estatísticas",
+  "landing.referrals.step3":
+    "Quando se cadastrarem com seu código, 50% de cada fatura paga é creditado na sua conta",
   "landing.referrals.cta": "Criar conta grátis",
   "landing.referrals.ctaSecondary": "Ver planos",
 

@@ -127,6 +127,23 @@ export interface UsageView {
   daily: { day: string; count: number }[];
 }
 
+export interface ReferralOverview {
+  code: string;
+  share: number;
+  stats: {
+    total: number;
+    month: number;
+    pending: number;
+    converted: number;
+  };
+  rewards: {
+    earnedTotal: number;
+    earnedMonth: number;
+    pending: number;
+    available: number;
+  };
+}
+
 export interface CreateKeyResponse {
   key: ApiKeyView;
   plaintext: string;

@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { AppPageHeader } from "@/components/set-api/app-page-header";
 import { CopyField } from "@/components/set-api/copy-field";
 import { StatChip } from "@/components/set-api/stat-chip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth-context";
+import { api } from "@/lib/api";
+import type { ReferralOverview } from "@/lib/api-types";
 import { formatARS } from "@/lib/format";
 import { buildReferralUrl, referralCodeFromUserId } from "@/lib/referrals";
 import { useTranslation } from "@/lib/i18n-context";
@@ -12,19 +15,25 @@ export const Route = createFileRoute("/app/referrals")({
   component: ReferralsPage,
 });
 
-/** Frontend placeholders until referrals API exists. */
-const REWARD_STATS = {
-  earnedTotal: 0,
-  earnedMonth: 0,
-  pending: 0,
-  available: 0,
-};
-
 function ReferralsPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const code = user?.id ? referralCodeFromUserId(user.id) : "--------";
+  const overview = useQuery({
+    queryKey: ["referrals", user?.id],
+    queryFn: () => api.get<ReferralOverview>("/api/referrals"),
+    enabled: Boolean(user?.id),
+  });
+
+  const code =
+    overview.data?.code ?? (user?.id ? referralCodeFromUserId(user.id) : "--------");
   const link = user?.id ? buildReferralUrl(code) : "";
+  const stats = overview.data?.stats ?? { total: 0, month: 0, pending: 0, converted: 0 };
+  const rewards = overview.data?.rewards ?? {
+    earnedTotal: 0,
+    earnedMonth: 0,
+    pending: 0,
+    available: 0,
+  };
 
   return (
     <div className="space-y-6 w-full">
@@ -50,10 +59,10 @@ function ReferralsPage() {
       </Card>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatChip label={t("referrals.stats.total")} value={0} />
-        <StatChip label={t("referrals.stats.month")} value={0} />
-        <StatChip label={t("referrals.stats.pending")} value={0} />
-        <StatChip label={t("referrals.stats.converted")} value={0} />
+        <StatChip label={t("referrals.stats.total")} value={stats.total} />
+        <StatChip label={t("referrals.stats.month")} value={stats.month} />
+        <StatChip label={t("referrals.stats.pending")} value={stats.pending} />
+        <StatChip label={t("referrals.stats.converted")} value={stats.converted} />
       </div>
 
       <section className="space-y-4">
@@ -64,19 +73,19 @@ function ReferralsPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatChip
             label={t("referrals.rewards.earned")}
-            value={formatARS(REWARD_STATS.earnedTotal)}
+            value={formatARS(rewards.earnedTotal)}
           />
           <StatChip
             label={t("referrals.rewards.month")}
-            value={formatARS(REWARD_STATS.earnedMonth)}
+            value={formatARS(rewards.earnedMonth)}
           />
           <StatChip
             label={t("referrals.rewards.pending")}
-            value={formatARS(REWARD_STATS.pending)}
+            value={formatARS(rewards.pending)}
           />
           <StatChip
             label={t("referrals.rewards.available")}
-            value={formatARS(REWARD_STATS.available)}
+            value={formatARS(rewards.available)}
           />
         </div>
         <ul className="space-y-2 text-sm text-slate max-w-2xl">

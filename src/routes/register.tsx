@@ -86,6 +86,7 @@ function RegisterPage() {
         password,
         name: name || undefined,
         plan,
+        referralCode: referralCode.trim() || undefined,
       });
       setPendingEmail(res.email);
       toast.success(t("register.verifySent"));
@@ -289,7 +290,9 @@ function RegisterPage() {
                     onCredential={async (credential) => {
                       startLoading(t("register.googleLoading"));
                       try {
-                        await loginWithGoogle(credential);
+                        await loginWithGoogle(credential, {
+                          referralCode: referralCode.trim() || undefined,
+                        });
                         navigate({ to: "/onboarding" });
                       } catch (err) {
                         toast.error(

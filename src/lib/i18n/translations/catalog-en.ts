@@ -65,15 +65,16 @@ export const catalogEn: TranslationDict = {
 
   "landing.referrals.title": "Referral program",
   "landing.referrals.subtitle":
-    "Invite other teams to Set-Api. Share your link and track how your network grows from the dashboard.",
+    "Invite teams to Set-Api and earn 50% of every invoice they pay. Share your link and track your network from the dashboard.",
   "landing.referrals.teaser":
-    "Invite teams, share your link and track progress from the dashboard.",
+    "50/50 on every invoice from your referrals. Share your link and track progress from the dashboard.",
   "landing.referrals.teaserCta": "View program",
   "landing.referrals.howTitle": "How it works",
   "landing.referrals.panelCta": "Go to referrals dashboard",
   "landing.referrals.step1": "Create your account and open Referrals in the dashboard",
   "landing.referrals.step2": "Copy your unique link and share it with anyone",
-  "landing.referrals.step3": "When they sign up with your code, you'll see progress in your stats",
+  "landing.referrals.step3":
+    "When they sign up with your code, 50% of every invoice they pay is credited to you",
   "landing.referrals.cta": "Create free account",
   "landing.referrals.ctaSecondary": "View plans",
 

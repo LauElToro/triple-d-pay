@@ -25,6 +25,7 @@ type RegisterInput = {
   name?: string;
   plan?: PlanId;
   orgName?: string;
+  referralCode?: string;
 };
 
 interface AuthState {
@@ -36,7 +37,7 @@ interface AuthState {
   register: (input: RegisterInput) => Promise<VerifyEmailChallenge>;
   verifyEmail: (email: string, code: string) => Promise<void>;
   login: (email: string, password: string) => Promise<LoginResult>;
-  loginWithGoogle: (credential: string) => Promise<LoginResult>;
+  loginWithGoogle: (credential: string, extra?: { referralCode?: string }) => Promise<LoginResult>;
   verifyTwoFactor: (pendingToken: string, code: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshMe: () => Promise<void>;
@@ -136,10 +137,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return res as AuthResponse;
   };
 
-  const loginWithGoogle = async (credential: string): Promise<LoginResult> => {
+  const loginWithGoogle = async (
+    credential: string,
+    extra?: { referralCode?: string },
+  ): Promise<LoginResult> => {
     const res = await api.post<AuthResponse | TwoFactorChallenge>("/api/auth/google", {
       credential,
       acquisition: getAcquisitionPayload(),
+      referralCode: extra?.referralCode,
     });
     if ("status" in res && res.status === "twofa_required") return res;
     await applySession(res as AuthResponse);

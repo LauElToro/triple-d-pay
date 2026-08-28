@@ -1,8 +1,10 @@
 export function formatARS(n: number): string {
+  const hasCents = Math.round(n * 100) % 100 !== 0;
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
-    maximumFractionDigits: 0,
+    minimumFractionDigits: hasCents ? 2 : 0,
+    maximumFractionDigits: 2,
   }).format(n);
 }
 

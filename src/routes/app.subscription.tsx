@@ -237,6 +237,9 @@ function SubscriptionPage() {
                     <p className="text-sm text-slate">{p.tagline}</p>
 
                     <p className="font-mono text-2xl mt-2 text-ink">{p.price}</p>
+                    {p.priceSecondary ? (
+                      <p className="font-mono text-sm text-slate mt-1">{p.priceSecondary}</p>
+                    ) : null}
 
                   </CardHeader>
 

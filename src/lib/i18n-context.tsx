@@ -9,26 +9,40 @@ import {
 } from "@/lib/i18n";
 import type { Plan } from "@/lib/plans";
 import type { PlanId } from "@/lib/api-types";
+import {
+  MONTHLY_PLAN_ARS,
+  MONTHLY_PLAN_USD,
+  USAGE_UNIT_ARS,
+  USAGE_UNIT_USD,
+  formatArsAmount,
+  formatUsdAmount,
+} from "@/lib/plan-prices";
 
 const STORAGE_KEY = "sa_locale";
 
-const PLAN_PRICES: Record<PlanId, string> = {
-  free: "AR$ 0",
-  fixed: "AR$ 29.900",
-  usage: "AR$ 22 / comprobante",
-};
+function planPriceCopy(locale: Locale): Record<PlanId, { price: string; priceSecondary: string }> {
+  const arsMonthly = formatArsAmount(MONTHLY_PLAN_ARS, locale);
+  const usdMonthly = formatUsdAmount(MONTHLY_PLAN_USD, locale);
+  const arsUnit = formatArsAmount(USAGE_UNIT_ARS, locale);
+  const usdUnit = formatUsdAmount(USAGE_UNIT_USD, locale);
+  const unitLabel = locale === "en" ? "voucher" : locale === "pt" ? "comprovante" : "comprobante";
+  const monthLabel = locale === "en" ? "mo" : locale === "pt" ? "mês" : "mes";
 
-const PLAN_PRICE_EN: Record<PlanId, string> = {
-  free: "AR$ 0",
-  fixed: "AR$ 29,900",
-  usage: "AR$ 22 / voucher",
-};
-
-const PLAN_PRICE_PT: Record<PlanId, string> = {
-  free: "AR$ 0",
-  fixed: "AR$ 29.900",
-  usage: "AR$ 22 / comprovante",
-};
+  return {
+    free: {
+      price: formatArsAmount(0, locale),
+      priceSecondary: `${formatUsdAmount(0, locale)} / ${monthLabel}`,
+    },
+    fixed: {
+      price: `${arsMonthly} / ${monthLabel}`,
+      priceSecondary: `${usdMonthly} / ${monthLabel}`,
+    },
+    usage: {
+      price: `${arsUnit} / ${unitLabel}`,
+      priceSecondary: `${usdUnit} / ${unitLabel}`,
+    },
+  };
+}
 
 interface I18nContextValue {
   locale: Locale;
@@ -50,14 +64,14 @@ function readStoredLocale(): Locale {
 }
 
 function buildPlans(locale: Locale, t: (key: string) => string): Plan[] {
-  const prices =
-    locale === "en" ? PLAN_PRICE_EN : locale === "pt" ? PLAN_PRICE_PT : PLAN_PRICES;
+  const prices = planPriceCopy(locale);
   const ids: PlanId[] = ["free", "fixed", "usage"];
 
   return ids.map((id) => ({
     id,
     name: t(`plans.${id}.name`),
-    price: prices[id],
+    price: prices[id].price,
+    priceSecondary: prices[id].priceSecondary,
     tagline: t(`plans.${id}.tagline`),
     features: [0, 1, 2, 3].map((i) => t(`plans.${id}.feature${i}`)),
     cta: t(`plans.${id}.cta`),

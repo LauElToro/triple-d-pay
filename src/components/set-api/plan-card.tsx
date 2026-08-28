@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 type PlanCardPlan = Pick<Plan, "name" | "price" | "tagline" | "features" | "cta"> & {
   id?: Plan["id"];
+  priceSecondary?: string;
 };
 
 export function PlanCard({
@@ -38,6 +39,9 @@ export function PlanCard({
         <CardTitle className="font-display text-2xl">{plan.name}</CardTitle>
         <p className="text-sm text-muted-foreground">{plan.tagline}</p>
         <p className="font-mono text-2xl mt-2 text-ink">{plan.price}</p>
+        {plan.priceSecondary ? (
+          <p className="font-mono text-sm text-slate mt-1">{plan.priceSecondary}</p>
+        ) : null}
       </CardHeader>
       <CardContent className="flex flex-1 flex-col gap-4">
         <ul className="space-y-2 text-sm">

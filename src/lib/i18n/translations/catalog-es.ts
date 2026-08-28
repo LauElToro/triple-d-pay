@@ -65,15 +65,16 @@ export const catalogEs: TranslationDict = {
 
   "landing.referrals.title": "Programa de referidos",
   "landing.referrals.subtitle":
-    "Invitá a otros equipos a Set-Api. Compartí tu link y seguí cómo crece tu red desde el panel.",
+    "Invitá equipos a Set-Api y ganá el 50% de cada factura que paguen. Compartí tu link y seguí tu red desde el panel.",
   "landing.referrals.teaser":
-    "Invitá equipos, compartí tu link y seguí el progreso desde el panel.",
+    "50/50 por cada factura de tus referidos. Compartí tu link y seguí el progreso desde el panel.",
   "landing.referrals.teaserCta": "Ver programa",
   "landing.referrals.howTitle": "Cómo funciona",
   "landing.referrals.panelCta": "Ir al panel de referidos",
   "landing.referrals.step1": "Creá tu cuenta y entrá al panel de Referidos",
   "landing.referrals.step2": "Copiá tu link único y compartilo con quien quieras",
-  "landing.referrals.step3": "Cuando se registren con tu código, vas a ver el progreso en tus estadísticas",
+  "landing.referrals.step3":
+    "Cuando se registren con tu código, el 50% de cada factura que paguen se acredita a tu cuenta",
   "landing.referrals.cta": "Crear cuenta gratis",
   "landing.referrals.ctaSecondary": "Ver planes",
 
